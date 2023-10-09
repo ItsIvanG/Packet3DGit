@@ -72,6 +72,7 @@ public class AddManager : MonoBehaviour
                 GameObject spawn = Instantiate(item.GameObject,transform);
                 spawn.transform.position = hitPosition;
                 spawn.transform.parent = null;
+                spawn.name = item.Name;
 
 
                 Destroy(ghost);
