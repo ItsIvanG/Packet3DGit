@@ -10,6 +10,8 @@ public class itemManager : MonoBehaviour
     public Transform itemContent;
     public GameObject itemButton;
     public List<PacketItem> items = new List<PacketItem>();
+    public List<Button> buttons = new List<Button>();
+    public GameObject itemsCategoryPanel;
     //public List<PacketItem> itemsSwitches = new List<PacketItem>();
     //public List<PacketItem> itemsEndDevices = new List<PacketItem>();
 
@@ -21,6 +23,12 @@ public class itemManager : MonoBehaviour
         foreach(var item in a)
         {
             items.Add(item);
+        }
+
+        var getButtons = itemsCategoryPanel.GetComponentsInChildren<Button>();
+        foreach(var b in getButtons)
+        {
+            buttons.Add(b);
         }
      
         
@@ -52,8 +60,22 @@ public class itemManager : MonoBehaviour
                 itemName.text = i.ShortName;
                 itemIcon.sprite = i.Thumbnail;
                 itemFunc.packetItem = i;
+                Debug.Log("opened " + (int)i.type + " list");
+
+                //SET ITEM CATEGORY ACTIVE COLOR
+                buttons[(int)i.type].GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonActiveColor;
+
+                //SET OTHER ITEM CATEGORIES IDLE COLOR
+                for (int z = 0; z < buttons.Count; z++)
+                {
+                    if (z != (int)i.type)
+                    {
+                        buttons[z].GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonIdleColor;
+                    }
+                }
             }
         }
+        
 
     }
 }

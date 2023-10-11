@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11171361feeb43043836144f092f66ad, type: 3}
+  m_Name: R_4321
+  m_EditorClassIdentifier: 
+  type: 0
+  Name: Cisco 4321
+  ShortName: 4321
+  Description: Cisco 4321 Router
+  Thumbnail: {fileID: 21300000, guid: 8fb457bc31427384da1bb2c128bb127f, type: 3}
+  GameObject: {fileID: 0}

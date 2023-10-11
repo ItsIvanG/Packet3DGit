@@ -35,7 +35,7 @@ public class SelectTransform : MonoBehaviour
     public Transform selection;
     private RaycastHit raycastHit;
     private RaycastHit raycastHitHandle;
-    private GameObject runtimeTransformGameObj;
+    public GameObject runtimeTransformGameObj;
     private RuntimeTransformHandle runtimeTransformHandle;
     private int runtimeTransformLayer = 6;
     private int runtimeTransformLayerMask;
@@ -47,6 +47,8 @@ public class SelectTransform : MonoBehaviour
     public Color highlightColor;
     public Color selectionColor;
     private bool deleteMode;
+    public int timeSinceClick;
+    private orbitCam orbit;
 
 
     private void Start()
@@ -60,6 +62,7 @@ public class SelectTransform : MonoBehaviour
         runtimeTransformHandle.autoScaleFactor = 1.0f;
         runtimeTransformGameObj.SetActive(false);
         MoveButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonActiveColor;
+        orbit = FindAnyObjectByType<orbitCam>();
     }
 
     void Update()
@@ -95,20 +98,49 @@ public class SelectTransform : MonoBehaviour
         // Selection
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+            if (timeSinceClick == 0)
+            {
+                timeSinceClick = 1;
+            }
+
+            if (timeSinceClick > 5 && selection!=null)
+            {
+                //FOCUS ON OBJ SELECTION
+                orbit.desiredPosition = selection.transform.position;
+                orbit.desiredY = selection.transform.position.y;
+                Debug.Log("FOCUS ON " + selection.name);
+                timeSinceClick = 0;
+            }
+            if (timeSinceClick > 5 && highlight != null)
+            {
+                //FOCUS ON OBJ HIGHLIGHT
+                orbit.desiredPosition = highlight.transform.position;
+                orbit.desiredY = highlight.transform.position.y;
+                Debug.Log("FOCUS ON " + highlight.name);
+                timeSinceClick = 0;
+            }
+
             ApplyLayerToChildren(runtimeTransformGameObj);
             if (Physics.Raycast(ray, out raycastHit))
             {
+                
+
                 if (Physics.Raycast(ray, out raycastHitHandle, Mathf.Infinity, runtimeTransformLayerMask)) //Raycast towards runtime transform handle only
                 {
                 }
                 else if (highlight)
                 {
+
+                    
                     if (selection != null)
                     {
                         //selection.GetComponentInChildren<MeshRenderer>().material = originalMaterialSelection;
                         selection.GetComponentInChildren<Renderer>().material.DisableKeyword("_EMISSION");
                     }
+
+
                     selection = raycastHit.transform;
+
                     /*if (selection.GetComponentInChildren<MeshRenderer>().material != selectionMaterial)
                     {
                         originalMaterialSelection = originalMaterialHighlight;
@@ -161,6 +193,15 @@ public class SelectTransform : MonoBehaviour
                     runtimeTransformGameObj.SetActive(false);
                 }
             }
+        }
+
+        if (timeSinceClick > 0 && timeSinceClick <80)
+        {
+            timeSinceClick++;
+        }
+        else
+        {
+            timeSinceClick = 0;
         }
 
         //Hot Keys for move, rotate, scale, local and Global/World transform

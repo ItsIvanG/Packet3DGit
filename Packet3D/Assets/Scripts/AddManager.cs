@@ -40,7 +40,12 @@ public class AddManager : MonoBehaviour
                 if (ghost == null)
                 {
                     ghost = Instantiate(item.GameObject, transform);
-                    ghost.GetComponentInChildren<Collider>().enabled = false;
+                    
+                    var g = ghost.GetComponentsInChildren<Collider>();
+                    foreach(var x in g)
+                    {
+                        x.enabled = false;
+                    }
                     ghost.GetComponentInChildren<Renderer>().material.EnableKeyword("_EMISSION");
                     ghost.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", new Color(0, 0.5f, 0.5f, 1));
                     Debug.Log("Ghost intantiated");
@@ -82,7 +87,7 @@ public class AddManager : MonoBehaviour
                 
                 orbit.desiredPosition = spawn.transform.position;
                 orbit.desiredY = spawn.transform.position.y;
-
+                
             }
         }
 
