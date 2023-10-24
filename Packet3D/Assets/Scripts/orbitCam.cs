@@ -14,7 +14,7 @@ public class orbitCam : MonoBehaviour
     public float positionDamping = 10f;
     public float mouseScrollSpeed = 2.0f;
     public GameObject cam;
-    Vector3 scrollVect = new Vector3(1f,1f,1f);
+    public Vector3 scrollVect = new Vector3(0.3f,0.3f,0.3f);
     public Vector3 desiredPosition = new Vector3(0, 0, 0);
     public float desiredY =0;
 

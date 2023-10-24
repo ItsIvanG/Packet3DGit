@@ -61,7 +61,7 @@ public class SelectTransform : MonoBehaviour
         runtimeTransformHandle.autoScale = true;
         runtimeTransformHandle.autoScaleFactor = 1.0f;
         runtimeTransformGameObj.SetActive(false);
-        MoveButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonActiveColor;
+        MoveButton.GetComponent<Image>().color = UIColorManagerScript.ButtonActiveColor;
         orbit = FindAnyObjectByType<orbitCam>();
     }
 
@@ -152,20 +152,25 @@ public class SelectTransform : MonoBehaviour
 
                     selection.GetComponentInChildren<Renderer>().material.EnableKeyword("_EMISSION");
                     selection.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", selectionColor);
-                    runtimeTransformHandle.target = selection;
-                    if (!deleteMode)
-                    {
-                        runtimeTransformGameObj.SetActive(true);
-                    }
-                    else
-                    {
-                        //DELETE MODE
-                        WarnMessage.SetActive(true);
-                        Debug.Log("ABOUT TO DELETE " + selection);
-                        WarnMessage.transform.Find("warnMessageText").GetComponent<TextMeshProUGUI>().SetText("Are you sure you want to delete "+selection.name+"?");
-                    }
 
 
+                    //CHECK IF IT HAS 'NO TRANSFORM GIZMO' SCRIPT
+
+                    if (!selection.GetComponent<NoTransformGizmo>())
+                    {
+                        runtimeTransformHandle.target = selection;
+                        if (!deleteMode)
+                        {
+                            runtimeTransformGameObj.SetActive(true);
+                        }
+                        else
+                        {
+                            //DELETE MODE
+                            WarnMessage.SetActive(true);
+                            Debug.Log("ABOUT TO DELETE " + selection);
+                            WarnMessage.transform.Find("warnMessageText").GetComponent<TextMeshProUGUI>().SetText("Are you sure you want to delete " + selection.name + "?");
+                        }
+                    }
 
 
                     highlight = null;
@@ -244,9 +249,9 @@ public class SelectTransform : MonoBehaviour
                     runtimeTransformGameObj.SetActive(true);
                 }
                 runtimeTransformHandle.type = HandleType.POSITION;
-                MoveButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonActiveColor;
-                RotateButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonIdleColor;
-                DeleteButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonDeleteIdleColor;
+                MoveButton.GetComponent<Image>().color = UIColorManagerScript.ButtonActiveColor;
+                RotateButton.GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;
+                DeleteButton.GetComponent<Image>().color = UIColorManagerScript.ButtonDeleteIdleColor;
                 deleteMode = false;
                 break;
             case 1:
@@ -255,16 +260,16 @@ public class SelectTransform : MonoBehaviour
                     runtimeTransformGameObj.SetActive(true);
                 }
                 runtimeTransformHandle.type = HandleType.ROTATION;
-                MoveButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonIdleColor;
-                RotateButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonActiveColor;
-                DeleteButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonDeleteIdleColor;
+                MoveButton.GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;
+                RotateButton.GetComponent<Image>().color = UIColorManagerScript.ButtonActiveColor;
+                DeleteButton.GetComponent<Image>().color = UIColorManagerScript.ButtonDeleteIdleColor;
                 deleteMode = false;
                 break;
             case 2:
                 runtimeTransformGameObj.SetActive(false);
-                MoveButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonIdleColor;
-                RotateButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonIdleColor;
-                DeleteButton.GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonDeleteActiveColor;
+                MoveButton.GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;
+                RotateButton.GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;
+                DeleteButton.GetComponent<Image>().color = UIColorManagerScript.ButtonDeleteActiveColor;
                 deleteMode = true;
                 break;
         }

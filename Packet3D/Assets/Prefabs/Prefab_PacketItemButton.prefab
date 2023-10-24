@@ -203,7 +203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.8536606, y: 0, z: 6.340763, w: 3.0495186}
+  m_margin: {x: 1.6033344, y: 0, z: 1.3261051, w: 3.0495186}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 6405677685108164152}
   - component: {fileID: 1928546332484777404}
   - component: {fileID: 4546738422812991900}
+  - component: {fileID: 741563873353430817}
   m_Layer: 5
   m_Name: Prefab_PacketItemButton
   m_TagString: Untagged
@@ -331,7 +332,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6405677685108164152}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4546738422812991900}
+        m_TargetAssemblyTypeName: packetItemButtonFunc, Assembly-CSharp
+        m_MethodName: setAddMngrItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4546738422812991900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,3 +359,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1928546332484777404}
   packetItem: {fileID: 0}
+--- !u!114 &741563873353430817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288706528676021626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45b457e75caa4a4390aa513e94d324a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subtitle: 
+  header: 
+  content: 

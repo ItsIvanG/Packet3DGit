@@ -12,18 +12,11 @@ public class packetItemButtonFunc : MonoBehaviour
     void Start()
     {
         addManager=FindAnyObjectByType<AddManager>();
-        Button btn = button.GetComponent<Button>();
-        btn.onClick.AddListener(TaskOnClick);
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    void TaskOnClick()
+    public void setAddMngrItem()
     {
         Debug.Log("clicked in packet item: " + packetItem);
         addManager.setPacketItem(packetItem);

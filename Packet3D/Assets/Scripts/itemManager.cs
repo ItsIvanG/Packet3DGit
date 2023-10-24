@@ -56,21 +56,24 @@ public class itemManager : MonoBehaviour
                 var itemName = obj.transform.Find("Name").GetComponent<TextMeshProUGUI>();
                 var itemIcon = obj.transform.Find("Image").GetComponent<Image>();
                 var itemFunc = obj.transform.GetComponent<packetItemButtonFunc>();
+                var itemTooltip = obj.transform.GetComponent<TooltipTrigger>();
 
                 itemName.text = i.ShortName;
                 itemIcon.sprite = i.Thumbnail;
                 itemFunc.packetItem = i;
+                itemTooltip.header = i.Name;
+                itemTooltip.content = i.Description;
                 Debug.Log("opened " + (int)i.type + " list");
 
                 //SET ITEM CATEGORY ACTIVE COLOR
-                buttons[(int)i.type].GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonActiveColor;
+                buttons[(int)i.type].GetComponent<Image>().color = UIColorManagerScript.ButtonActiveColor;
 
                 //SET OTHER ITEM CATEGORIES IDLE COLOR
                 for (int z = 0; z < buttons.Count; z++)
                 {
                     if (z != (int)i.type)
                     {
-                        buttons[z].GetComponent<Image>().color = FindAnyObjectByType<UIColorManagerScript>().ButtonIdleColor;
+                        buttons[z].GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;
                     }
                 }
             }
