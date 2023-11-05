@@ -8,6 +8,7 @@ public class PacketItemPrefabDetails : MonoBehaviour
     
     public string type;
     public string Name;
+    public Sprite icon;
     TooltipTrigger tooltipTrigger;
     public List<PortProperties> portList = new List<PortProperties>();
     private void Start()

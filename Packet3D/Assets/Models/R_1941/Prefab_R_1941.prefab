@@ -704,6 +704,7 @@ GameObject:
   - component: {fileID: 3982642102301701088}
   - component: {fileID: 8275108456742267647}
   - component: {fileID: -8333122142628406627}
+  - component: {fileID: 4489610349832833823}
   m_Layer: 0
   m_Name: Prefab_R_1941
   m_TagString: Selectable
@@ -774,7 +775,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: Router
-  name: Cisco 1941
+  Name: Cisco 1941
+  icon: {fileID: 21300000, guid: 8fb457bc31427384da1bb2c128bb127f, type: 3}
+  portList: []
 --- !u!114 &-8333122142628406627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,9 +790,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45b457e75caa4a4390aa513e94d324a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subtitle: 
+  subtitle: Router
   header: 
   content: 
+--- !u!114 &4489610349832833823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491106933655992623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6c41b094d81ba458e3ac5eaa5ef1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hostname: Router
 --- !u!1 &5685443274086678270
 GameObject:
   m_ObjectHideFlags: 0

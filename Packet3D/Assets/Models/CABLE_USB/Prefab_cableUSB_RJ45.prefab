@@ -428,6 +428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portA: {fileID: 0}
   portB: {fileID: 0}
+  portAType: 1
+  portBType: 0
 --- !u!1 &3741160347033935119
 GameObject:
   m_ObjectHideFlags: 0

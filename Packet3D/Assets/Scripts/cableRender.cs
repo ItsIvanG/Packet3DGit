@@ -16,6 +16,7 @@ public class cableRender : MonoBehaviour
     TMP_Dropdown dropdown;
     private List<string> units= new List<string>{"","cm","m","\"","ft"};
     float convertedDistance;
+    CableHops cableHops;
     //0: disabled
     //1: cm
     //2: m
@@ -25,6 +26,7 @@ public class cableRender : MonoBehaviour
     {
         cam = Camera.main;
         dropdown = GameObject.Find("MeasureDropdown").GetComponent<TMP_Dropdown>();
+        cableHops = transform.parent.GetComponent<CableHops>();
     }
     void Update()
     {
@@ -36,6 +38,9 @@ public class cableRender : MonoBehaviour
         cableLengthUI.transform.position = midpoint;
         cableLengthUI.transform.rotation = cam.transform.rotation;
         //cableLengthUI.transform.localScale = FindAnyObjectByType<orbitCam>().scrollVect*50;
+        updateRender();
+        
+
     }
     public void Measure()
     {
@@ -67,6 +72,12 @@ public class cableRender : MonoBehaviour
             cableLengthUI.SetActive(true);
             cableLengthUI.GetComponentInChildren<TextMeshPro>().text = convertedDistance.ToString("0.00") + units[measureUnit];
         }
+    }
+
+    public void updateRender()
+    {
+        posA.transform.parent.transform.position = cableHops.portA.transform.position;
+        posB.transform.parent.transform.position = cableHops.portB.transform.position;
     }
     
 }

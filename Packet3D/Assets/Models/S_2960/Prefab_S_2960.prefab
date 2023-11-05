@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 27829947343637286}
   - component: {fileID: 3007308840969458347}
   - component: {fileID: 2947595793954803372}
+  - component: {fileID: 1206497814046005920}
   m_Layer: 0
   m_Name: Prefab_S_2960
   m_TagString: Selectable
@@ -68,8 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4727ac75f77fd4b9c8611b9e7df485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 
-  name: 
+  type: switch
+  Name: Cisco 2960
+  icon: {fileID: 21300000, guid: 8688682be92faad489fcd1f0cb0124f5, type: 3}
+  portList: []
 --- !u!114 &2947595793954803372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +88,19 @@ MonoBehaviour:
   subtitle: 
   header: 
   content: 
+--- !u!114 &1206497814046005920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4604975743586620506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6c41b094d81ba458e3ac5eaa5ef1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hostname: Switch
 --- !u!1001 &7693521001055395344
 PrefabInstance:
   m_ObjectHideFlags: 0

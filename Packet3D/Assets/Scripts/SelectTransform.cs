@@ -140,6 +140,7 @@ public class SelectTransform : MonoBehaviour
 
 
                     selection = raycastHit.transform;
+                    PropertiesTab.updatePropertiesTab(selection);
 
                     /*if (selection.GetComponentInChildren<MeshRenderer>().material != selectionMaterial)
                     {
@@ -177,23 +178,24 @@ public class SelectTransform : MonoBehaviour
                 }
                 else
                 {
-                    if (selection)
+                    if (selection) //CLICK ON OBJ BUT SHOULD BE NULL
                     {
                         //selection.GetComponentInChildren<MeshRenderer>().material = originalMaterialSelection;
                         selection.GetComponentInChildren<Renderer>().material.DisableKeyword("_EMISSION");
                         selection = null;
-
+                        PropertiesTab.updatePropertiesTab(null);
                         runtimeTransformGameObj.SetActive(false);
                     }
                 }
             }
             else
             {
-                if (selection)
+                if (selection) //CLICK ON VOID
                 {
                     //selection.GetComponentInChildren<MeshRenderer>().material = originalMaterialSelection;
                     selection.GetComponentInChildren<Renderer>().material.DisableKeyword("_EMISSION");
                     selection = null;
+                    PropertiesTab.updatePropertiesTab(null);
 
                     runtimeTransformGameObj.SetActive(false);
                 }
@@ -266,6 +268,7 @@ public class SelectTransform : MonoBehaviour
                 deleteMode = false;
                 break;
             case 2:
+                //DELETE MODE
                 runtimeTransformGameObj.SetActive(false);
                 MoveButton.GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;
                 RotateButton.GetComponent<Image>().color = UIColorManagerScript.ButtonIdleColor;

@@ -18,10 +18,17 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         TooltipSystem.Hide();
     }
 
-    public void OnMouseEnter()
+    public void OnMouseOver()
     {
-        TooltipSystem.Show(header, content, subtitle);
 
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            TooltipSystem.Show(header, content, subtitle);
+        }
+        else
+        {
+            TooltipSystem.Hide();
+        }
     }
 
     public void OnMouseExit()

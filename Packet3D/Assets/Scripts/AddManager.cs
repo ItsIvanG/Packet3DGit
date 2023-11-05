@@ -103,7 +103,7 @@ public class AddManager : MonoBehaviour
                     cablePosA = spawn.transform.Find("portA");
                     
 
-                    if (Physics.Raycast(ray, out hit, 100))
+                    if (Physics.Raycast(ray, out hit, 100) && hit.transform.GetComponent<PortProperties>())
                     {
                         if (cablePosA != null)
                         {
