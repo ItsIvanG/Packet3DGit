@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class TerminalConsole 
 {
-    private readonly IEnumerable<IConsoleCommand> commands;
-    public TerminalConsole(IEnumerable<IConsoleCommand> commands)
+    private readonly IEnumerable<ConsoleCommand> commands;
+    private bool found=false;
+    public TerminalConsole(IEnumerable<ConsoleCommand> commands)
     {
         this.commands = commands;
     }
 
-    public void ProcessCommand(string inputValue)
+    public void ProcessCommand(string inputValue, bool flagIfInvalid)
     {
         Debug.Log("PROCESSING COMMAND: "+inputValue);
         string[] inputSplit = inputValue.Split(' ');
@@ -20,22 +21,45 @@ public class TerminalConsole
 
         string[] args = inputSplit.Skip(1).ToArray();
 
-        ProcessCommand(commandInput, args);
+        ProcessCommand(commandInput, args, flagIfInvalid);
     }
 
-    public void ProcessCommand(string commandInput, string[] args)
+    public void ProcessCommand(string commandInput, string[] args, bool flagIfInvalid)
     {
         foreach(var command in commands)
         {
-            if(!commandInput.Equals(command.CommandWord, StringComparison.OrdinalIgnoreCase))
+            if (TerminalConsoleBehavior.instance.currentPrivilege == command.CommandPrivilege || 
+                command.CommandPrivilege == TerminalPrivileges.privileges.all)
             {
+                
+                if (!commandInput.Equals(command.CommandWord, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                if (command.Process(args))
+                {
+                    found = true;
+                    Debug.Log("executing " + command.CommandWord);
+                    return;
+                }
+                else
+                {
+                    found = true;
+                    TerminalConsoleBehavior.printToTerminal("Invalid arguments to command: " + commandInput);
+                    return;
+                }
+                
+            }
+            else
+            {
+                found = false;
                 continue;
             }
-
-            if (command.Process(args))
-            {
-                return;
-            }
+            
+        }
+        if (!found && flagIfInvalid)
+        {
+            TerminalConsoleBehavior.printToTerminal("Invalid command: " + commandInput);
         }
     }
 

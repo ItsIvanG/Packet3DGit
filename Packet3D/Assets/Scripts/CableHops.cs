@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class CableHops : MonoBehaviour
 {
-    public portTypes portAType;
+    public PortTypes.Type portAType;
     public GameObject portA;
-    public portTypes portBType;
+    public PortTypes.Type portBType;
     public GameObject portB;
-    public enum portTypes {RJ45,USB };
     
     
 

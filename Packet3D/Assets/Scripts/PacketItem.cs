@@ -22,7 +22,7 @@ public class PacketItem : ScriptableObject
             if (details != null)
             {
                 details.Name = Name;
-                details.type = type.ToString();
+                details.type = type;
             }
             
             TooltipTrigger trigger = GameObject.GetComponent<TooltipTrigger>();

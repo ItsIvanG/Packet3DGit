@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PortProperties : MonoBehaviour
 {
-    public enum Type { RJ45, USB};
     public string PortName;
     public PortProperties portHop;
     public GameObject portHopParent;
-    public Type PortType;
+    public PortTypes.Type PortType;
     public string network;
     public string address;
     public string subnet;

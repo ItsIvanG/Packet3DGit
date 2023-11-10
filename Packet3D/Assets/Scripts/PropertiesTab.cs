@@ -40,12 +40,12 @@ public class PropertiesTab : MonoBehaviour
         {
             instance.gameObject.SetActive(false);
         }
-        else if ((t.GetComponent<PacketItemPrefabDetails>().type.ToLower() == "router" || t.GetComponent<PacketItemPrefabDetails>().type.ToLower() == "enddevice" || t.GetComponent<PacketItemPrefabDetails>().type.ToLower() == "switch"))
+        else if (t.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Router || t.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.EndDevice || t.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Switch)
         {
             instance.gameObject.SetActive(true);
 
             instance.thumbnailSprite.sprite = instance.currentObj.GetComponent<PacketItemPrefabDetails>().icon;
-            instance.typeString.text = instance.currentObj.GetComponent<PacketItemPrefabDetails>().type;
+            instance.typeString.text = instance.currentObj.GetComponent<PacketItemPrefabDetails>().type.ToString();
             instance.nameString.text = instance.currentObj.GetComponent<PacketItemPrefabDetails>().name;
 
 
@@ -82,14 +82,14 @@ public class PropertiesTab : MonoBehaviour
 
     public void configureButton()
     {
-        if(instance.currentObj.GetComponent<PacketItemPrefabDetails>().type.ToLower() == "enddevice")
+        if(instance.currentObj.GetComponent<PacketItemPrefabDetails>().type== PacketItem.Type.EndDevice)
         {
             
 
             Debug.Log("opening pc desktop.."+instance.currentObj.gameObject);
             DesktopCanvasScript.showDesktopCanvas(instance.currentObj.gameObject);
             Debug.Log(" pc desktop open success");
-        } else if (instance.currentObj.GetComponent<PacketItemPrefabDetails>().type.ToLower() == "router"|| instance.currentObj.GetComponent<PacketItemPrefabDetails>().type.ToLower() == "switch")
+        } else if (instance.currentObj.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Router || instance.currentObj.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Switch)
         {
             TerminalCanvasScript.ShowTerminal(instance.currentObj.gameObject);
         }

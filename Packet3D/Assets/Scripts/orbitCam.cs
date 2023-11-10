@@ -39,12 +39,12 @@ public class orbitCam : MonoBehaviour
         // Y
         if (Input.GetKey("q"))
         {
-            Debug.Log("DOWN");
+            //Debug.Log("DOWN");
             desiredY -= movementSpeed * 0.5f * transform.localScale.y ;
         } 
         else if (Input.GetKey("e"))
         {
-            Debug.Log("UP");
+            //Debug.Log("UP");
             desiredY += movementSpeed * 0.5f * transform.localScale.y;
         }
         desiredPosition = new Vector3(desiredPosition.x, desiredY, desiredPosition.z);

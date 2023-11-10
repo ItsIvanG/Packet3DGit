@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ConsoleCommand : ScriptableObject, IConsoleCommand
+public abstract class ConsoleCommand : ScriptableObject
 {
-    [SerializeField] private string commandWord = string.Empty;
 
-    public string CommandWord => commandWord;
+    public string CommandWord;
+    public List<string> CommandArgs;
+    public TerminalPrivileges.privileges CommandPrivilege;
 
     public abstract bool Process(string[] args);
 

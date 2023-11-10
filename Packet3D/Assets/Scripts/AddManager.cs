@@ -84,7 +84,7 @@ public class AddManager : MonoBehaviour
         //LEFT CLICK SPAWN
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log("LMB PRESSED");
+            //Debug.Log("LMB PRESSED");
             if (ghost != null && addCableState==0)
             {
                 spawn = Instantiate(item.GameObject, transform);

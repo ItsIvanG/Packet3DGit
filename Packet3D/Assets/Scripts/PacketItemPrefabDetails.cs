@@ -6,7 +6,7 @@ using UnityEngine;
 public class PacketItemPrefabDetails : MonoBehaviour
 {
     
-    public string type;
+    public PacketItem.Type type;
     public string Name;
     public Sprite icon;
     TooltipTrigger tooltipTrigger;

@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4727ac75f77fd4b9c8611b9e7df485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: EndDevice
+  type: 2
   Name: Personal Computer
   icon: {fileID: 21300000, guid: 6098b2f917c3a4d4a8e9422ea7918091, type: 3}
   portList: []

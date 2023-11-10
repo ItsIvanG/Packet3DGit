@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a24ee0bd076d1a8488ebc66188b00b57, type: 3}
-  m_Name: Terminal_LogCommand
+  m_Script: {fileID: 11500000, guid: b4eda8a8d40c4e74c9f0ba258f032d07, type: 3}
+  m_Name: SO_Config
   m_EditorClassIdentifier: 
-  commandWord: log
+  CommandWord: configuration
+  CommandArgs:
+  - terminal
+  CommandPrivilege: 2
