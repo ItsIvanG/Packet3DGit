@@ -14,14 +14,8 @@ public class HostnameCommand : ConsoleCommand
 
             Debug.Log("Setting hostname to: " + args[0]);
 
-            if (TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterProperties>())
-            {
-                TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterProperties>().hostname = args[0];
-            }
-            else if (TerminalConsoleBehavior.instance.currentObj.GetComponent<SwitchProperties>())
-            {
-                TerminalConsoleBehavior.instance.currentObj.GetComponent<SwitchProperties>().hostname = args[0];
-            }
+            TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().hostname = args[0];
+            
             PropertiesTab.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
 
             return true;

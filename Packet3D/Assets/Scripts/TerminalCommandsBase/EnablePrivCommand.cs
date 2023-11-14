@@ -8,8 +8,6 @@ public class EnablePrivCommand : ConsoleCommand
     public override bool Process(string[] args)
     {
 
-        if (TerminalConsoleBehavior.instance.currentPrivilege == TerminalPrivileges.privileges.user)
-        {
             if (TerminalConsoleBehavior.instance.enablePassword == "")
             {
                 TerminalConsoleBehavior.instance.currentPrivilege = TerminalPrivileges.privileges.privileged;
@@ -21,13 +19,8 @@ public class EnablePrivCommand : ConsoleCommand
                 TerminalConsoleBehavior.instance.currentPrivilege = TerminalPrivileges.privileges.loggedOut;
 
             }
-            return true;
 
-        }
-        else
-        {
-            return false;
-        }
+            return true;
           
     }
 }

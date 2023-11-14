@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8187382346081070154}
   - component: {fileID: 6820835567992629836}
-  - component: {fileID: -7036540364907268938}
+  - component: {fileID: 3869382976452921189}
   - component: {fileID: 1914205666126361824}
   - component: {fileID: 6821166065242078176}
   m_Layer: 0
-  m_Name: Prefab_RJ45PORT
+  m_Name: Prefab_CiscoRJ45PORT
   m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016995043, y: 0.01315655, z: 0.0048393924}
   m_Center: {x: 0, y: -0.00024066842, z: 0.0010713614}
---- !u!114 &-7036540364907268938
+--- !u!114 &3869382976452921189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,11 +66,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1055998869929621282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ff11558415abc1469347c77cd0ae97d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43cf6276c87086140bb93172f3b8d5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PortName: 
+  portHop: {fileID: 0}
+  portHopParent: {fileID: 0}
   PortType: 0
+  PortFunction: 0
+  pluggedCable: {fileID: 0}
+  address: 
+  subnet: 
+  network: 
+  noShut: 0
 --- !u!114 &1914205666126361824
 MonoBehaviour:
   m_ObjectHideFlags: 0

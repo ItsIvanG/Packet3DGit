@@ -98,32 +98,41 @@ public class SelectTransform : MonoBehaviour
         // Selection
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+            
+            //DOUBLE CLICK TO FOCUS
             if (timeSinceClick == 0)
             {
                 timeSinceClick = 1;
             }
 
-            if (timeSinceClick > 5 && selection!=null)
-            {
-                //FOCUS ON OBJ SELECTION
-                orbit.desiredPosition = selection.transform.position;
-                orbit.desiredY = selection.transform.position.y;
-                Debug.Log("FOCUS ON " + selection.name);
-                timeSinceClick = 0;
-            }
-            if (timeSinceClick > 5 && highlight != null)
-            {
-                //FOCUS ON OBJ HIGHLIGHT
-                orbit.desiredPosition = highlight.transform.position;
-                orbit.desiredY = highlight.transform.position.y;
-                Debug.Log("FOCUS ON " + highlight.name);
-                timeSinceClick = 0;
-            }
+           
+            
 
             ApplyLayerToChildren(runtimeTransformGameObj);
             if (Physics.Raycast(ray, out raycastHit))
             {
-                
+                //PICK OBJ FOR SIMULATION
+
+                if (SimulationBehavior.instance.isPicking)
+                {
+                    if (raycastHit.transform.GetComponent<PacketItemPrefabDetails>())
+                    {
+                        SimulationBehavior.instance.pickedObj(raycastHit.transform.gameObject);
+                    }
+                    else
+                    {
+                        SimulationBehavior.instance.CancelPick();
+                    }
+                }
+
+                if (timeSinceClick > 5)
+                {
+                    //FOCUS ON OBJ SELECTION
+                    orbit.desiredPosition = raycastHit.transform.position;
+                    orbit.desiredY = raycastHit.transform.position.y;
+                    Debug.Log("FOCUS ON " + raycastHit.transform.name);
+                    timeSinceClick = 0;
+                }
 
                 if (Physics.Raycast(ray, out raycastHitHandle, Mathf.Infinity, runtimeTransformLayerMask)) //Raycast towards runtime transform handle only
                 {
@@ -288,6 +297,7 @@ public class SelectTransform : MonoBehaviour
     public void continueDelete()
     {
         Destroy(selection.gameObject);
+        SimulationBehavior.refreshDelay();
     }
 
 

@@ -10,20 +10,16 @@ public class PacketItemPrefabDetails : MonoBehaviour
     public string Name;
     public Sprite icon;
     TooltipTrigger tooltipTrigger;
-    public List<PortProperties> portList = new List<PortProperties>();
+
     private void Start()
     {
         tooltipTrigger = GetComponent<TooltipTrigger>();
         tooltipTrigger.header = name;
-        var ports = GetComponentsInChildren<PortProperties>();
-        foreach(var p in ports)
-        {
-            portList.Add(p);
-        }
-        UpdateContent();
+        
+        
         
     }
-    public void UpdateContent()
+    /*public void UpdateContent()
     {
         if(tooltipTrigger != null)
         {
@@ -41,5 +37,5 @@ public class PacketItemPrefabDetails : MonoBehaviour
             }
         }
         
-    }
+    }*/
 }

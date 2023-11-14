@@ -30,23 +30,23 @@ public class TerminalCanvasScript : MonoBehaviour
         instance.gameObject.SetActive(true);
         instance.currentDevice = device;
         instance.deviceLabel.text = device.name;
+        
+        
+        TerminalConsoleBehavior.instance.currentObj = device;
+        TerminalConsoleBehavior.instance.getVarsFromCisco();
         TerminalLogin.checkLogin();
         instance.updateHostnamePrefix();
-        TerminalConsoleBehavior.instance.currentObj = device;
     }
 
     public void updateHostnamePrefix()
     {
         if(TerminalConsoleBehavior.instance.currentPrivilege > TerminalPrivileges.privileges.loggedOut)
         {
-            if (instance.currentDevice.GetComponent<RouterProperties>())
+            if (instance.currentDevice.GetComponent<CiscoDevice>())
             {
-                instance.hostnameLabel.text = instance.currentDevice.GetComponent<RouterProperties>().hostname + TerminalConsoleBehavior.instance.getPrivilegePrefix();
+                instance.hostnameLabel.text = instance.currentDevice.GetComponent<CiscoDevice>().hostname + TerminalConsoleBehavior.instance.getPrivilegePrefix();
             }
-            else if (instance.currentDevice.GetComponent<SwitchProperties>())
-            {
-                instance.hostnameLabel.text = instance.currentDevice.GetComponent<SwitchProperties>().hostname + TerminalConsoleBehavior.instance.getPrivilegePrefix();
-            }
+            
         }
         else
         {

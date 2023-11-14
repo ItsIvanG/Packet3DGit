@@ -97,8 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   Name: Personal Computer
-  icon: {fileID: 21300000, guid: 6098b2f917c3a4d4a8e9422ea7918091, type: 3}
-  portList: []
+  icon: {fileID: 21300000, guid: 7695fb1b4b5fda14191bb1c15ade65e2, type: 3}
 --- !u!114 &3923551763389512007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,11 +301,43 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7036540364907268938, guid: bcbb38af8f2e7f748bba2b63304efbb3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1055998869929621282, guid: bcbb38af8f2e7f748bba2b63304efbb3, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 3633205146299467231}
   m_SourcePrefab: {fileID: 100100000, guid: bcbb38af8f2e7f748bba2b63304efbb3, type: 3}
+--- !u!1 &4177585810947735812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1055998869929621282, guid: bcbb38af8f2e7f748bba2b63304efbb3, type: 3}
+  m_PrefabInstance: {fileID: 3989746483906672166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3633205146299467231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177585810947735812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef02e7412b9a05f40801071ceeb89935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PortName: Ethernet Port
+  portHop: {fileID: 0}
+  portHopParent: {fileID: 0}
+  PortType: 0
+  PortFunction: 0
+  pluggedCable: {fileID: 0}
+  address: 
+  subnet: 
+  defaultgateway: 
+  dnsserver: 
+  isStaticIP: 1
 --- !u!4 &5098357991135615596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8187382346081070154, guid: bcbb38af8f2e7f748bba2b63304efbb3, type: 3}

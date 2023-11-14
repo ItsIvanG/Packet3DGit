@@ -34,32 +34,37 @@ public class PropertiesTab : MonoBehaviour
 
     public static void updatePropertiesTab(Transform t)
     {
+        PacketItemPrefabDetails currentObjPacketDetails = null; 
         instance.currentObj = t;
+        if (t != null)
+        {
+            currentObjPacketDetails = instance.currentObj.GetComponent<PacketItemPrefabDetails>();
+        }
 
-        if (t == null || !t.GetComponent<PacketItemPrefabDetails>() )
+
+        if (t == null || !currentObjPacketDetails)
         {
             instance.gameObject.SetActive(false);
         }
-        else if (t.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Router || t.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.EndDevice || t.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Switch)
+        else if (currentObjPacketDetails.type == PacketItem.Type.Router || 
+            currentObjPacketDetails.type == PacketItem.Type.EndDevice || 
+            currentObjPacketDetails.type == PacketItem.Type.Switch)
         {
             instance.gameObject.SetActive(true);
 
-            instance.thumbnailSprite.sprite = instance.currentObj.GetComponent<PacketItemPrefabDetails>().icon;
-            instance.typeString.text = instance.currentObj.GetComponent<PacketItemPrefabDetails>().type.ToString();
-            instance.nameString.text = instance.currentObj.GetComponent<PacketItemPrefabDetails>().name;
+            instance.thumbnailSprite.sprite = currentObjPacketDetails.icon;
+            instance.typeString.text = currentObjPacketDetails.type.ToString();
+            instance.nameString.text = currentObjPacketDetails.name;
 
 
             instance.contextString.text = "";
 
             ///DISPLAY HOSTNAME
-            if (instance.currentObj.GetComponent<RouterProperties>())
+            if (instance.currentObj.GetComponent<CiscoDevice>())
             {
-                instance.contextString.text += "<style=\"h3\">Hostname:</style>\n" + instance.currentObj.GetComponent<RouterProperties>().hostname + "\n\n";
+                instance.contextString.text += "<style=\"h3\">Hostname:</style>\n" + instance.currentObj.GetComponent<CiscoDevice>().hostname + "\n\n";
             }
-            else if (instance.currentObj.GetComponent<SwitchProperties>())
-            {
-                instance.contextString.text += "<style=\"h3\">Hostname:</style>\n" + instance.currentObj.GetComponent<SwitchProperties>().hostname + "\n\n";
-            }
+           
 
             //DISPLAY PORTS
             var ports = instance.currentObj.GetComponentsInChildren<PortProperties>();
@@ -74,7 +79,25 @@ public class PropertiesTab : MonoBehaviour
                 {
                     instance.contextString.text += p.portHop.PortName + "(" + p.portHopParent.name + ")\n";
                 }
-                instance.contextString.text += p.address + SubnetDictionary.getPrefix(p.subnet)+ "\n\n";
+
+                if (p is Vlan)
+                {
+                    Vlan vlan = (Vlan)p;
+                    var vlanPorts = vlan.vlanPorts;
+                    instance.contextString.text += "Name: " + vlan.vlanName+"\n";
+                    foreach (var port in vlanPorts)
+                    {
+                        instance.contextString.text += port.PortName+"\n";
+                    }
+                    
+                }
+
+                if (p.address != "")
+                {
+                    instance.contextString.text += p.address + SubnetDictionary.getPrefix(p.subnet) + "\n";
+                }
+                instance.contextString.text += "\n";
+
             }
 
         }
@@ -82,14 +105,15 @@ public class PropertiesTab : MonoBehaviour
 
     public void configureButton()
     {
-        if(instance.currentObj.GetComponent<PacketItemPrefabDetails>().type== PacketItem.Type.EndDevice)
+        PacketItemPrefabDetails currentObjPacketDetails = currentObj.GetComponent<PacketItemPrefabDetails>();
+        if(currentObjPacketDetails.type== PacketItem.Type.EndDevice)
         {
             
 
             Debug.Log("opening pc desktop.."+instance.currentObj.gameObject);
             DesktopCanvasScript.showDesktopCanvas(instance.currentObj.gameObject);
             Debug.Log(" pc desktop open success");
-        } else if (instance.currentObj.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Router || instance.currentObj.GetComponent<PacketItemPrefabDetails>().type == PacketItem.Type.Switch)
+        } else if (currentObjPacketDetails.type == PacketItem.Type.Router || currentObjPacketDetails.type == PacketItem.Type.Switch)
         {
             TerminalCanvasScript.ShowTerminal(instance.currentObj.gameObject);
         }

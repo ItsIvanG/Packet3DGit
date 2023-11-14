@@ -9,23 +9,49 @@ public class CableHops : MonoBehaviour
     public GameObject portA;
     public PortTypes.Type portBType;
     public GameObject portB;
-    
-    
-
+    public bool bothHopValid;
+    public Sprite upSprite; 
+    public Sprite downSprite;
+    public SpriteRenderer A_statusSprite; public SpriteRenderer B_statusSprite;
     public void UpdateHops(GameObject pA, GameObject pB)
     {
         portA = pA;
         portB = pB;
 
-        portA.GetComponent<PortProperties>().portHop = portB.GetComponent<PortProperties>();
-        portA.GetComponent<PortProperties>().portHopParent = portB.transform.parent.gameObject;
-        portA.GetComponentInParent<PacketItemPrefabDetails>().UpdateContent();
+        PortProperties portAproperties = portA.GetComponent<PortProperties>();
+        PacketItemPrefabDetails portAPrefabDetails = portA.GetComponentInParent<PacketItemPrefabDetails>();
 
-        portB.GetComponent<PortProperties>().portHop = portA.GetComponent<PortProperties>();
-        portB.GetComponent<PortProperties>().portHopParent = portA.transform.parent.gameObject;
-        portB.GetComponentInParent<PacketItemPrefabDetails>().UpdateContent();
+        portAproperties.portHop = portB.GetComponent<PortProperties>();
+        portAproperties.portHopParent = portB.transform.parent.gameObject;
+        //portAPrefabDetails.UpdateContent();
+        portAproperties.pluggedCable = gameObject;
 
+        PortProperties portBproperties = portB.GetComponent<PortProperties>();
+        PacketItemPrefabDetails portBPrefabDetails = portB.GetComponentInParent<PacketItemPrefabDetails>();
+
+        portBproperties.portHop = portA.GetComponent<PortProperties>();
+        portBproperties.portHopParent = portA.transform.parent.gameObject;
+        //portBPrefabDetails.UpdateContent();
+        portBproperties.pluggedCable = gameObject;
         Debug.Log("Updated hops");
+
+        A_statusSprite.enabled = true;
+        B_statusSprite.enabled = true;
+
+    }
+    private void Update()
+    {
+        //TODO: HOP VALID SHOULD BE SEPARATE!
+        if (bothHopValid)
+        {
+            A_statusSprite.sprite = upSprite;
+            B_statusSprite.sprite = upSprite;
+        }
+        else
+        {
+            A_statusSprite.sprite = downSprite;
+            B_statusSprite.sprite = downSprite;
+        }
     }
 
 }

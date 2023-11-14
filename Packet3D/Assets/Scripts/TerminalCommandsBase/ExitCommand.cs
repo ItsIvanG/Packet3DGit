@@ -20,6 +20,9 @@ public class ExitCommand : ConsoleCommand
                 if ((int)TerminalConsoleBehavior.instance.currentConfigLevel > 0)
                 {
                     TerminalConsoleBehavior.instance.currentConfigLevel = 0;
+                    TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().interfacePort = null;
+                    TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().configVlan = null;
+                    TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().interfaceRange.Clear();
                 }
                 else
                 {

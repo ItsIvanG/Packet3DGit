@@ -10,8 +10,11 @@ public class DesktopCanvasScript : MonoBehaviour
     public GameObject currentPC;
     public TextMeshProUGUI PCLabel;
     public TMP_Dropdown ethernetPortsDropdown;
-    public List<PortProperties> ethernetPorts = new List<PortProperties>();
+    public TMP_Dropdown USBPortsDropdown;
+    public List<PCEthernetProperties> ethernetPorts;
     public List<string> ethernetPortNames = new List<string>();
+    public List<PortProperties> USBPorts = new List<PortProperties>();
+    public List<string> USBPortNames = new List<string>();
     public Toggle DHCPToggle;
     public Toggle StaticToggle;
     public TMP_InputField IPInput;
@@ -31,40 +34,42 @@ public class DesktopCanvasScript : MonoBehaviour
     {
         instance.ethernetPorts.Clear();
         instance.ethernetPortNames.Clear();
+        instance.USBPorts.Clear();
+        instance.USBPortNames.Clear();
         instance.currentPC = pc;
         instance.gameObject.SetActive(true);
         instance.PCLabel.text = pc.name;
         
 
         var ports = pc.GetComponentsInChildren<PortProperties>();
-        foreach(var p in ports)
+        var EthPorts = pc.GetComponentsInChildren<PCEthernetProperties>();
+        foreach (var p in ports)
         {
-            if (p.PortType.ToString().ToLower() == "rj45")
+            if (p.PortType == PortTypes.Type.USB)
             {
-                instance.ethernetPorts.Add(p);
-                instance.ethernetPortNames.Add(p.PortName);
+                instance.USBPorts.Add(p);
+                instance.USBPortNames.Add(p.PortName);
             }
+        }
+        foreach(var p in EthPorts)
+        {
+           
+            instance.ethernetPorts.Add(p);
+            instance.ethernetPortNames.Add(p.PortName);
             
         }
         instance.ethernetPortsDropdown.ClearOptions();
         instance.ethernetPortsDropdown.AddOptions(instance.ethernetPortNames);
-
+        instance.USBPortsDropdown.ClearOptions();
+        instance.USBPortsDropdown.AddOptions(instance.USBPortNames);
         instance.getIPdetails();
+        instance.setDHCPStaticToggles();
     }
     public void getIPdetails()
     {
-        PortProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+        PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
         Debug.Log("Getting port properties: " + pp);
-        if (pp.isStaticIP)
-        {
-            StaticToggle.isOn = true;
-            DHCPToggle.isOn = false;
-        }
-        else
-        {
-            StaticToggle.isOn = false;
-            DHCPToggle.isOn = true;
-        }
+       
         IPInput.text = pp.address;
         SubnetInput.text = pp.subnet;
         GatewayInput.text = pp.defaultgateway;
@@ -74,13 +79,12 @@ public class DesktopCanvasScript : MonoBehaviour
 
     public void setIPdetails()
     {
-        PortProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+        PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
         Debug.Log("SETTING port properties: " + pp);
 
         if (SubnetDictionary.getPrefix(SubnetInput.text) == "/?")
         {
-            errorString.gameObject.SetActive(true);
-            errorString.text = "ERROR: Subnet invalid or unsupported.";
+            PopupMessage.showMessage("Error", "Subnet invalid or unsupported.", PopupMessage.MsgType.Error);
         }
         else
         {
@@ -92,5 +96,61 @@ public class DesktopCanvasScript : MonoBehaviour
             IPPanel.gameObject.SetActive(false);
         }
 
+    }
+    public void setPCtoDHCP()
+    {
+        PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+        CiscoEthernetPort ciscoPortHop = null;
+        var getAllCiscoPorts = pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>();
+
+        foreach (CiscoEthernetPort port in getAllCiscoPorts)
+        {
+            if (port.name == pp.portHop.name)
+            {
+                ciscoPortHop = port;
+            }
+        }
+
+        pp.isStaticIP = false;
+        Debug.Log("attempting dhcp address excludeEnd " + ciscoPortHop.excludeEnd);
+        var excludeEndSplit = ciscoPortHop.excludeEnd.Split(".");
+        pp.address = excludeEndSplit[0] + "." + excludeEndSplit[1] + "." + excludeEndSplit[2] + "." + (int.Parse(excludeEndSplit[3])+1);
+        pp.subnet = ciscoPortHop.networkSubnet;
+        pp.dnsserver = ciscoPortHop.dnsserver;
+        pp.defaultgateway = ciscoPortHop.defaultRouter;
+
+        getIPdetails();
+    }
+    public void setPCstaticIP()
+    {
+        PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+        pp.isStaticIP = true;
+        //getIPdetails();
+    }
+    public void showPCTerminal()
+    {
+        if (USBPorts[USBPortsDropdown.value].portHopParent && USBPorts[USBPortsDropdown.value].portHop.PortFunction==PortTypes.Function.Console)
+        {
+            TerminalCanvasScript.ShowTerminal(USBPorts[USBPortsDropdown.value].portHopParent);
+        }
+        else
+        {
+            Debug.Log("NO Console Device plugged in USB port!");
+            PopupMessage.showMessage("Error", "NO Console Device plugged in USB port!", PopupMessage.MsgType.Error);
+        }
+    }
+    public void setDHCPStaticToggles()
+    {
+        PCEthernetProperties pp = instance.ethernetPorts[instance.ethernetPortsDropdown.value];
+        if (pp.isStaticIP)
+        {
+            instance.StaticToggle.isOn = true;
+            instance.DHCPToggle.isOn = false;
+        }
+        else
+        {
+            instance.StaticToggle.isOn = false;
+            instance.DHCPToggle.isOn = true;
+        }
     }
 }

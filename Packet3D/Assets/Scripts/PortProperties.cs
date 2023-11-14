@@ -8,12 +8,12 @@ public class PortProperties : MonoBehaviour
     public PortProperties portHop;
     public GameObject portHopParent;
     public PortTypes.Type PortType;
-    public string network;
+    public PortTypes.Function PortFunction;
+    public GameObject pluggedCable;
+    
     public string address;
     public string subnet;
-    public string defaultgateway;
-    public string dnsserver;
-    public bool isStaticIP = true;
+    
 
     private TooltipTrigger tooltipTrigger;
     // Start is called before the first frame update

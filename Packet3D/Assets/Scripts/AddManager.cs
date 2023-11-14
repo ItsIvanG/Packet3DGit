@@ -91,6 +91,8 @@ public class AddManager : MonoBehaviour
                 spawn.transform.position = hitPosition;
                 spawn.transform.parent = null;
                 spawn.name = item.Name;
+                
+                SimulationBehavior.refreshDelay();
 
 
                 Destroy(ghost);
@@ -139,6 +141,7 @@ public class AddManager : MonoBehaviour
                     }
                 }
             }
+            
         }
         //Cable pos B ghost
         if (addCableState == 1)

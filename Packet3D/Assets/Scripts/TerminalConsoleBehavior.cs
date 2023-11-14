@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
     //[SerializeField] private ConsoleCommand[] commands = new ConsoleCommand[0];
     [SerializeField] private List<ConsoleCommand> commands = new List<ConsoleCommand>();
     [Header("UI")]
-    [SerializeField] private GameObject uiCanvas = null;
+    //[SerializeField] private GameObject uiCanvas = null;
     [SerializeField] public TMP_InputField inputField = null;
     [SerializeField] private TMP_InputField outputField = null;
     [SerializeField] private TextMeshProUGUI hostnamePrefix = null;
@@ -27,7 +28,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
     public bool authenticatingEnable;
 
     public static TerminalConsoleBehavior instance;
-
+    public List<string> currentClues;
     private TerminalConsole terminalConsole;
 
     private TerminalConsole TerminalConsole
@@ -143,7 +144,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
         {
             DestroyImmediate(cluesPanel.transform.GetChild(0).gameObject);
         }
-
+        currentClues.Clear();
         bool noClues = true;
 
         string[] typedCommandSplit = typedCommand.Split(" ");
@@ -157,7 +158,10 @@ public class TerminalConsoleBehavior : MonoBehaviour
             {
                 if (typedCommandSplit.Length==1 && cc.CommandWord.Contains(typedCommandSplitLast) &&
                     typedCommandSplitLast != cc.CommandWord &&
-                    (TerminalConsoleBehavior.instance.currentPrivilege == cc.CommandPrivilege || cc.CommandPrivilege == TerminalPrivileges.privileges.all))
+                    ((instance.currentPrivilege == cc.CommandPrivilege && cc.specificConfig == TerminalPrivileges.specificConfig.global) ||
+                cc.CommandPrivilege == TerminalPrivileges.privileges.all ||
+                (instance.currentPrivilege == cc.CommandPrivilege && cc.specificConfig == instance.currentConfigLevel)))
+
                 {
                     cluesPanel.SetActive(true);
                     //Debug.Log("found " + cc.CommandWord);
@@ -165,7 +169,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
                     prefab.GetComponent<cluesString>().setText(cc.CommandWord, typedCommandSplitLast, this);
                     noClues = false;
                 }
-                if (typedCommandSplit.Length > 1 && cc.CommandWord.Contains(typedCommandSplit[0]))
+                if (typedCommandSplit.Length > 1 && cc.CommandWord==typedCommandSplit[0])
                 {
                     var SOargs = cc.CommandArgs;
                     foreach (string a in SOargs)
@@ -176,27 +180,31 @@ public class TerminalConsoleBehavior : MonoBehaviour
                             //Debug.Log("typedCommandSplitLast: " + typedCommandSplitLast);
                             if(typedCommandSplit.Length >2)
                             {
-                                if (argsSplit[typedCommandSplit.Length - 2].Contains(typedCommandSplitLast) && 
-                                    string.Join(" ", argsSplit).Contains(typedCommandSplit[typedCommandSplit.Length - 2]) && 
-                                    typedCommandSplitLast != argsSplit[typedCommandSplit.Length - 2])
+                                if (argsSplit[typedCommandSplit.Length - 2].Contains(typedCommandSplitLast) &&
+                                    string.Join(" ", argsSplit).Contains(typedCommandSplit[typedCommandSplit.Length - 2]) &&
+                                    typedCommandSplitLast != argsSplit[typedCommandSplit.Length - 2] &&
+                                    !currentClues.Contains(argsSplit[typedCommandSplit.Length - 2]))
                                 {
                                     cluesPanel.SetActive(true);
                                     GameObject prefab = Instantiate(cluePrefab, cluesPanel.transform);
                                     prefab.GetComponent<cluesString>().setText(argsSplit[typedCommandSplit.Length - 2], typedCommandSplitLast, this);
                                     prefab.GetComponent<cluesString>().args = a;
                                     prefab.GetComponent<cluesString>().argsBaseCommand = cc.CommandWord;
+                                    currentClues.Add(argsSplit[typedCommandSplit.Length - 2]);
                                     noClues = false;
                                 }
                             }
                             else
                             {
-                                if (argsSplit[0].Contains(typedCommandSplitLast) && typedCommandSplitLast != argsSplit[0])
+                                if (argsSplit[0].Contains(typedCommandSplitLast) && typedCommandSplitLast != argsSplit[0] &&
+                                    !currentClues.Contains(argsSplit[0]))
                                 {
                                     cluesPanel.SetActive(true);
                                     GameObject prefab = Instantiate(cluePrefab, cluesPanel.transform);
                                     prefab.GetComponent<cluesString>().setText(argsSplit[0], typedCommandSplitLast, this);
                                     prefab.GetComponent<cluesString>().args = argsSplit[0];
                                     prefab.GetComponent<cluesString>().argsBaseCommand = cc.CommandWord;
+                                    currentClues.Add(argsSplit[0]);
                                     noClues = false;
                                 }
                             }
@@ -253,5 +261,33 @@ public class TerminalConsoleBehavior : MonoBehaviour
     public static void printToTerminal(string stringToPrint)
     {
         instance.outputField.text += stringToPrint+"\n";
+    }
+
+    public void saveVarsToCisco()
+    {
+        CiscoDevice ciscoDevice = currentObj.GetComponent<CiscoDevice>();
+        ciscoDevice.currentPrivilege = currentPrivilege;
+        ciscoDevice.currentConfigLevel = currentConfigLevel;
+        ciscoDevice.localUsername=localUsername;
+        ciscoDevice.localPassword= localPassword;
+        ciscoDevice.enablePassword=enablePassword;
+        ciscoDevice.MOTD = MOTD;
+        ciscoDevice.enteringLocalWhat = enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
+        ciscoDevice.authenticatingEnable = authenticatingEnable;
+        ciscoDevice.terminalContent = outputField.text;
+    }
+    public void getVarsFromCisco()
+    {
+        
+        CiscoDevice ciscoDevice = currentObj.GetComponent<CiscoDevice>();
+        currentPrivilege = ciscoDevice.currentPrivilege;
+        currentConfigLevel = ciscoDevice.currentConfigLevel;
+        localUsername = ciscoDevice.localUsername;
+        localPassword = ciscoDevice.localPassword;
+        enablePassword = ciscoDevice.enablePassword;
+        MOTD = ciscoDevice.MOTD;
+        enteringLocalWhat = ciscoDevice.enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
+        authenticatingEnable = ciscoDevice.authenticatingEnable;
+        outputField.text = ciscoDevice.terminalContent;
     }
 }
