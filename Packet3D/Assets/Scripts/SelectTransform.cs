@@ -173,15 +173,15 @@ public class SelectTransform : MonoBehaviour
                         {
                             runtimeTransformGameObj.SetActive(true);
                         }
-                        else
-                        {
-                            //DELETE MODE
-                            WarnMessage.SetActive(true);
-                            Debug.Log("ABOUT TO DELETE " + selection);
-                            WarnMessage.transform.Find("warnMessageText").GetComponent<TextMeshProUGUI>().SetText("Are you sure you want to delete " + selection.name + "?");
-                        }
+                        
                     }
-
+                    if(deleteMode)
+                    {
+                        //DELETE MODE
+                        WarnMessage.SetActive(true);
+                        Debug.Log("ABOUT TO DELETE " + selection);
+                        WarnMessage.transform.Find("warnMessageText").GetComponent<TextMeshProUGUI>().SetText("Are you sure you want to delete " + selection.name + "?");
+                    }
 
                     highlight = null;
                 }

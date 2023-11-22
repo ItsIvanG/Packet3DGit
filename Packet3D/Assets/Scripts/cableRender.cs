@@ -19,6 +19,8 @@ public class cableRender : MonoBehaviour
     private List<string> units= new List<string>{"","cm","m","\"","ft"};
     float convertedDistance;
     CableHops cableHops;
+    CapsuleCollider CapsuleCol;
+    public bool updateCollider=false;
     //0: disabled
     //1: cm
     //2: m
@@ -29,6 +31,7 @@ public class cableRender : MonoBehaviour
         cam = Camera.main;
         dropdown = GameObject.Find("MeasureDropdown").GetComponent<TMP_Dropdown>();
         cableHops = transform.parent.GetComponent<CableHops>();
+        CapsuleCol = transform.parent.GetComponent<CapsuleCollider>();
     }
     void Update()
     {
@@ -56,7 +59,17 @@ public class cableRender : MonoBehaviour
         BStatus.transform.position = BstatusPoint;
         BStatus.transform.rotation = cam.transform.rotation;
         //cableLengthUI.transform.localScale = FindAnyObjectByType<orbitCam>().scrollVect*50;
-        updateRender();
+
+        if (updateCollider)
+        {
+            CapsuleCol.transform.position = (posA.position + posB.position) * 0.5f;
+            CapsuleCol.transform.LookAt(posB.position);
+            CapsuleCol.height = Vector3.Distance(posA.position, posB.position);
+
+            updateRender();
+        }
+
+
         
 
     }

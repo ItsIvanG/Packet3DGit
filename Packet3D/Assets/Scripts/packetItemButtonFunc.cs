@@ -20,5 +20,6 @@ public class packetItemButtonFunc : MonoBehaviour
     {
         Debug.Log("clicked in packet item: " + packetItem);
         addManager.setPacketItem(packetItem);
+        FindAnyObjectByType<SelectTransform>().setTransformMode(0);
     }
 }

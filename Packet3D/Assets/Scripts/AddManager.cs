@@ -87,9 +87,9 @@ public class AddManager : MonoBehaviour
             //Debug.Log("LMB PRESSED");
             if (ghost != null && addCableState==0)
             {
-                spawn = Instantiate(item.GameObject, transform);
+                spawn = Instantiate(item.GameObject);
                 spawn.transform.position = hitPosition;
-                spawn.transform.parent = null;
+                //spawn.transform.parent = null;
                 spawn.name = item.Name;
                 
                 SimulationBehavior.refreshDelay();
@@ -138,6 +138,7 @@ public class AddManager : MonoBehaviour
                         Debug.Log("cablePosB set");
                         addCableState = 0;
                         spawn.GetComponent<CableHops>().UpdateHops(cablePortGameObjectA, cablePortGameObjectB);
+                        spawn.GetComponentInChildren<cableRender>().updateCollider = true;
                     }
                 }
             }
