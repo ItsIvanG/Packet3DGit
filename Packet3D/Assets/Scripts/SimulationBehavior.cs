@@ -100,6 +100,7 @@ public class SimulationBehavior : MonoBehaviour
     public void playSim()
     {
         Debug.Log("doing recursive test: " + DevicesList[A_Dropdown.value]);
+        hopsFound.Clear();
         hopsFound.Add(DevicesList[A_Dropdown.value]);
         recursiveTest(DevicesList[A_Dropdown.value]);
     }

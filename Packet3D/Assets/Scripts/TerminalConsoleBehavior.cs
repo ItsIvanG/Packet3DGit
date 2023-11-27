@@ -26,7 +26,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
     [SerializeField] public string MOTD;
     public int enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
     public bool authenticatingEnable;
-
+    public bool isCMD;
     public static TerminalConsoleBehavior instance;
     public List<string> currentClues;
     private TerminalConsole terminalConsole;
@@ -159,7 +159,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
                 if (typedCommandSplit.Length==1 && cc.CommandWord.Contains(typedCommandSplitLast) &&
                     typedCommandSplitLast != cc.CommandWord &&
                     ((instance.currentPrivilege == cc.CommandPrivilege && cc.specificConfig == TerminalPrivileges.specificConfig.global) ||
-                cc.CommandPrivilege == TerminalPrivileges.privileges.all ||
+                cc.CommandPrivilege == TerminalPrivileges.privileges.all && currentPrivilege != TerminalPrivileges.privileges.cmd||
                 (instance.currentPrivilege == cc.CommandPrivilege && cc.specificConfig == instance.currentConfigLevel)))
 
                 {
@@ -230,8 +230,11 @@ public class TerminalConsoleBehavior : MonoBehaviour
     {
         outputField.text += hostnamePrefix.text + commandInput + "\n";
         TerminalConsole.ProcessCommand(commandInput, flagIfInvalid);
-        
-        TerminalCanvasScript.instance.updateHostnamePrefix();
+
+        if (!isCMD)
+        {
+            TerminalCanvasScript.instance.updateHostnamePrefix();
+        }
     }
 
     public string getPrivilegePrefix()
@@ -265,16 +268,23 @@ public class TerminalConsoleBehavior : MonoBehaviour
 
     public void saveVarsToCisco()
     {
-        CiscoDevice ciscoDevice = currentObj.GetComponent<CiscoDevice>();
-        ciscoDevice.currentPrivilege = currentPrivilege;
-        ciscoDevice.currentConfigLevel = currentConfigLevel;
-        ciscoDevice.localUsername=localUsername;
-        ciscoDevice.localPassword= localPassword;
-        ciscoDevice.enablePassword=enablePassword;
-        ciscoDevice.MOTD = MOTD;
-        ciscoDevice.enteringLocalWhat = enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
-        ciscoDevice.authenticatingEnable = authenticatingEnable;
-        ciscoDevice.terminalContent = outputField.text;
+        if (!isCMD)
+        {
+            CiscoDevice ciscoDevice = currentObj.GetComponent<CiscoDevice>();
+            ciscoDevice.currentPrivilege = currentPrivilege;
+            ciscoDevice.currentConfigLevel = currentConfigLevel;
+            ciscoDevice.localUsername = localUsername;
+            ciscoDevice.localPassword = localPassword;
+            ciscoDevice.enablePassword = enablePassword;
+            ciscoDevice.MOTD = MOTD;
+            ciscoDevice.enteringLocalWhat = enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
+            ciscoDevice.authenticatingEnable = authenticatingEnable;
+            ciscoDevice.terminalContent = outputField.text;
+        }
+        else
+        {
+            isCMD = false;
+        }
     }
     public void getVarsFromCisco()
     {
@@ -289,5 +299,15 @@ public class TerminalConsoleBehavior : MonoBehaviour
         enteringLocalWhat = ciscoDevice.enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
         authenticatingEnable = ciscoDevice.authenticatingEnable;
         outputField.text = ciscoDevice.terminalContent;
+    }
+
+    public void openCMDPrompt()
+    {
+        Debug.Log("opening cmd");
+
+        TerminalCanvasScript.instance.gameObject.SetActive(true);
+        TerminalCanvasScript.instance.hostnameLabel.text = "C:/";
+        currentPrivilege = TerminalPrivileges.privileges.cmd;
+        isCMD = true;
     }
 }
