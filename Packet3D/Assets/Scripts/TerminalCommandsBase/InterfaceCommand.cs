@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New InterfaceCommand Command", menuName = "Terminal/InterfaceCommand Command")]
@@ -14,25 +15,11 @@ public class InterfaceCommand : ConsoleCommand
         CiscoDevice ciscoDevice = TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>();
         if (args.Length <2)
         {
-            string[] rangeSplit = args[0].Split("-");
-            if (rangeSplit.Length == 1)
-            {
-                Debug.Log("accessing interface non-range");
-                range = false;
-            }
-            else if (rangeSplit.Length == 2)
-            {
-                //TODO: SUPPORT 2 DIGIT START RANGES!!
-                Debug.Log("accessing interface range " + args[0][3] +"-"+ rangeSplit[1]) ;
-                startRange = (int)char.GetNumericValue(args[0][3]);
-                endRange = int.Parse(rangeSplit[1]);
-                range = true;
-            }
-            else
-            {
-                return false;
-            }
+            Debug.Log("accessing interface non-range");
+            range = false;
 
+
+           
             CiscoEthernetPort interfacePort=null;
             Debug.Log("Finding port: "+args[0] + " from " + TerminalConsoleBehavior.instance.currentObj);
             
@@ -43,47 +30,73 @@ public class InterfaceCommand : ConsoleCommand
             {
 
                 //interface f0/1
-                if (port.name == args[0].ToUpper() && !range)
+                if (port.name == args[0].ToUpper())
                 {
                     interfacePort = port;
                 } 
-                else if (range )
-                {
-
-                    for (int i = startRange; i <= endRange; i++)
-                    {
-                        //TODO: SUPPORT 2 DIGIT START RANGES!!
-                        Debug.Log("(RANGE) attempting to find " + args[0].ToUpper().Substring(0, 3) + i);
-                        if (port.name == args[0].ToUpper().Substring(0,3)+i)
-                        {
-                            ciscoDevice.interfaceRange.Add(port);
-                            TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.InterfaceRange;
-                        }
-                    }
-                }
+                
             }
 
-            if (!range)
+            if (interfacePort != null)
             {
-                if (interfacePort != null)
-                {
-                    Debug.Log("Found port " + args[0]);
-                    ciscoDevice.interfacePort = interfacePort;
-                    TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.Interface;
+                Debug.Log("Found port " + args[0]);
+                ciscoDevice.interfacePort = interfacePort;
+                TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.Interface;
 
-                    return true;
-                }
-                else
-                {
-                    Debug.Log("Did not find port " + args[0]);
-                    TerminalConsoleBehavior.printToTerminal("Could not find port:" + args[0] + ".");
-                    return false;
-                }
+                return true;
             }
             else
             {
+                Debug.Log("Did not find port " + args[0]);
+                TerminalConsoleBehavior.printToTerminal("Could not find port:" + args[0] + ".");
+                return false;
+            }
+           
+        }
+        else if (args[0]=="range" && args.Length< 3)
+        {
+            string[] rangeSplit = args[1].Split("-");
+            if (rangeSplit.Length == 1)
+            {
+                return false;
+            }
+            else if (rangeSplit.Length == 2)
+            {
+                //TODO: SUPPORT 2 DIGIT START RANGES!!
+                Debug.Log("accessing interface range " + args[1][3] + "-" + rangeSplit[1]);
+                startRange = (int)char.GetNumericValue(args[1][3]);
+                endRange = int.Parse(rangeSplit[1]);
+                range = true;
+
+
+
+                var getAllCiscoPorts = TerminalConsoleBehavior.instance.currentObj.GetComponentsInChildren<CiscoEthernetPort>();
+                if (range)
+                {
+                    foreach (CiscoEthernetPort port in getAllCiscoPorts)
+                    {
+
+                        for (int i = startRange; i <= endRange; i++)
+                        {
+                            //TODO: SUPPORT 2 DIGIT START RANGES!!
+                            Debug.Log("(RANGE) attempting to find " + args[1].ToUpper().Substring(0, 3) + i);
+                            if (port.name == args[1].ToUpper().Substring(0, 3) + i)
+                            {
+                                ciscoDevice.interfaceRange.Add(port);
+                                TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.InterfaceRange;
+                            }
+                        }
+                    }
+
+                   
+                }
                 return true;
             }
+            else
+            {
+                return false;
+            }
+
         }
         else if (args[0]=="vlan" && args.Length < 3 && TerminalConsoleBehavior.instance.currentObj.GetComponent<SwitchBehavior>())
         {
