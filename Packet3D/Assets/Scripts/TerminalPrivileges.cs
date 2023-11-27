@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TerminalPrivileges : MonoBehaviour
 {
-    public enum privileges { loggedOut,user,privileged,config,all};
+    public enum privileges { loggedOut,user,privileged,config,all,cmd};
     public static string[] priviledgePrefix = { ":",">","#","#" };
     public enum specificConfig { global,Interface,InterfaceRange,line,dhcppool,vlan };
     
