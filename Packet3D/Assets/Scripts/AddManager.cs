@@ -85,7 +85,7 @@ public class AddManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             //Debug.Log("LMB PRESSED");
-            if (ghost != null && addCableState==0)
+            if (ghost != null && addCableState == 0)
             {
                 spawn = Instantiate(item.GameObject);
                 spawn.transform.position = hitPosition;
@@ -93,7 +93,7 @@ public class AddManager : MonoBehaviour
                 spawn.name = item.Name;
                 
                 SimulationBehavior.refreshDelay();
-
+                enableAllCableCollisions();
 
                 Destroy(ghost);
                 Debug.Log(item + " Item placed");
@@ -103,20 +103,37 @@ public class AddManager : MonoBehaviour
                 if (item.type == PacketItem.Type.Cable && addCableState == 0)
                 {
                     cablePosA = spawn.transform.Find("portA");
+                    disableAllCableCollisions();
                     
 
-                    if (Physics.Raycast(ray, out hit, 100) && hit.transform.GetComponent<PortProperties>())
+                    if (Physics.Raycast(ray, out hit, 100) 
+                        && hit.transform.GetComponent<PortProperties>())
                     {
-                        if (cablePosA != null)
+                        if (hit.transform.GetComponent<PortProperties>().PortType == spawn.GetComponent<CableHops>().portAType)
                         {
-                            spawn.transform.position = hit.transform.position;
-                            cablePosA.transform.rotation = hit.transform.rotation;
-                            cablePortGameObjectA = hit.transform.gameObject;
-                            
-                            Debug.Log("cablePosA set");
-                            addCableState = 1;
-                            cablePosB = spawn.transform.Find("portB");
+                            if (cablePosA != null)
+                            {
+
+
+                                spawn.transform.position = hit.transform.position;
+                                cablePosA.transform.rotation = hit.transform.rotation;
+                                cablePortGameObjectA = hit.transform.gameObject;
+
+                                Debug.Log("cablePosA set");
+                                addCableState = 1;
+                                cablePosB = spawn.transform.Find("portB");
+                            }
                         }
+                        else
+                        {
+                            Destroy(spawn);
+                            return;
+                        }  
+                    }
+                    else
+                    {
+                        Destroy(spawn);
+                        return;
                     }
                 }
 
@@ -128,18 +145,31 @@ public class AddManager : MonoBehaviour
             else if (addCableState == 1)
             {
                 
-                if (Physics.Raycast(ray, out hit, 100))
+                if (Physics.Raycast(ray, out hit, 100) && 
+                    hit.transform.GetComponent<PortProperties>())
                 {
-                    if (cablePosB != null)
+                    if (hit.transform.GetComponent<PortProperties>().PortType == spawn.GetComponent<CableHops>().portBType)
                     {
-                        cablePosB.transform.position = hit.transform.position;
-                        cablePosB.transform.rotation = hit.transform.rotation;
-                        cablePortGameObjectB = hit.transform.gameObject;
-                        Debug.Log("cablePosB set");
-                        addCableState = 0;
-                        spawn.GetComponent<CableHops>().UpdateHops(cablePortGameObjectA, cablePortGameObjectB);
-                        spawn.GetComponentInChildren<cableRender>().updateCollider = true;
+                        if (cablePosB != null)
+                        {
+                            cablePosB.transform.position = hit.transform.position;
+                            cablePosB.transform.rotation = hit.transform.rotation;
+                            cablePortGameObjectB = hit.transform.gameObject;
+                            Debug.Log("cablePosB set");
+                            addCableState = 0;
+                            spawn.GetComponent<CableHops>().UpdateHops(cablePortGameObjectA, cablePortGameObjectB);
+                            spawn.GetComponentInChildren<cableRender>().updateCollider = true;
+                            enableAllCableCollisions();
+                        }
                     }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
                 }
             }
             
@@ -163,4 +193,25 @@ public class AddManager : MonoBehaviour
         Destroy(ghost);
         Debug.Log("setPacketItem success");
     }
+
+    public void disableAllCableCollisions()
+    {
+        Debug.Log("disable all cable collisions");
+        var allCables = FindObjectsByType<CableHops>(0);
+        foreach(var cable in allCables)
+        {
+            cable.GetComponent<CapsuleCollider>().enabled = false;
+        }
+    }
+
+    public void enableAllCableCollisions()
+    {
+        Debug.Log("enable all cable collisions");
+        var allCables = FindObjectsByType<CableHops>(0);
+        foreach (var cable in allCables)
+        {
+            cable.GetComponent<CapsuleCollider>().enabled = true;
+        }
+    }
+
 }

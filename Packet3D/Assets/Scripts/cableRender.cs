@@ -53,11 +53,14 @@ public class cableRender : MonoBehaviour
         cableLengthUI.transform.position = midpoint;
         cableLengthUI.transform.rotation = cam.transform.rotation;
 
-        AStatus.transform.position = AstatusPoint;
-        AStatus.transform.rotation = cam.transform.rotation;
+        if(AStatus!=null && BStatus != null)
+        {
+            AStatus.transform.position = AstatusPoint;
+            AStatus.transform.rotation = cam.transform.rotation;
 
-        BStatus.transform.position = BstatusPoint;
-        BStatus.transform.rotation = cam.transform.rotation;
+            BStatus.transform.position = BstatusPoint;
+            BStatus.transform.rotation = cam.transform.rotation;
+        }
         //cableLengthUI.transform.localScale = FindAnyObjectByType<orbitCam>().scrollVect*50;
 
         if (updateCollider)

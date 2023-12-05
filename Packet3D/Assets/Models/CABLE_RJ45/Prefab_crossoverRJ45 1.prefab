@@ -240,6 +240,7 @@ MonoBehaviour:
   AStatus: {fileID: 6594417757303125672}
   BStatus: {fileID: 6435318638455745229}
   measureUnit: 0
+  updateCollider: 0
 --- !u!1 &2016751993563323336
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,11 +422,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5433311756032916493}
-  - component: {fileID: 8211196322609386192}
   - component: {fileID: 3224870055547880929}
   - component: {fileID: 7084480238444315131}
   - component: {fileID: 2728768253221737308}
   - component: {fileID: 632754846849175627}
+  - component: {fileID: 4668731756528748285}
   m_Layer: 0
   m_Name: Prefab_crossoverRJ45 1
   m_TagString: Selectable
@@ -455,28 +456,6 @@ Transform:
   - {fileID: 1424135289599150691}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &8211196322609386192
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2722624590797645819}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &3224870055547880929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +523,29 @@ MonoBehaviour:
   DEBUGAnimatePacket: 0
   simulateCableMat: {fileID: 2100000, guid: 1bc3b7b8dac55194b99e66defeaba5e4, type: 2}
   forwards: 1
+--- !u!136 &4668731756528748285
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722624590797645819}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.005
+  m_Height: 0.37
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2783987066596221512
 GameObject:
   m_ObjectHideFlags: 0

@@ -112,11 +112,51 @@ public class SimulationBehavior : MonoBehaviour
         foreach(var p in ports)
         {
 
+            //List<Node> getChilds = new List<Node>();
+
             if (p.portHopParent != null && !hopsFound.Contains(p.portHopParent))
             {
                 Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
                 hopsFound.Add(p.portHopParent);
+
+                //if (p.portHopParent.GetComponent<Node>())
+                //{
+                //    Debug.Log("getting node of portHopParent " + p.portHopParent);
+                //    Node mNode = p.portHopParent.GetComponent<Node>();
+                //    Debug.Log("Done! " + mNode);
+                //    getChilds.Add(mNode);
+                //    g.GetComponent<Node>().children = getChilds.ToArray();
+                //    Debug.Log("getting node of portHopParent SUCCESS " + p.portHopParent);
+                //}
+                //else
+                //{
+                //    Debug.Log("getting node of portHopParent FAIL " + p.portHopParent);
+
+                //}
+                
+                
                 recursiveTest(p.portHopParent);
+
+
+            }
+            //Debug.Log("setting NODE childrens: " + getChilds);
+           
+        }
+    }
+
+    public void recursiveTest(GameObject g,CMD_Ping ping)
+    {
+        Debug.Log("current recursive: " + g);
+        var ports = g.GetComponentsInChildren<PortProperties>();
+        foreach (var p in ports)
+        {
+
+            if (p.portHopParent != null && !hopsFound.Contains(p.portHopParent))
+            {
+                Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
+                hopsFound.Add(p.portHopParent);
+                ping.hops.Add(p.portHopParent);
+                recursiveTest(p.portHopParent, ping);
 
             }
         }

@@ -100,9 +100,17 @@ public class DesktopCanvasScript : MonoBehaviour
     public void setPCtoDHCP()
     {
         PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
-        CiscoEthernetPort ciscoPortHop = null;
-        var getAllCiscoPorts = pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>();
 
+        
+
+        CiscoEthernetPort ciscoPortHop = null;
+        //if (pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>())
+        //{
+        //    PopupMessage.showMessage("Error", "No valid connection on ethernet port.", PopupMessage.MsgType.Error);
+        //    return;
+        //}
+        var getAllCiscoPorts = pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>();
+        
         foreach (CiscoEthernetPort port in getAllCiscoPorts)
         {
             if (port.name == pp.portHop.name)

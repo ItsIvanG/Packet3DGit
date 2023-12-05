@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2284744082099462528}
   - component: {fileID: 7599095325947683527}
   - component: {fileID: 3923551763389512007}
+  - component: {fileID: 8455466579638297534}
+  - component: {fileID: 7194338729192143331}
   m_Layer: 0
   m_Name: prefab_End_PC1
   m_TagString: Selectable
@@ -113,6 +115,34 @@ MonoBehaviour:
   subtitle: EndDevice
   header: 
   content: 
+--- !u!114 &8455466579638297534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395033692822780505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b118b646f492342aef300f458fa8cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  children: []
+  used: 0
+--- !u!114 &7194338729192143331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395033692822780505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc20bd01ead42734fa2da9d3029aeaec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terminalContent: 
 --- !u!1001 &383842922049764512
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -284,30 +284,41 @@ public class TerminalConsoleBehavior : MonoBehaviour
         else
         {
             isCMD = false;
+            PCBehavior pcBehavior = currentObj.GetComponent<PCBehavior>();
+            pcBehavior.terminalContent = outputField.text;
         }
     }
     public void getVarsFromCisco()
     {
-        
-        CiscoDevice ciscoDevice = currentObj.GetComponent<CiscoDevice>();
-        currentPrivilege = ciscoDevice.currentPrivilege;
-        currentConfigLevel = ciscoDevice.currentConfigLevel;
-        localUsername = ciscoDevice.localUsername;
-        localPassword = ciscoDevice.localPassword;
-        enablePassword = ciscoDevice.enablePassword;
-        MOTD = ciscoDevice.MOTD;
-        enteringLocalWhat = ciscoDevice.enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
-        authenticatingEnable = ciscoDevice.authenticatingEnable;
-        outputField.text = ciscoDevice.terminalContent;
+
+        if (!isCMD){
+            CiscoDevice ciscoDevice = currentObj.GetComponent<CiscoDevice>();
+            currentPrivilege = ciscoDevice.currentPrivilege;
+            currentConfigLevel = ciscoDevice.currentConfigLevel;
+            localUsername = ciscoDevice.localUsername;
+            localPassword = ciscoDevice.localPassword;
+            enablePassword = ciscoDevice.enablePassword;
+            MOTD = ciscoDevice.MOTD;
+            enteringLocalWhat = ciscoDevice.enteringLocalWhat; //0: enter USERNAME, 1: enter PASSWORD, 2:no user and pass, just press RETURN
+            authenticatingEnable = ciscoDevice.authenticatingEnable;
+            outputField.text = ciscoDevice.terminalContent;
+        }
+        else
+        {
+            PCBehavior pcBehavior = currentObj.GetComponent<PCBehavior>();
+            outputField.text = pcBehavior.terminalContent;
+        }
     }
 
     public void openCMDPrompt()
     {
         Debug.Log("opening cmd");
-
+        currentObj = DesktopCanvasScript.instance.currentPC;
         TerminalCanvasScript.instance.gameObject.SetActive(true);
-        TerminalCanvasScript.instance.hostnameLabel.text = "C:/";
+        TerminalCanvasScript.instance.hostnameLabel.text = "C:\\>";
+        TerminalCanvasScript.instance.deviceLabel.text = DesktopCanvasScript.instance.currentPC.name;
         currentPrivilege = TerminalPrivileges.privileges.cmd;
         isCMD = true;
+        getVarsFromCisco();
     }
 }

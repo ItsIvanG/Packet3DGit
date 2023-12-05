@@ -296,8 +296,17 @@ public class SelectTransform : MonoBehaviour
 
     public void continueDelete()
     {
+        if (selection.GetComponent<CableHops>())
+        {
+            var ch = selection.GetComponent<CableHops>();
+            ch.portA.GetComponent<PortProperties>().portHop = null;
+            ch.portA.GetComponent<PortProperties>().portHopParent = null;
+            ch.portB.GetComponent<PortProperties>().portHop = null;
+            ch.portB.GetComponent<PortProperties>().portHopParent = null;
+        }
         Destroy(selection.gameObject);
         SimulationBehavior.refreshDelay();
+
     }
 
 

@@ -35,23 +35,30 @@ public class CableHops : MonoBehaviour
         portBproperties.pluggedCable = gameObject;
         Debug.Log("Updated hops");
 
-        A_statusSprite.enabled = true;
-        B_statusSprite.enabled = true;
+        if(A_statusSprite!=null && B_statusSprite != null)
+        {
+            A_statusSprite.enabled = true;
+            B_statusSprite.enabled = true;
+        }
 
     }
     private void Update()
     {
-        //TODO: HOP VALID SHOULD BE SEPARATE!
-        if (bothHopValid)
+        if (A_statusSprite != null && B_statusSprite != null)
         {
-            A_statusSprite.sprite = upSprite;
-            B_statusSprite.sprite = upSprite;
+            //TODO: HOP VALID SHOULD BE SEPARATE!
+            if (bothHopValid)
+            {
+                A_statusSprite.sprite = upSprite;
+                B_statusSprite.sprite = upSprite;
+            }
+            else
+            {
+                A_statusSprite.sprite = downSprite;
+                B_statusSprite.sprite = downSprite;
+            }
         }
-        else
-        {
-            A_statusSprite.sprite = downSprite;
-            B_statusSprite.sprite = downSprite;
-        }
+           
     }
 
 }
