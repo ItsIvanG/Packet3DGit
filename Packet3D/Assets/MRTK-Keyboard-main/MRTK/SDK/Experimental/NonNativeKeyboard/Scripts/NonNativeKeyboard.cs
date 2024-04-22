@@ -212,7 +212,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         /// <summary>
         /// The position of the caret in the text field.
         /// </summary>
-        private int m_CaretPosition = 0;
+        public int m_CaretPosition = 0;
 
         /// <summary>
         /// The starting scale of the keyboard.
@@ -326,7 +326,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             CheckForCloseOnInactivityTimeExpired();
         }
 
-        private void UpdateCaretPosition(int newPos) => InputField.caretPosition = newPos;
+        public void UpdateCaretPosition(int newPos) => InputField.caretPosition = newPos;
 
         /// <summary>
         /// Called whenever the keyboard is disabled or deactivated.
@@ -806,7 +806,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
                 m_CaretPosition = InputField.caretPosition;
 
-                InputField.text = InputField.text.Insert(m_CaretPosition, enterString);
+                InputField.text = InputField.text.Insert(InputField.text.Length, enterString);
                 m_CaretPosition += enterString.Length;
 
                 UpdateCaretPosition(m_CaretPosition);

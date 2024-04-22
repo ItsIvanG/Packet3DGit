@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Windows;
-
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
 public class cluesString : MonoBehaviour
 {
     public TextMeshProUGUI clueText;
@@ -64,5 +64,6 @@ public class cluesString : MonoBehaviour
 
         terminalConsoleBehavior.inputField.ActivateInputField();
         terminalConsoleBehavior.inputField.caretPosition = terminalConsoleBehavior.inputField.text.Length;
+        NonNativeKeyboard.Instance.UpdateCaretPosition(terminalConsoleBehavior.inputField.text.Length);
     }
 }
