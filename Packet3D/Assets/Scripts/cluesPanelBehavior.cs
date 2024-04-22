@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class cluesPanelBehavior : MonoBehaviour
 {
-    Vector2 pos;
+    Vector3 pos;
     TMP_InputField inputFieldInstance;
     private void Start()
     {
@@ -15,8 +15,9 @@ public class cluesPanelBehavior : MonoBehaviour
     void Update()
     {
         
-        pos.x = inputFieldInstance.transform.position.x+ inputFieldInstance.caretPosition*8;
+        pos.x = inputFieldInstance.transform.position.x+ inputFieldInstance.caretPosition* 0.0040125392f; //8f at 1x
         pos.y = inputFieldInstance.transform.position.y;
+        pos.z = inputFieldInstance.transform.position.z;
         transform.position = pos;
     }
     

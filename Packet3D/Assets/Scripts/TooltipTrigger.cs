@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class TooltipTrigger : MonoBehaviour
 {
     public string subtitle;
     public string header;
     [TextArea]
     public string content;
-    public void OnPointerEnter(PointerEventData eventData)
+    public void onRayEnter()
     {
         TooltipSystem.Show(header, content, subtitle);
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public void onRayLeave()
     {
         TooltipSystem.Hide();
     }

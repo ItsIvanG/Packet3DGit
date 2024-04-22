@@ -313,6 +313,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
     public void openCMDPrompt()
     {
         Debug.Log("opening cmd");
+        TerminalCanvasScript.instance.SetKB();
         currentObj = DesktopCanvasScript.instance.currentPC;
         TerminalCanvasScript.instance.gameObject.SetActive(true);
         TerminalCanvasScript.instance.hostnameLabel.text = "C:\\>";

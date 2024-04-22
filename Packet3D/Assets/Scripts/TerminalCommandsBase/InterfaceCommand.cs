@@ -110,7 +110,7 @@ public class InterfaceCommand : ConsoleCommand
                 vlanComponent.PortName = "VLAN" + args[1];
                 vlanComponent.enabled = true;
                 vlanComponent.vlanNumber = int.Parse(args[1]);
-                PropertiesTab.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
+                PropertiesTab.instance.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
             }
             else
             {

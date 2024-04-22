@@ -84,7 +84,7 @@ public class SwitchportCommand : ConsoleCommand
                 vlanComponent = vlanTransform.GetComponent<Vlan>();
                 vlanComponent.updateVlanPorts();
             }
-            PropertiesTab.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
+            PropertiesTab.instance.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
             return true;
         }
         else

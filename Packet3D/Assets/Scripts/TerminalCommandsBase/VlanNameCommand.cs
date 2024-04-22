@@ -12,7 +12,7 @@ public class VlanName : ConsoleCommand
         {
             CiscoDevice ciscoDevice = TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>();
             ciscoDevice.configVlan.vlanName = args[0];
-            PropertiesTab.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
+            PropertiesTab.instance.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
             return true;
         }
         else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
 
 public class TerminalCanvasScript : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class TerminalCanvasScript : MonoBehaviour
     public GameObject currentDevice;
     public TextMeshProUGUI deviceLabel;
     public TextMeshProUGUI hostnameLabel;
+    public TMP_InputField inputField;
     public bool updateHostnamePrefixNow;
+
     private void Awake()
     {
         instance = this;
@@ -27,15 +30,27 @@ public class TerminalCanvasScript : MonoBehaviour
 
     public static void ShowTerminal(GameObject device)
     {
+        instance.inputField.text = "";
+        instance. SetKB();
         instance.gameObject.SetActive(true);
         instance.currentDevice = device;
         instance.deviceLabel.text = device.name;
+        
         
         
         TerminalConsoleBehavior.instance.currentObj = device;
         TerminalConsoleBehavior.instance.getVarsFromCisco();
         TerminalLogin.checkLogin();
         instance.updateHostnamePrefix();
+    }
+    public void SetKB()
+    {
+        instance.inputField.onSelect.AddListener(x => instance.OpenKeyboard());
+    }
+    public void OpenKeyboard()
+    {
+        NonNativeKeyboard.Instance.InputField = inputField;
+        NonNativeKeyboard.Instance.PresentKeyboard(inputField.text);
     }
 
     public void updateHostnamePrefix()

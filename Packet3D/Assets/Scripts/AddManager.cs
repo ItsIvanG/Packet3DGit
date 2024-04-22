@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class AddManager : MonoBehaviour
 {
@@ -17,11 +20,17 @@ public class AddManager : MonoBehaviour
     Transform cablePosB;
     GameObject cablePortGameObjectA;
     GameObject cablePortGameObjectB;
+    public GameObject ControllerGameObj;
+    public InputActionProperty addGrip;
+    public TextMeshProUGUI DebugText;
+    public static AddManager instance;
+    private bool raycastControl;
     // Start is called before the first frame update
     void Start()
     {
        cam = Camera.main;
        orbit = FindAnyObjectByType<orbitCam>();
+        instance = this;
 
     }
 
@@ -38,11 +47,16 @@ public class AddManager : MonoBehaviour
         RaycastHit hit;
 
 
+            raycastControl = Physics.Raycast(ControllerGameObj.transform.position, ControllerGameObj.transform.forward, out hit, 100);
+
+
+        //DebugText.text = hit.collider.name;
         //check if item to add is not null
         if (item != null)
         {
-            if (Physics.Raycast(ray, out hit, 100))
-            {
+            //if (Physics.Raycast(ray, out hit, 100)) PC RAYCAST
+                if (Physics.Raycast(ControllerGameObj.transform.position, ControllerGameObj.transform.forward, out hit, 100))
+                {
 
                 if (ghost == null)
                 {
@@ -82,7 +96,8 @@ public class AddManager : MonoBehaviour
         }
 
         //LEFT CLICK SPAWN
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        //if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) ---- PC
+        if (addGrip.action.WasPressedThisFrame())
         {
             //Debug.Log("LMB PRESSED");
             if (ghost != null && addCableState == 0)
@@ -106,18 +121,19 @@ public class AddManager : MonoBehaviour
                     disableAllCableCollisions();
                     
 
-                    if (Physics.Raycast(ray, out hit, 100) 
-                        && hit.transform.GetComponent<PortProperties>())
+                   // if (Physics.Raycast(ray, out hit, 100) ---------- PC
+                   if(raycastControl
+                        && hit.collider.GetComponent<PortProperties>())
                     {
-                        if (hit.transform.GetComponent<PortProperties>().PortType == spawn.GetComponent<CableHops>().portAType)
+                        if (hit.collider.GetComponent<PortProperties>().PortType == spawn.GetComponent<CableHops>().portAType)
                         {
                             if (cablePosA != null)
                             {
 
 
-                                spawn.transform.position = hit.transform.position;
-                                cablePosA.transform.rotation = hit.transform.rotation;
-                                cablePortGameObjectA = hit.transform.gameObject;
+                                spawn.transform.position = hit.collider.transform.position;
+                                cablePosA.transform.rotation = hit.collider.transform.rotation;
+                                cablePortGameObjectA = hit.collider.transform.gameObject;
 
                                 Debug.Log("cablePosA set");
                                 addCableState = 1;
@@ -145,16 +161,18 @@ public class AddManager : MonoBehaviour
             else if (addCableState == 1)
             {
                 
-                if (Physics.Raycast(ray, out hit, 100) && 
-                    hit.transform.GetComponent<PortProperties>())
+                //if (Physics.Raycast(ray, out hit, 100) ----------- pc
+                  if (raycastControl
+
+                    && hit.collider.GetComponent<PortProperties>())
                 {
-                    if (hit.transform.GetComponent<PortProperties>().PortType == spawn.GetComponent<CableHops>().portBType)
+                    if (hit.collider.GetComponent<PortProperties>().PortType == spawn.GetComponent<CableHops>().portBType)
                     {
                         if (cablePosB != null)
                         {
-                            cablePosB.transform.position = hit.transform.position;
-                            cablePosB.transform.rotation = hit.transform.rotation;
-                            cablePortGameObjectB = hit.transform.gameObject;
+                            cablePosB.transform.position = hit.collider.transform.position;
+                            cablePosB.transform.rotation = hit.collider.transform.rotation;
+                            cablePortGameObjectB = hit.collider.transform.gameObject;
                             Debug.Log("cablePosB set");
                             addCableState = 0;
                             spawn.GetComponent<CableHops>().UpdateHops(cablePortGameObjectA, cablePortGameObjectB);
@@ -177,7 +195,7 @@ public class AddManager : MonoBehaviour
         //Cable pos B ghost
         if (addCableState == 1)
         { 
-            if (Physics.Raycast(ray, out hit, 100))
+            if (raycastControl)
             {
                 cablePosB.transform.position = hit.point;
                 cablePosB.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);
@@ -192,6 +210,15 @@ public class AddManager : MonoBehaviour
         this.item = item;
         Destroy(ghost);
         Debug.Log("setPacketItem success");
+    }
+    public void setPacketItem(PacketItem item,GameObject control)
+    {
+        addCableState = 0;
+        this.item = item;
+        Destroy(ghost);
+        Debug.Log("setPacketItem success");
+        ControllerGameObj = control;
+        addGrip = ControllerGameObj.GetComponent<ActionBasedController>().activateAction;
     }
 
     public void disableAllCableCollisions()

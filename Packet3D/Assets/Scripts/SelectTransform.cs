@@ -23,6 +23,8 @@ using UnityEngine.EventSystems;
 using RuntimeHandle;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
 
 public class SelectTransform : MonoBehaviour
 {
@@ -49,6 +51,11 @@ public class SelectTransform : MonoBehaviour
     private bool deleteMode;
     public int timeSinceClick;
     private orbitCam orbit;
+    public GameObject leftControl;
+    public GameObject rightControl;
+
+    public InputActionProperty LeftAddGrip;
+    public InputActionProperty RightAddGrip;
 
 
     private void Start()
@@ -63,10 +70,16 @@ public class SelectTransform : MonoBehaviour
         runtimeTransformGameObj.SetActive(false);
         MoveButton.GetComponent<Image>().color = UIColorManagerScript.ButtonActiveColor;
         orbit = FindAnyObjectByType<orbitCam>();
+        LeftAddGrip = leftControl.GetComponent<ActionBasedController>().activateAction;
+        RightAddGrip = rightControl.GetComponent<ActionBasedController>().activateAction;
     }
 
     void Update()
     {
+        RaycastHit hit;
+        //bool LeftRay = Physics.Raycast(leftControl.transform.position, leftControl.transform.forward, out hit, 100);
+        bool RightRay = Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out hit, 100);
+
         // Highlight
         if (highlight != null)
         {
@@ -75,9 +88,9 @@ public class SelectTransform : MonoBehaviour
             highlight = null;
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit)) //Make sure you have EventSystem in the hierarchy before using EventSystem
+        if (!EventSystem.current.IsPointerOverGameObject() && ( RightRay )) //Make sure you have EventSystem in the hierarchy before using EventSystem
         {
-            highlight = raycastHit.transform;
+            highlight = hit.collider.transform;
             if (highlight.CompareTag("Selectable") && highlight != selection)
             {
                 //if (highlight.GetComponentInChildren<MeshRenderer>().material != highlightMaterial)
@@ -96,7 +109,7 @@ public class SelectTransform : MonoBehaviour
         }
 
         // Selection
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if ((LeftAddGrip.action.WasPressedThisFrame() || RightAddGrip.action.WasPressedThisFrame()) && !EventSystem.current.IsPointerOverGameObject())
         {
             
             //DOUBLE CLICK TO FOCUS
@@ -109,15 +122,15 @@ public class SelectTransform : MonoBehaviour
             
 
             ApplyLayerToChildren(runtimeTransformGameObj);
-            if (Physics.Raycast(ray, out raycastHit))
+            if ( RightRay )
             {
                 //PICK OBJ FOR SIMULATION
 
                 if (SimulationBehavior.instance.isPicking)
                 {
-                    if (raycastHit.transform.GetComponent<PacketItemPrefabDetails>())
+                    if (hit.collider.transform.GetComponent<PacketItemPrefabDetails>())
                     {
-                        SimulationBehavior.instance.pickedObj(raycastHit.transform.gameObject);
+                        SimulationBehavior.instance.pickedObj(hit.collider.transform.gameObject);
                     }
                     else
                     {
@@ -125,16 +138,17 @@ public class SelectTransform : MonoBehaviour
                     }
                 }
 
-                if (timeSinceClick > 5)
-                {
-                    //FOCUS ON OBJ SELECTION
-                    orbit.desiredPosition = raycastHit.transform.position;
-                    orbit.desiredY = raycastHit.transform.position.y;
-                    Debug.Log("FOCUS ON " + raycastHit.transform.name);
-                    timeSinceClick = 0;
-                }
+                //if (timeSinceClick > 5 && orbit!=null)
+                //{
+                //    //FOCUS ON OBJ SELECTION
+                //    orbit.desiredPosition = raycastHit.transform.position;
+                //    orbit.desiredY = raycastHit.transform.position.y;
+                //    Debug.Log("FOCUS ON " + raycastHit.transform.name);
+                //    timeSinceClick = 0;
+                //}
 
-                if (Physics.Raycast(ray, out raycastHitHandle, Mathf.Infinity, runtimeTransformLayerMask)) //Raycast towards runtime transform handle only
+                if (Physics.Raycast(leftControl.transform.position, leftControl.transform.forward, out raycastHitHandle, Mathf.Infinity,runtimeTransformLayerMask)||
+                    Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out raycastHitHandle, Mathf.Infinity, runtimeTransformLayerMask)) //Raycast towards runtime transform handle only
                 {
                 }
                 else if (highlight)
@@ -147,9 +161,10 @@ public class SelectTransform : MonoBehaviour
                         selection.GetComponentInChildren<Renderer>().material.DisableKeyword("_EMISSION");
                     }
 
-
-                    selection = raycastHit.transform;
-                    PropertiesTab.updatePropertiesTab(selection);
+                    selection = hit.collider.transform;
+                    Debug.Log("SELECT: " + selection);
+                    Debug.Log("PROPERTIES TAB: " + PropertiesTab.instance);
+                    PropertiesTab.instance.updatePropertiesTab(selection);
 
                     /*if (selection.GetComponentInChildren<MeshRenderer>().material != selectionMaterial)
                     {
@@ -166,15 +181,15 @@ public class SelectTransform : MonoBehaviour
 
                     //CHECK IF IT HAS 'NO TRANSFORM GIZMO' SCRIPT
 
-                    if (!selection.GetComponent<NoTransformGizmo>())
-                    {
-                        runtimeTransformHandle.target = selection;
-                        if (!deleteMode)
-                        {
-                            runtimeTransformGameObj.SetActive(true);
-                        }
+                    //if (!selection.GetComponent<NoTransformGizmo>())
+                    //{
+                    //    runtimeTransformHandle.target = selection;
+                    //    if (!deleteMode)
+                    //    {
+                    //        runtimeTransformGameObj.SetActive(true);
+                    //    }
                         
-                    }
+                    //}
                     if(deleteMode)
                     {
                         //DELETE MODE
@@ -192,7 +207,7 @@ public class SelectTransform : MonoBehaviour
                         //selection.GetComponentInChildren<MeshRenderer>().material = originalMaterialSelection;
                         selection.GetComponentInChildren<Renderer>().material.DisableKeyword("_EMISSION");
                         selection = null;
-                        PropertiesTab.updatePropertiesTab(null);
+                        PropertiesTab.instance.updatePropertiesTab(null);
                         runtimeTransformGameObj.SetActive(false);
                     }
                 }
@@ -204,7 +219,7 @@ public class SelectTransform : MonoBehaviour
                     //selection.GetComponentInChildren<MeshRenderer>().material = originalMaterialSelection;
                     selection.GetComponentInChildren<Renderer>().material.DisableKeyword("_EMISSION");
                     selection = null;
-                    PropertiesTab.updatePropertiesTab(null);
+                    PropertiesTab.instance.updatePropertiesTab(null);
 
                     runtimeTransformGameObj.SetActive(false);
                 }

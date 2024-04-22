@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
 
 public class DesktopCanvasScript : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class DesktopCanvasScript : MonoBehaviour
     public TMP_InputField DNSInput;
     public TextMeshProUGUI errorString;
     public GameObject IPPanel;
+    public GameObject cursor;
+    public GameObject rightControl;
+    public float cursorOffset;
+    public NonNativeKeyboard Keyboard;
 
     private void Awake()
     {
@@ -30,8 +35,25 @@ public class DesktopCanvasScript : MonoBehaviour
         instance.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        RaycastHit hit;
+        Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out hit, 100);
+        cursor.transform.position = hit.point-(transform.parent.forward*cursorOffset);
+    }
+
     public static void showDesktopCanvas(GameObject pc)
     {
+
+        ///put screen & keyboard to monitor
+        Transform screen = pc.transform.Find("Screen");
+        Transform kb = pc.transform.Find("KB");
+        instance.transform.parent.position = screen.position;
+        instance.transform.parent.rotation = screen.rotation;
+        instance.Keyboard.transform.position = kb.position;
+        instance.Keyboard.transform.rotation = kb.rotation;
+        instance.Keyboard.PresentKeyboard();
+
         instance.ethernetPorts.Clear();
         instance.ethernetPortNames.Clear();
         instance.USBPorts.Clear();

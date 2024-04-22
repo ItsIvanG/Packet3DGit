@@ -13,18 +13,16 @@ public class PropertiesTab : MonoBehaviour
     public Image thumbnailSprite;
     public TextMeshProUGUI nameString;
     public TextMeshProUGUI contextString;
-    public void Awake()
+    public PropertiesCanvas propertiesCanvas;
+    public GameObject configButton;
+    public void Start()
     {
         instance = this;
         instance.gameObject.SetActive(false);
     }
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  
 
     // Update is called once per frame
     void Update()
@@ -32,8 +30,9 @@ public class PropertiesTab : MonoBehaviour
         
     }
 
-    public static void updatePropertiesTab(Transform t)
+    public  void updatePropertiesTab(Transform t)
     {
+        instance.propertiesCanvas.openCanvas();
         PacketItemPrefabDetails currentObjPacketDetails = null; 
         instance.currentObj = t;
         if (t != null)
@@ -98,6 +97,15 @@ public class PropertiesTab : MonoBehaviour
                 }
                 instance.contextString.text += "\n";
 
+            }
+
+            if(currentObjPacketDetails.type != PacketItem.Type.EndDevice)
+            {
+                configButton.SetActive(false);
+            }
+            else
+            {
+                configButton.SetActive(true);
             }
 
         }

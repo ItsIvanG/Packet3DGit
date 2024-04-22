@@ -25,7 +25,7 @@ public class VlanCommand : ConsoleCommand
                     vlanComponent.PortName = "VLAN" + args[0];
                     vlanComponent.enabled = true;
                     vlanComponent.vlanNumber = int.Parse(args[0]);
-                    PropertiesTab.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
+                    PropertiesTab.instance.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
                 }
                 else
                 {

@@ -20,7 +20,7 @@ public class IPAddCommand : ConsoleCommand
                     {
                         ciscoDevice.interfacePort.address = args[1];
                         ciscoDevice.interfacePort.subnet = args[2];
-                        PropertiesTab.updatePropertiesTab(PropertiesTab.instance.currentObj);
+                        PropertiesTab.instance.updatePropertiesTab(PropertiesTab.instance.currentObj);
                         return true;
                     }
                     else
