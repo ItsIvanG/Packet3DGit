@@ -11,6 +11,7 @@ public class TooltipTrigger : MonoBehaviour
     public string content;
     public void onRayEnter()
     {
+        //Debug.Log("Showing tooltip " + header);
         TooltipSystem.Show(header, content, subtitle);
     }
     public void onRayLeave()
@@ -35,4 +36,6 @@ public class TooltipTrigger : MonoBehaviour
     {
         TooltipSystem.Hide();
     }
+
+    
 }

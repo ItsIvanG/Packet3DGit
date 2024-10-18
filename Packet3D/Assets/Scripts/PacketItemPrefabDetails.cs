@@ -9,12 +9,12 @@ public class PacketItemPrefabDetails : MonoBehaviour
     public PacketItem.Type type;
     public string Name;
     public Sprite icon;
-    TooltipTrigger tooltipTrigger;
+    //TooltipTrigger tooltipTrigger;
 
     private void Start()
     {
-        tooltipTrigger = GetComponent<TooltipTrigger>();
-        tooltipTrigger.header = name;
+        //tooltipTrigger = GetComponent<TooltipTrigger>();
+        //tooltipTrigger.header = name;
         
         
         

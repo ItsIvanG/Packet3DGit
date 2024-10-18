@@ -3,12 +3,22 @@ guid: 06189e692142ff04c8ca1bbea3ba6ab3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ScifiCeilingLights
+    second: {fileID: 2100000, guid: 05be9b74de7b5064a9473d1e9be4bbff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ShinyWhite
+    second: {fileID: 2100000, guid: dd73aec71081d7547a49a7a06cc8109a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

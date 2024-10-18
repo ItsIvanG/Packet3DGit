@@ -1,0 +1,203 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6257433665044761964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6569807692970665172}
+  - component: {fileID: 3919776639407757464}
+  - component: {fileID: 5800336036064289723}
+  m_Layer: 0
+  m_Name: TutorialManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6569807692970665172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257433665044761964}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 459.89633, y: 219.24704, z: -4.2079997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3919776639407757464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257433665044761964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9971e9ef2f7344ebd537186f3d9549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevLineAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Prev Line
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: fcf1dcc5-827c-44b4-9a73-e6be7b3d44b1
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 6461544676776618721, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  nextLineAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Next Line
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: fcc788e0-72f2-486a-93e4-9e5cd2c98fb1
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -7975812860949601700, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  yButtonAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Y Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 4e52483a-1dce-496e-a9d6-b6e1122bde17
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -5302406620110960859, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  LineRef: {fileID: 0}
+  currentLine: 0
+  currentWait: 0
+  bmo: {fileID: 0}
+  MakulitWait: 1
+  prevButton: {fileID: 0}
+  nextButton: {fileID: 0}
+  winCanvas: {fileID: 0}
+  EmitLight: {fileID: 0}
+  BlueLight: {r: 0, g: 1.157955, b: 3.895759, a: 0}
+  GreenLight: {r: 0.4211771, g: 19.698313, b: 0, a: 0}
+  fadeDuration: 1
+  fadeTimer: 0
+  isFading: 0
+  visualPanels:
+  - {fileID: 0}
+  - {fileID: 0}
+  headerReference: {fileID: 0}
+  tutorialTitle: IP Addressing
+  Lines:
+  - line: "Welcome to the second part of your networking journey! Today we\u2019ll
+      be learning about assigning IP Addresses to computers, and hooking them up
+      to a network switch."
+    wait: []
+  - line: Imagine you want to send a letter to a friend. Every house has a unique
+      address so the mailman knows exactly where to deliver the letter. Without an
+      address, the mailman wouldn't know where to go!
+    wait: []
+  - line: In the same way, every device on the internet has its own special address
+      called an IP address.
+    wait: []
+  - line: Just like your house address is made of a street name and a number, an
+      IP address is a set of numbers (like 192.168.1.1) that helps computers find
+      each other when they need to send information.
+    wait: []
+  - line: "Let\u2019s start by connecting the first computer to the switch."
+    wait:
+    - arrowOn: {fileID: 0}
+      waitType: 3
+      waitObject: {fileID: 0}
+      fieldCheck: 
+      objectCheck: {fileID: 0}
+      PCStateCheck: 0
+      CiscoPrivilegeCheck: 0
+  - line: Now hook the second computer!
+    wait:
+    - arrowOn: {fileID: 0}
+      waitType: 3
+      waitObject: {fileID: 0}
+      fieldCheck: 
+      objectCheck: {fileID: 0}
+      PCStateCheck: 0
+      CiscoPrivilegeCheck: 0
+  - line: "Great! Let\u2019s assign an IP Address to our first PC. Open up IP Config
+      on the desktop, and make sure it\u2019s set to static.\n"
+    wait:
+    - arrowOn: {fileID: 0}
+      waitType: 2
+      waitObject: {fileID: 0}
+      fieldCheck: 
+      objectCheck: {fileID: 0}
+      PCStateCheck: 1
+      CiscoPrivilegeCheck: 0
+  - line: Enter 192.168.1.1 on the IPv4 box, and 255.255.255.0 on the subnet mask.
+    wait:
+    - arrowOn: {fileID: 0}
+      waitType: 1
+      waitObject: {fileID: 0}
+      fieldCheck: 192.168.1.1/24
+      objectCheck: {fileID: 0}
+      PCStateCheck: 1
+      CiscoPrivilegeCheck: 0
+  - line: Nice job! The subnet mask is like a line on a map that tells you how much
+      of the address belongs to the neighborhood and how much belongs to the house
+      number.
+    wait: []
+  - line: 255.255.255.0 is an example of a subnet mask. 255.255.255 means that the
+      first three parts of the address tell you which neighborhood you're in, while
+      0 means the last part is for the specific house.
+    wait: []
+  - line: If you have the IP address 192.168.1.1, and the subnet mask is 255.255.255.0,
+      the first three numbers (192.168.1) tell you the neighborhood, and the last
+      number (1) tells you which house (computer) it is.
+    wait: []
+  - line: Do the same thing on the second computer, but enter 192.168.1.2 on its
+      IPv4 box, and the same subnet mask.
+    wait:
+    - arrowOn: {fileID: 0}
+      waitType: 1
+      waitObject: {fileID: 0}
+      fieldCheck: 192.168.1.2/24
+      objectCheck: {fileID: 0}
+      PCStateCheck: 1
+      CiscoPrivilegeCheck: 0
+  - line: "Good job! Let\u2019s now try to check if these two PCs can see each other."
+    wait: []
+  - line: "Enter CMD Prompt on PC 1 and type in \u2018ping 192.168.1.2\u2019."
+    wait: []
+  - line: 'Great! This means that the PCs can interact with each other.
+
+'
+    wait: []
+  - line: "Congratulations! You have now setup your very first network configuration.
+      We\u2019ll have more lessons to learn on the other side!\n"
+    wait: []
+--- !u!114 &5800336036064289723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257433665044761964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 154cc0a0101808846a789abe1b74d2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runningTime: 0
+  currentMinutes: 0
+  currentSeconds: 0

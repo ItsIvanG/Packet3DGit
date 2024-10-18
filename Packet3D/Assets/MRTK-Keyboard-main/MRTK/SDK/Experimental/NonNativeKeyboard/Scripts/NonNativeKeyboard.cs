@@ -326,7 +326,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             CheckForCloseOnInactivityTimeExpired();
         }
 
-        public void UpdateCaretPosition(int newPos) => InputField.caretPosition = newPos;
+        public void UpdateCaretPosition(int newPos) { 
+            InputField.caretPosition = newPos;
+            Debug.Log("updated caret to " + newPos);
+        }
 
         /// <summary>
         /// Called whenever the keyboard is disabled or deactivated.

@@ -14,9 +14,9 @@ TagManager:
   - Water
   - UI
   - Cable
-  - 
-  - 
-  - 
+  - WirePhysics
+  - WireEnds
+  - RenderTop
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 2050801787
     locked: 0

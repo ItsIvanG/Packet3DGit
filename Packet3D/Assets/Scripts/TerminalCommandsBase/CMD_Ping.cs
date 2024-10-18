@@ -12,30 +12,48 @@ public class CMD_Ping : ConsoleCommand
         bool found = false;
 
         hops.Clear();
+        hops.Add(DesktopCanvasScript.instance.currentPC);
         SimulationBehavior.instance.hopsFound.Clear();
-       SimulationBehavior.instance.recursiveTest(DesktopCanvasScript.instance.currentPC,this);
-
-        foreach(var hop in hops)
+        if (args[0] != "localhost")
         {
-            var ports = hop.GetComponentsInChildren<PortProperties>();
-            foreach(var port in ports)
-            {
-                if (port.address == args[0])
-                {
+            SimulationBehavior.instance.recursiveTest(DesktopCanvasScript.instance.currentPC, this);
 
-                    TerminalConsoleBehavior.printToTerminal("Reply from " + args[0] + ": bytes=32 time<1ms TTL=128");
-                    TerminalConsoleBehavior.printToTerminal("Reply from " + args[0] + ": bytes=32 time<1ms TTL=128");
-                    TerminalConsoleBehavior.printToTerminal("Reply from " + args[0] + ": bytes=32 time<1ms TTL=128");
-                    TerminalConsoleBehavior.printToTerminal("Reply from " + args[0] + ": bytes=32 time<1ms TTL=128");
-                    found = true;
+            foreach (var hop in hops)
+            {
+                var ports = hop.GetComponentsInChildren<PortProperties>();
+                foreach (var port in ports)
+                {
+                    if (port.address == args[0])
+                    {
+
+                        //TerminalConsoleBehavior.printToTerminal("Reply from " + args[0] + ": bytes=32 time<1ms TTL=128");
+
+                        TerminalConsoleBehavior.instance.StartCoroutine(TerminalConsoleBehavior.instance.RepeatPrint(
+                            "Reply from " + args[0] + ": bytes=32 time<1ms TTL=128",
+                            0.5f,
+                            4
+                            ));
+
+                        DesktopCanvasScript.instance.currentPC.GetComponent<PCBehavior>().successPing = args[0];
+                        found = true;
+                    }
                 }
             }
+            if (!found)
+            {
+                TerminalConsoleBehavior.printToTerminal("Request timed out.");
+            }
         }
-        if (!found)
+        else
         {
-            TerminalConsoleBehavior.printToTerminal("Request timed out.");
+            TerminalConsoleBehavior.instance.StartCoroutine(TerminalConsoleBehavior.instance.RepeatPrint(
+                          "Reply from " + DesktopCanvasScript.instance.currentPC.GetComponentInChildren<PortProperties>().address + ": bytes=32 time<1ms TTL=128",
+                          0.5f,
+                          4
+                          ));
         }
 
         return true;
     }
+
 }

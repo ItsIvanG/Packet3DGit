@@ -16,7 +16,9 @@ public class Tooltip : MonoBehaviour
 
     public RectTransform rectTransform;
     public GameObject rightControl;
+    TooltipTrigger lastTooltip = null;
     Transform cam;
+    LayerMask rayMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,17 @@ public class Tooltip : MonoBehaviour
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        // Define the layer indices you want to exclude
+        int[] exclusionLayerIndices = { 2, 7 }; // ALSO CHANGE IN TOOLTIPSYSTEM IF CHANGING
+
+        // Initialize LayerMask to include all layers
+        rayMask = ~0; // This means all layers
+
+        foreach (int layerIndex in exclusionLayerIndices)
+        {
+            // Exclude the layer by using bitwise AND with the inverted layer
+            rayMask &= ~(1 << layerIndex);
+        }
     }
     public void SetText( string header, string content, string sub)
     {
@@ -39,26 +52,44 @@ public class Tooltip : MonoBehaviour
         layoutElement.enabled = (headerLength > characterWraplimit || contentLength > characterWraplimit) ? true : false;
     }
 
-    private void Update()
-    {
+    //private void FixedUpdate()
+    //{
 
-        RaycastHit hit;
-        bool RightRay = Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out hit, 100);
-
-        if (RightRay)
-        {
-            transform.position = hit.point;
+    //    RaycastHit hit;
+    //    bool RightRay = Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out hit, 100, rayMask);
 
 
-            transform.LookAt(new Vector3(cam.position.x, transform.position.y, cam.position.z));
-            transform.forward *= -1;
-        }
 
-        //Vector2 position;
-        //position.x = Input.mousePosition.x+15;
-        //position.y = Input.mousePosition.y-5;
+    //    //if (RightRay && hasTooltip)
+    //    //{
+    //    //    transform.position = hit.collider.transform.position;
+    //    //   
 
-        //transform.position = position;
+    //    //    transform.LookAt(new Vector3(cam.position.x, transform.position.y, cam.position.z));
+    //    //    transform.forward *= -1;
+    //    //    lastTooltip = hasTooltip;
+    //    //}
 
-    }
+    //    if (RightRay)
+    //    {
+    //        transform.position = hit.collider.transform.position;
+
+    //        transform.LookAt(new Vector3(cam.position.x, transform.position.y, cam.position.z));
+    //        transform.forward *= -1;
+           
+
+    //    }
+    //    //else if ((!RightRay || !hasTooltip) && lastTooltip)
+    //    //{
+    //    //    lastTooltip.onRayLeave();
+    //    //    lastTooltip = null;
+    //    //}
+
+    //    //Vector2 position;
+    //    //position.x = Input.mousePosition.x+15;
+    //    //position.y = Input.mousePosition.y-5;
+
+    //    //transform.position = position;
+
+    //}
 }

@@ -13,6 +13,7 @@ public class EnableSecretPassCommand :ConsoleCommand
             {
                 TerminalConsoleBehavior.instance.enablePassword = args[1];
                 //REMEMBER TO ADD TO ROUTER/SWITCH ITSELF!!!
+                TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().enablePassword = args[1];
                 return true;
             }
             else

@@ -227,7 +227,10 @@ public class AddManager : MonoBehaviour
         var allCables = FindObjectsByType<CableHops>(0);
         foreach(var cable in allCables)
         {
-            cable.GetComponent<CapsuleCollider>().enabled = false;
+            if (cable.GetComponent<CapsuleCollider>())
+            {
+                cable.GetComponent<CapsuleCollider>().enabled = false;
+            }
         }
     }
 
@@ -237,7 +240,10 @@ public class AddManager : MonoBehaviour
         var allCables = FindObjectsByType<CableHops>(0);
         foreach (var cable in allCables)
         {
-            cable.GetComponent<CapsuleCollider>().enabled = true;
+            if (cable.GetComponent<CapsuleCollider>())
+            {
+                cable.GetComponent<CapsuleCollider>().enabled = true;
+            }
         }
     }
 

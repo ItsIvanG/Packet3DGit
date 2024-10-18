@@ -6,20 +6,27 @@ using UnityEngine;
 public class CableHops : MonoBehaviour
 {
     public PortTypes.Type portAType;
+    [Tooltip("Port GameObject with PortProperties THAT IT IS connected to.")]
     public GameObject portA;
     public PortTypes.Type portBType;
+    [Tooltip("Port GameObject with PortProperties THAT IT IS connected to.")]
     public GameObject portB;
+    [Tooltip("This wire's WireEndA")]
+    public GameObject wireEndA;
+    [Tooltip("This wire's WireEndB")]
+    public GameObject wireEndB;
     public bool bothHopValid;
     public Sprite upSprite; 
     public Sprite downSprite;
     public SpriteRenderer A_statusSprite; public SpriteRenderer B_statusSprite;
+    GameObject lastPortA, lastPortB;
     public void UpdateHops(GameObject pA, GameObject pB)
     {
         portA = pA;
         portB = pB;
 
         PortProperties portAproperties = portA.GetComponent<PortProperties>();
-        PacketItemPrefabDetails portAPrefabDetails = portA.GetComponentInParent<PacketItemPrefabDetails>();
+        //PacketItemPrefabDetails portAPrefabDetails = portA.GetComponentInParent<PacketItemPrefabDetails>();
 
         portAproperties.portHop = portB.GetComponent<PortProperties>();
         portAproperties.portHopParent = portB.transform.parent.gameObject;
@@ -27,7 +34,7 @@ public class CableHops : MonoBehaviour
         portAproperties.pluggedCable = gameObject;
 
         PortProperties portBproperties = portB.GetComponent<PortProperties>();
-        PacketItemPrefabDetails portBPrefabDetails = portB.GetComponentInParent<PacketItemPrefabDetails>();
+        //PacketItemPrefabDetails portBPrefabDetails = portB.GetComponentInParent<PacketItemPrefabDetails>();
 
         portBproperties.portHop = portA.GetComponent<PortProperties>();
         portBproperties.portHopParent = portA.transform.parent.gameObject;
@@ -42,23 +49,82 @@ public class CableHops : MonoBehaviour
         }
 
     }
-    private void Update()
+
+    public void UpdateHops() //PHYS WIRE
     {
-        if (A_statusSprite != null && B_statusSprite != null)
+        if(portA) lastPortA = portA;
+        if (portB) lastPortB = portB;
+        if (portA && portB)
         {
-            //TODO: HOP VALID SHOULD BE SEPARATE!
-            if (bothHopValid)
-            {
-                A_statusSprite.sprite = upSprite;
-                B_statusSprite.sprite = upSprite;
-            }
-            else
-            {
-                A_statusSprite.sprite = downSprite;
-                B_statusSprite.sprite = downSprite;
-            }
+            
+            lastPortB = portB;
+            PortProperties portAproperties = portA.GetComponent<PortProperties>();
+            //PacketItemPrefabDetails portAPrefabDetails = portA.GetComponentInParent<PacketItemPrefabDetails>();
+
+            portAproperties.portHop = portB.GetComponent<PortProperties>();
+            portAproperties.portHopParent = portB.transform.parent.gameObject;
+            //portAPrefabDetails.UpdateContent();
+            portAproperties.pluggedCable = gameObject;
+
+            PortProperties portBproperties = portB.GetComponent<PortProperties>();
+            //PacketItemPrefabDetails portBPrefabDetails = portB.GetComponentInParent<PacketItemPrefabDetails>();
+
+            portBproperties.portHop = portA.GetComponent<PortProperties>();
+            portBproperties.portHopParent = portA.transform.parent.gameObject;
+            //portBPrefabDetails.UpdateContent();
+            portBproperties.pluggedCable = gameObject;
+            Debug.Log("Updated hops");
         }
-           
+        else if (lastPortA && lastPortB)
+        {
+            PortProperties portAproperties = lastPortA.GetComponent<PortProperties>();
+
+            portAproperties.portHop = null;
+            portAproperties.portHopParent = null;
+            portAproperties.pluggedCable = null;
+
+            PortProperties portBproperties = lastPortB.GetComponent<PortProperties>();
+
+            portBproperties.portHop = null;
+            portBproperties.portHopParent = null;
+            portBproperties.pluggedCable = null;
+
+            lastPortA = null;
+            lastPortB = null;
+
+            Debug.Log("Updated hops");
+        }
     }
+    public void updateHopA(PortProperties pp)
+    {
+        if (pp)
+            portA = pp.gameObject;
+        else portA = null;
+    }
+    public void updateHopB(PortProperties pp)
+    {
+        if (pp)
+            portB = pp.gameObject;
+        else portB = null;
+    }
+
+    //private void Update()
+    //{
+    //    if (A_statusSprite != null && B_statusSprite != null)
+    //    {
+    //        //TODO: HOP VALID SHOULD BE SEPARATE!
+    //        if (bothHopValid)
+    //        {
+    //            A_statusSprite.sprite = upSprite;
+    //            B_statusSprite.sprite = upSprite;
+    //        }
+    //        else
+    //        {
+    //            A_statusSprite.sprite = downSprite;
+    //            B_statusSprite.sprite = downSprite;
+    //        }
+    //    }
+
+    //}
 
 }

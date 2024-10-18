@@ -61,9 +61,10 @@ public class cluesString : MonoBehaviour
             Debug.Log("autocorrecting args " + string.Join(" ", argsSplit));
             terminalConsoleBehavior.inputField.text = argsBaseCommand +" "+ string.Join(" ",argsSplit);
         }
-
-        terminalConsoleBehavior.inputField.ActivateInputField();
+        Debug.Log("setting caret to " + terminalConsoleBehavior.inputField.text.Length);
+        //terminalConsoleBehavior.inputField.ActivateInputField();
         terminalConsoleBehavior.inputField.caretPosition = terminalConsoleBehavior.inputField.text.Length;
-        NonNativeKeyboard.Instance.UpdateCaretPosition(terminalConsoleBehavior.inputField.text.Length);
+        //NonNativeKeyboard.Instance.m_CaretPosition = terminalConsoleBehavior.inputField.text.Length;
+        //NonNativeKeyboard.Instance.UpdateCaretPosition(terminalConsoleBehavior.inputField.text.Length);
     }
 }

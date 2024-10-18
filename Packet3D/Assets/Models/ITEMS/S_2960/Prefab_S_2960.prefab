@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8411302708461054822}
   - component: {fileID: 27829947343637286}
   - component: {fileID: 3007308840969458347}
-  - component: {fileID: 2947595793954803372}
   - component: {fileID: 6033170574862282909}
   - component: {fileID: 944842438719784003}
   - component: {fileID: -7574381033746591313}
@@ -77,7 +76,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -100,21 +99,6 @@ MonoBehaviour:
   type: 1
   Name: Cisco 2960
   icon: {fileID: 21300000, guid: f335e864e7de5394b908796eb0b8fec8, type: 3}
---- !u!114 &2947595793954803372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4604975743586620506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45b457e75caa4a4390aa513e94d324a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  subtitle: Switch
-  header: 
-  content: 
 --- !u!114 &6033170574862282909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,12 +179,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 27829947343637286}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 1073741824
   m_DistanceCalculationMode: 1
   m_SelectMode: 1
   m_FocusMode: 1

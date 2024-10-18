@@ -16,6 +16,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hostnamePrefix = null;
     [SerializeField] private GameObject cluesPanel = null; 
     [SerializeField] private GameObject cluePrefab = null;
+    public GameObject TerminalCanvas;
     [Header("VARIABLES")]
     [SerializeField] public GameObject currentObj = null;
     [SerializeField] public TerminalPrivileges.privileges currentPrivilege = TerminalPrivileges.privileges.user;
@@ -264,6 +265,28 @@ public class TerminalConsoleBehavior : MonoBehaviour
     public static void printToTerminal(string stringToPrint)
     {
         instance.outputField.text += stringToPrint+"\n";
+    }
+
+    public IEnumerator RepeatPrint(string text,float seconds,int howManyRepeats)
+    {
+        for (int i = 0; i < howManyRepeats; i++) // Repeat 4 times
+        {
+            Debug.Log("Coroutine iteration: " + (i + 1));
+
+            // Call the coroutine task here
+            yield return StartCoroutine(printToTerminalRoutine(text));
+
+            // Wait for 1 second before the next iteration
+            yield return new WaitForSeconds(seconds);
+        }
+
+        Debug.Log("All iterations completed!");
+    }
+
+    IEnumerator printToTerminalRoutine(string text)
+    {
+        instance.outputField.text += text + "\n";
+        yield return null; // Simulating work, add more logic if needed
     }
 
     public void saveVarsToCisco()

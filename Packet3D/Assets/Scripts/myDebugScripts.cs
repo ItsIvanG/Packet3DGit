@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class myDebugScripts : MonoBehaviour
 {
     public bool updateHops=false;
+
+    public static myDebugScripts instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Update()
     {
@@ -19,7 +30,9 @@ public class myDebugScripts : MonoBehaviour
         var hops = FindObjectsByType<CableHops>(0);
         foreach(var hop in hops)
         {
-            hop.UpdateHops(hop.portA,hop.portB);
+            hop.UpdateHops();
         }
     }
+
+   
 }

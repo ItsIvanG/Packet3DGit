@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
+using UnityEditor.Hardware;
 
 public class DesktopCanvasScript : MonoBehaviour
 {
@@ -24,10 +25,13 @@ public class DesktopCanvasScript : MonoBehaviour
     public TMP_InputField DNSInput;
     public TextMeshProUGUI errorString;
     public GameObject IPPanel;
-    public GameObject cursor;
-    public GameObject rightControl;
-    public float cursorOffset;
+    //public GameObject cursor;
+    //public GameObject rightControl;
+    //public float cursorOffset;
     public NonNativeKeyboard Keyboard;
+    public TextMeshProUGUI COMString;
+    public TMP_InputField COMInput;
+    //public PCBehavior.CurrentMenu currentMenu = PCBehavior.CurrentMenu.Desktop;
 
     private void Awake()
     {
@@ -35,12 +39,12 @@ public class DesktopCanvasScript : MonoBehaviour
         instance.gameObject.SetActive(false);
     }
 
-    private void Update()
-    {
-        RaycastHit hit;
-        Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out hit, 100);
-        cursor.transform.position = hit.point-(transform.parent.forward*cursorOffset);
-    }
+    //private void Update()
+    //{
+    //    RaycastHit hit;
+    //    Physics.Raycast(rightControl.transform.position, rightControl.transform.forward, out hit, 100);
+    //    cursor.transform.position = hit.point-(transform.parent.forward*cursorOffset);
+    //}
 
     public static void showDesktopCanvas(GameObject pc)
     {
@@ -50,9 +54,22 @@ public class DesktopCanvasScript : MonoBehaviour
         Transform kb = pc.transform.Find("KB");
         instance.transform.parent.position = screen.position;
         instance.transform.parent.rotation = screen.rotation;
-        instance.Keyboard.transform.position = kb.position;
-        instance.Keyboard.transform.rotation = kb.rotation;
-        instance.Keyboard.PresentKeyboard();
+
+        if (ActivityScript.instance)
+        {
+            if (!ActivityScript.instance.isDone)
+            {
+                instance.Keyboard.transform.position = kb.position;
+                instance.Keyboard.transform.rotation = kb.rotation;
+                instance.Keyboard.PresentKeyboard();
+            }
+        }
+        else
+        {
+            instance.Keyboard.transform.position = kb.position;
+            instance.Keyboard.transform.rotation = kb.rotation;
+            instance.Keyboard.PresentKeyboard();
+        }
 
         instance.ethernetPorts.Clear();
         instance.ethernetPortNames.Clear();
@@ -82,8 +99,8 @@ public class DesktopCanvasScript : MonoBehaviour
         }
         instance.ethernetPortsDropdown.ClearOptions();
         instance.ethernetPortsDropdown.AddOptions(instance.ethernetPortNames);
-        instance.USBPortsDropdown.ClearOptions();
-        instance.USBPortsDropdown.AddOptions(instance.USBPortNames);
+        //instance.USBPortsDropdown.ClearOptions();
+        //instance.USBPortsDropdown.AddOptions(instance.USBPortNames);
         instance.getIPdetails();
         instance.setDHCPStaticToggles();
     }
@@ -159,15 +176,21 @@ public class DesktopCanvasScript : MonoBehaviour
     }
     public void showPCTerminal()
     {
-        if (USBPorts[USBPortsDropdown.value].portHopParent && USBPorts[USBPortsDropdown.value].portHop.PortFunction==PortTypes.Function.Console)
+        for (int i = 0; i < USBPorts.Count; i++)
         {
-            TerminalCanvasScript.ShowTerminal(USBPorts[USBPortsDropdown.value].portHopParent);
+
+            if (USBPortNames[i] ==COMInput.text &&  USBPorts[i].portHop.PortFunction == PortTypes.Function.Console)
+            {
+                TerminalCanvasScript.ShowTerminal(USBPorts[i].portHopParent);
+                currentPC.GetComponent<PCBehavior>().currentMenu = PCBehavior.CurrentMenu.Terminal;
+            }
         }
-        else
-        {
-            Debug.Log("NO Console Device plugged in USB port!");
-            PopupMessage.showMessage("Error", "NO Console Device plugged in USB port!", PopupMessage.MsgType.Error);
-        }
+       
+        //else
+        //{
+        //    Debug.Log("NO Console Device plugged in USB port!");
+        //    PopupMessage.showMessage("Error", "NO Console Device plugged in USB port!", PopupMessage.MsgType.Error);
+        //}
     }
     public void setDHCPStaticToggles()
     {
@@ -181,6 +204,27 @@ public class DesktopCanvasScript : MonoBehaviour
         {
             instance.StaticToggle.isOn = false;
             instance.DHCPToggle.isOn = true;
+        }
+    }
+
+    public void saveDesktopState(int state)
+    {
+        currentPC.GetComponent<PCBehavior>().currentMenu = (PCBehavior.CurrentMenu)state;
+
+    }
+    public void getDesktopState()
+    {
+
+    }
+    public void UpdateCOMList()
+    {
+        COMString.text = "";
+        for (int i = 0; i < USBPorts.Count; i++)
+        {
+            if (USBPorts[i].portHop != null)
+            {
+                COMString.text += USBPortNames[i] + "\n";
+            }
         }
     }
 }

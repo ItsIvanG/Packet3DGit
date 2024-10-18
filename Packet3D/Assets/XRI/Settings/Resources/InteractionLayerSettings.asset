@@ -40,8 +40,8 @@ MonoBehaviour:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - WireEndsUSB
+  - WireEndsRJ45
+  - Ports
+  - Rackable
   - Teleport

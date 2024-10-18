@@ -16,7 +16,7 @@ public class HostnameCommand : ConsoleCommand
 
             TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().hostname = args[0];
 
-            PropertiesTab.instance.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
+            //PropertiesTab.instance.updatePropertiesTab(TerminalConsoleBehavior.instance.currentObj.transform);
 
             return true;
         }

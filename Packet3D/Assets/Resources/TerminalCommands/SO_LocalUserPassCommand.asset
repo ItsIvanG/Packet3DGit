@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SO_LocalUserPassCommand
   m_EditorClassIdentifier: 
   CommandWord: username
-  CommandArgs: []
+  CommandArgs:
+  - x:secret
   CommandPrivilege: 3
   specificConfig: 0

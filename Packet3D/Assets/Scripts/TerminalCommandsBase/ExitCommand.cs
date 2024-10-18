@@ -10,9 +10,13 @@ public class ExitCommand : ConsoleCommand
         Debug.Log("EXIT");
         if(args.Length == 0)
         {
+            var cd = TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>();
             if (TerminalConsoleBehavior.instance.currentPrivilege < TerminalPrivileges.privileges.config)
             {
+
                 TerminalConsoleBehavior.instance.currentPrivilege -= 1;
+                cd.currentPrivilege = TerminalConsoleBehavior.instance.currentPrivilege;
+
                 TerminalLogin.checkLogin();
             } 
             else if(TerminalConsoleBehavior.instance.currentPrivilege == TerminalPrivileges.privileges.config)

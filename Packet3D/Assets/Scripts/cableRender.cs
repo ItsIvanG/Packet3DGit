@@ -21,6 +21,7 @@ public class cableRender : MonoBehaviour
     CableHops cableHops;
     CapsuleCollider CapsuleCol;
     public bool updateCollider=false;
+    public GameObject physStart, physEnd;
     //0: disabled
     //1: cm
     //2: m
@@ -29,14 +30,17 @@ public class cableRender : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
-        dropdown = GameObject.Find("MeasureDropdown").GetComponent<TMP_Dropdown>();
+        //dropdown = GameObject.Find("MeasureDropdown").GetComponent<TMP_Dropdown>();
         cableHops = transform.parent.GetComponent<CableHops>();
         CapsuleCol = transform.parent.GetComponent<CapsuleCollider>();
     }
     void Update()
     {
-        lineRenderer.SetPosition(0, posA.position);
-        lineRenderer.SetPosition(1, posB.position);
+        if (lineRenderer) {
+            lineRenderer.SetPosition(0, posA.position);
+            lineRenderer.SetPosition(1, posB.position);
+        }
+
 
         Vector3 midpoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) / 2, 
             posA.position.y + (posB.position.y - posA.position.y) / 2, 
@@ -50,8 +54,11 @@ public class cableRender : MonoBehaviour
            posA.position.y + (posB.position.y - posA.position.y) * 0.8f,
            posA.position.z + (posB.position.z - posA.position.z) * 0.8f);
 
-        cableLengthUI.transform.position = midpoint;
-        cableLengthUI.transform.rotation = cam.transform.rotation;
+        if (cableLengthUI)
+        {
+            cableLengthUI.transform.position = midpoint;
+            cableLengthUI.transform.rotation = cam.transform.rotation;
+        }
 
         if(AStatus!=null && BStatus != null)
         {
@@ -63,58 +70,64 @@ public class cableRender : MonoBehaviour
         }
         //cableLengthUI.transform.localScale = FindAnyObjectByType<orbitCam>().scrollVect*50;
 
-        if (updateCollider)
+        if (updateCollider && CapsuleCol)
         {
             CapsuleCol.transform.position = (posA.position + posB.position) * 0.5f;
             CapsuleCol.transform.LookAt(posB.position);
             CapsuleCol.height = Vector3.Distance(posA.position, posB.position);
 
-            updateRender();
+            
         }
+        updateRender();
 
 
-        
 
     }
     public void Measure()
     {
-        measureUnit = dropdown.value;
-        if (measureUnit == 0)
-        {
-            cableLengthUI.SetActive(false);
-        }
-        else
-        {
-            float measuredDistanceInMeters = Vector3.Distance(posA.position, posB.position);
-            switch (measureUnit)
-            {
-                case 1:
-                    convertedDistance = measuredDistanceInMeters * 100;
-                    break;
-                case 2:
-                    convertedDistance = measuredDistanceInMeters;
-                    break;
-                case 3:
-                    convertedDistance = measuredDistanceInMeters * 39.3701f;
-                    break;
-                case 4:
-                    convertedDistance = measuredDistanceInMeters * 3.28f;
-                    break;
-            }
+        //measureUnit = dropdown.value;
+        //if (measureUnit == 0)
+        //{
+        //    cableLengthUI.SetActive(false);
+        //}
+        //else
+        //{
+        //    float measuredDistanceInMeters = Vector3.Distance(posA.position, posB.position);
+        //    switch (measureUnit)
+        //    {
+        //        case 1:
+        //            convertedDistance = measuredDistanceInMeters * 100;
+        //            break;
+        //        case 2:
+        //            convertedDistance = measuredDistanceInMeters;
+        //            break;
+        //        case 3:
+        //            convertedDistance = measuredDistanceInMeters * 39.3701f;
+        //            break;
+        //        case 4:
+        //            convertedDistance = measuredDistanceInMeters * 3.28f;
+        //            break;
+        //    }
 
 
-            cableLengthUI.SetActive(true);
-            cableLengthUI.GetComponentInChildren<TextMeshPro>().text = convertedDistance.ToString("0.00") + units[measureUnit];
-        }
+        //    cableLengthUI.SetActive(true);
+        //    cableLengthUI.GetComponentInChildren<TextMeshPro>().text = convertedDistance.ToString("0.00") + units[measureUnit];
+        //}
     }
 
     public void updateRender()
     {
-        posA.transform.parent.transform.position = cableHops.portA.transform.position;
-        posA.transform.parent.transform.rotation = cableHops.portA.transform.rotation;
+        //posA.transform.parent.transform.position = cableHops.portA.transform.position;
+        //posA.transform.parent.transform.rotation = cableHops.portA.transform.rotation;
 
-        posB.transform.parent.transform.position = cableHops.portB.transform.position;
-        posB.transform.parent.transform.rotation = cableHops.portB.transform.rotation;
+        //posB.transform.parent.transform.position = cableHops.portB.transform.position;
+        //posB.transform.parent.transform.rotation = cableHops.portB.transform.rotation;
+
+        if (physStart && physEnd)
+        {
+            physStart.transform.position = posA.position;
+            physEnd.transform.position = posB.position;
+        }
     }
     
 }

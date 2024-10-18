@@ -60,6 +60,7 @@ public class TerminalCanvasScript : MonoBehaviour
             if (instance.currentDevice.GetComponent<CiscoDevice>())
             {
                 instance.hostnameLabel.text = instance.currentDevice.GetComponent<CiscoDevice>().hostname + TerminalConsoleBehavior.instance.getPrivilegePrefix();
+                TerminalConsoleBehavior.instance.saveVarsToCisco();
             }
             
         }

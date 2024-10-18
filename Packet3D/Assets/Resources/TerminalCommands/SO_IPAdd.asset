@@ -15,5 +15,6 @@ MonoBehaviour:
   CommandWord: ip
   CommandArgs:
   - address
+  - address:x:255.255.255.0
   CommandPrivilege: 3
   specificConfig: 1

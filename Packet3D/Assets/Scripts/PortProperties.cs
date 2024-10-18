@@ -5,7 +5,10 @@ using UnityEngine;
 public class PortProperties : MonoBehaviour
 {
     public string PortName;
+    [Tooltip("PortProperties THAT IT IS connected to.")]
+
     public PortProperties portHop;
+    [Tooltip("Port GameObject PARENT THAT IT IS connected to.")]
     public GameObject portHopParent;
     public PortTypes.Type PortType;
     public PortTypes.Function PortFunction;
@@ -25,13 +28,13 @@ public class PortProperties : MonoBehaviour
         tooltipTrigger.header = PortName;
         
     }
-    private void Update()
-    {
-        if(portHop != null)
-        {
-            tooltipTrigger.content = portHop.PortName;
-        }
-    }
+    //private void Update()
+    //{
+    //    if(portHop != null)
+    //    {
+    //        tooltipTrigger.content = portHop.PortName;
+    //    }
+    //}
 
 
 

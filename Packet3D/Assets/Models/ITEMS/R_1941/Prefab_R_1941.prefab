@@ -703,7 +703,6 @@ GameObject:
   - component: {fileID: 6178019408313903966}
   - component: {fileID: 3982642102301701088}
   - component: {fileID: 8275108456742267647}
-  - component: {fileID: -8333122142628406627}
   - component: {fileID: 4489610349832833823}
   - component: {fileID: -9176486198987214752}
   - component: {fileID: 1795995742543004457}
@@ -779,21 +778,6 @@ MonoBehaviour:
   type: 0
   Name: Cisco 1941
   icon: {fileID: 21300000, guid: 56831b7cf81e51342858a973816b9f81, type: 3}
---- !u!114 &-8333122142628406627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5491106933655992623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45b457e75caa4a4390aa513e94d324a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  subtitle: Router
-  header: 
-  content: 
 --- !u!114 &4489610349832833823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,9 +851,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 1073741824
   m_DistanceCalculationMode: 1
-  m_SelectMode: 0
+  m_SelectMode: 1
   m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
@@ -953,7 +937,7 @@ MonoBehaviour:
       m_Calls: []
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
-  m_UseDynamicAttach: 0
+  m_UseDynamicAttach: 1
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
   m_SnapToColliderVolume: 1

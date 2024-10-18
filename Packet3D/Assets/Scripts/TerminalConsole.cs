@@ -28,17 +28,29 @@ public class TerminalConsole
     {
         foreach(var command in commands)
         {
-            if ((TerminalConsoleBehavior.instance.currentPrivilege == command.CommandPrivilege && command.specificConfig == TerminalPrivileges.specificConfig.global && TerminalConsoleBehavior.instance.currentConfigLevel == TerminalPrivileges.specificConfig.global) || 
-                command.CommandPrivilege == TerminalPrivileges.privileges.all ||
-                (TerminalConsoleBehavior.instance.currentPrivilege == command.CommandPrivilege && command.specificConfig == TerminalConsoleBehavior.instance.currentConfigLevel))
+            if ((TerminalConsoleBehavior.instance.currentPrivilege == command.CommandPrivilege && 
+                command.specificConfig == TerminalPrivileges.specificConfig.global && 
+                TerminalConsoleBehavior.instance.currentConfigLevel == TerminalPrivileges.specificConfig.global)
+                || 
+                command.CommandPrivilege == TerminalPrivileges.privileges.all 
+                ||
+                (TerminalConsoleBehavior.instance.currentPrivilege == command.CommandPrivilege &&
+                command.specificConfig == TerminalConsoleBehavior.instance.currentConfigLevel)
+                ||
+                (TerminalConsoleBehavior.instance.currentPrivilege == TerminalPrivileges.privileges.cmd &&
+                command.CommandPrivilege == TerminalPrivileges.privileges.cmd)
+                )
             {
                 
-                if (!commandInput.Equals(command.CommandWord, StringComparison.OrdinalIgnoreCase))
+                if (!commandInput.Equals(command.CommandWord))
                 {
                     continue;
                 }
                 if (command.Process(args))
                 {
+
+                    if (TutorialScript.instance) TutorialScript.instance.checkWait();
+                    if (ActivityScript.instance) ActivityScript.instance.checkWait();
                     found = true;
                     Debug.Log("executing " + command.CommandWord);
                     return;

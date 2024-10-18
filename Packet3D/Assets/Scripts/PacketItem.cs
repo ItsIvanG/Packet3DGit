@@ -10,10 +10,11 @@ public class PacketItem : ScriptableObject
     public Type type;
     public string Name;
     public string ShortName;
+    [TextArea]
     public string Description;
     public Sprite Thumbnail;
     public GameObject GameObject;
-
+    public GameObject ShowroomObject;
     public void Awake()
     {
         if (GameObject != null && Name!=null)

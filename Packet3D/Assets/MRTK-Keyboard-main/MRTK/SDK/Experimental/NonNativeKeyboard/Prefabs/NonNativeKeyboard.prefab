@@ -15560,6 +15560,7 @@ MonoBehaviour:
   m_MinDistance: 1
   CloseOnInactivity: 1
   CloseOnInactivityTime: 15
+  m_CaretPosition: 0
 --- !u!114 &114593871428788132
 MonoBehaviour:
   m_ObjectHideFlags: 0

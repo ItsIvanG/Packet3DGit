@@ -6,6 +6,7 @@ using UnityEngine;
 public class cluesPanelBehavior : MonoBehaviour
 {
     Vector3 pos;
+    Quaternion rot;
     TMP_InputField inputFieldInstance;
     private void Start()
     {
@@ -14,11 +15,11 @@ public class cluesPanelBehavior : MonoBehaviour
     }
     void Update()
     {
-        
-        pos.x = inputFieldInstance.transform.position.x+ inputFieldInstance.caretPosition* 0.0040125392f; //8f at 1x
-        pos.y = inputFieldInstance.transform.position.y;
-        pos.z = inputFieldInstance.transform.position.z;
+
+        pos = DesktopCanvasScript.instance.currentPC.transform.Find("KB Clues").position;
+        rot = DesktopCanvasScript.instance.currentPC.transform.Find("KB Clues").rotation;
         transform.position = pos;
+        transform.rotation = rot;
     }
     
 }

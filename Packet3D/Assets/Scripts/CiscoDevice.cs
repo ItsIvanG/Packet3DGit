@@ -8,6 +8,7 @@ public  class CiscoDevice : MonoBehaviour
     public  string hostname;
     public TerminalPrivileges.privileges currentPrivilege = TerminalPrivileges.privileges.loggedOut;
     public TerminalPrivileges.specificConfig currentConfigLevel = TerminalPrivileges.specificConfig.global;
+    public TerminalPrivileges.lineConfig lineConfig = TerminalPrivileges.lineConfig.console;
     public string localUsername;
     public string localPassword;
     public string enablePassword;
@@ -17,9 +18,25 @@ public  class CiscoDevice : MonoBehaviour
     //NOT ACCESSIBLE VIA TERMINALCONSOLEBEHAVIOR v v v v
     public CiscoEthernetPort interfacePort;
     public List<CiscoEthernetPort> interfaceRange;
+    [Tooltip("Current vlan configuring (config-vlan)")]
     public Vlan configVlan;
+    public int linConAvailable = 1;
+    public List<LineConsole> lineConsoles;
+    public int currentLineCon = -1;
 
     [TextArea]
     public string terminalContent;
+
+    public bool checkLoginLocal()
+    {
+        foreach(var lc in lineConsoles)
+        {
+            if (lc.usingLocal == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
