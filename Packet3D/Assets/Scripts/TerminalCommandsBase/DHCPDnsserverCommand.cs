@@ -7,22 +7,25 @@ public class DHCPDnsserver : ConsoleCommand
 {
     public override bool Process(string[] args)
     {
+        int poolIndex = 0;
         CiscoDevice ciscoDevice = TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>();
 
         if (args.Length == 1)
         {
-            if (ciscoDevice.interfacePort != null)
-            {
 
-                ciscoDevice.interfacePort.dnsserver = args[0];
-
-                return true;
-            }
-            else
+            for (int i = 0; i < ciscoDevice.DHCPPools.Count; i++)
             {
-                TerminalConsoleBehavior.printToTerminal("No port interface");
-                return false;
+                if (ciscoDevice.DHCPPools[i].Name == ciscoDevice.currentPool) poolIndex = i;
+                break;
             }
+
+            ciscoDevice.DHCPPools[poolIndex].defaultDNS = args[0];
+
+
+
+            return true;
+
+
         }
         else
         {

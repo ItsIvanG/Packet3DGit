@@ -15,6 +15,10 @@ MonoBehaviour:
   type: 0
   Name: Cisco 4331
   ShortName: 4331
-  Description: 
-  Thumbnail: {fileID: 21300000, guid: 8fb457bc31427384da1bb2c128bb127f, type: 3}
-  GameObject: {fileID: 0}
+  Description: Cisco 4000 Series Integrated Services Routers (ISR 4000) provides
+    a scalable, flexible foundation so you can quickly integrate leading IT initiatives
+    like SD-WAN and edge compute, while meeting the explosive network performance
+    need driven by cloud-based application adoption.
+  Thumbnail: {fileID: 21300000, guid: e0441339f0b370848b6cd0248cb54f16, type: 3}
+  GameObject: {fileID: 5491106933655992623, guid: 00f318334ed00b24d95ff2ea9e0ba430, type: 3}
+  ShowroomObject: {fileID: 0}

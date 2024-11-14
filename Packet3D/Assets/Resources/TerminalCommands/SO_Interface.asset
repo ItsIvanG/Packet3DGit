@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: SO_Interface
   m_EditorClassIdentifier: 
   CommandWord: interface
-  CommandArgs: []
+  CommandArgs:
+  - range
   CommandPrivilege: 3
   specificConfig: 0
+  routerOnly: 0
   vlanPrefab: {fileID: 5799782395837711968, guid: d9037711884310f49a335a405de6fd35, type: 3}
+  subportPrefab: {fileID: 5799782395837711968, guid: ea9c3e3b9ce57e340a6e0dc22164bb7e, type: 3}
+  range: 1
+  startRange: 1
+  endRange: 11

@@ -157,11 +157,20 @@ public class TerminalConsoleBehavior : MonoBehaviour
         {
             foreach (ConsoleCommand cc in commands)
             {
-                if (typedCommandSplit.Length==1 && cc.CommandWord.Contains(typedCommandSplitLast) &&
+                if (
+                    typedCommandSplit.Length==1 && 
+                    cc.CommandWord.Contains(typedCommandSplitLast) &&
                     typedCommandSplitLast != cc.CommandWord &&
-                    ((instance.currentPrivilege == cc.CommandPrivilege && cc.specificConfig == TerminalPrivileges.specificConfig.global) ||
-                cc.CommandPrivilege == TerminalPrivileges.privileges.all && currentPrivilege != TerminalPrivileges.privileges.cmd||
-                (instance.currentPrivilege == cc.CommandPrivilege && cc.specificConfig == instance.currentConfigLevel)))
+                    
+                    ((instance.currentPrivilege == cc.CommandPrivilege && 
+                    cc.specificConfig == TerminalPrivileges.specificConfig.global) 
+                    ||
+                    cc.CommandPrivilege == TerminalPrivileges.privileges.all && 
+                    currentPrivilege != TerminalPrivileges.privileges.cmd
+                    ||
+                    (instance.currentPrivilege == cc.CommandPrivilege && 
+                    cc.specificConfig == instance.currentConfigLevel))
+                    )
 
                 {
                     cluesPanel.SetActive(true);

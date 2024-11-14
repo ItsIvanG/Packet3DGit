@@ -16,5 +16,6 @@ MonoBehaviour:
   Name: Small Table
   ShortName: Table
   Description: A small office table.
-  Thumbnail: {fileID: 21300000, guid: ba9f221af5a2ece408b53a67650bb5b5, type: 3}
+  Thumbnail: {fileID: 21300000, guid: 5000cb0f9012c8047b746e9c9d49c82e, type: 3}
   GameObject: {fileID: 6696783750557932655, guid: d331d04ba6a20414a91c03a3cf06cbfa, type: 3}
+  ShowroomObject: {fileID: 0}

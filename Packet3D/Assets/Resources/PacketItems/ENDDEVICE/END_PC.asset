@@ -16,5 +16,6 @@ MonoBehaviour:
   Name: Personal Computer
   ShortName: PC
   Description: 
-  Thumbnail: {fileID: 21300000, guid: 6098b2f917c3a4d4a8e9422ea7918091, type: 3}
+  Thumbnail: {fileID: 21300000, guid: 7695fb1b4b5fda14191bb1c15ade65e2, type: 3}
   GameObject: {fileID: 8395033692822780505, guid: e21e20dd21fa9934090709b27e0b691a, type: 3}
+  ShowroomObject: {fileID: 0}

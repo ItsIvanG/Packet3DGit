@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VInspector;
 
 public  class CiscoDevice : MonoBehaviour
 
@@ -23,6 +24,15 @@ public  class CiscoDevice : MonoBehaviour
     public int linConAvailable = 1;
     public List<LineConsole> lineConsoles;
     public int currentLineCon = -1;
+    public List<float> writeMems;
+    public List<StaticRoute> staticRoutes;
+    public List<DHCPPool> DHCPPools;
+    public List<DHCPExcludes> DHCPExcludes;
+    public string currentPool;
+    public SerializedDictionary<string, string> DNSHosts;
+    public string DNSName;
+    public List<string> RIPNetworks;
+
 
     [TextArea]
     public string terminalContent;

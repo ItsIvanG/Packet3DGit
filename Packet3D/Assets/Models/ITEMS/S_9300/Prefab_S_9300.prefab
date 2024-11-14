@@ -83,6 +83,71 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &719277016158530806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7108598734271546146}
+  - component: {fileID: 6236729177097894979}
+  m_Layer: 0
+  m_Name: VLAN1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7108598734271546146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719277016158530806}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.026043747, y: -0.0550915, z: -0.09698117}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8411302708461054822}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6236729177097894979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719277016158530806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b60f1c1d5eea3e45bdc695acbceb65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PortName: VLAN1
+  portHop: {fileID: 0}
+  portHopParent: {fileID: 0}
+  PortType: 0
+  PortFunction: 0
+  pluggedCable: {fileID: 0}
+  address: 
+  subnet: 
+  network: 
+  networkSubnet: 
+  defaultRouter: 
+  dnsserver: 
+  excludeStart: 
+  excludeEnd: 
+  switchportMode: 0
+  switchportAccessVlan: 0
+  noShut: 0
+  switchport: 0
+  vlanName: 
+  vlanNumber: 1
+  vlanPorts: []
 --- !u!1 &987628098310007202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,6 +1573,7 @@ Transform:
   - {fileID: 6796307469692164813}
   - {fileID: 4097843285841303590}
   - {fileID: 3745451161458171203}
+  - {fileID: 7108598734271546146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &27829947343637286
@@ -1523,7 +1589,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1561,6 +1627,7 @@ MonoBehaviour:
   hostname: Switch
   currentPrivilege: 0
   currentConfigLevel: 0
+  lineConfig: 0
   localUsername: 
   localPassword: 
   enablePassword: 
@@ -1570,6 +1637,19 @@ MonoBehaviour:
   interfacePort: {fileID: 0}
   interfaceRange: []
   configVlan: {fileID: 0}
+  linConAvailable: 1
+  lineConsoles: []
+  currentLineCon: -1
+  writeMems: []
+  staticRoutes: []
+  DHCPPools: []
+  DHCPExcludes: []
+  currentPool: 
+  DNSHosts:
+    serializedKvps: []
+    dividerPos: 0.33
+  DNSName: 
+  RIPNetworks: []
   terminalContent: 
 --- !u!114 &944842438719784003
 MonoBehaviour:
@@ -3434,11 +3514,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/14
+      value: G0/14
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3508,11 +3592,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/10
+      value: G0/10
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3582,11 +3670,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/12
+      value: G0/12
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet0/12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3656,11 +3748,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/2
+      value: G0/2
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3730,11 +3826,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/4
+      value: G0/4
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3804,11 +3904,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/3
+      value: G0/3
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3878,11 +3982,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/15
+      value: G0/15
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3952,11 +4060,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/7
+      value: G0/7
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4026,7 +4138,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/17
+      value: G0/17
       objectReference: {fileID: 0}
     - target: {fileID: 3091222465700476236, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4043,6 +4155,10 @@ PrefabInstance:
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4112,11 +4228,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/22
+      value: G0/22
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4186,11 +4306,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/21
+      value: G0/21
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4260,7 +4384,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/24
+      value: G0/24
       objectReference: {fileID: 0}
     - target: {fileID: 3091222465700476236, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4269,6 +4393,10 @@ PrefabInstance:
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4342,11 +4470,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/20
+      value: G0/20
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4416,11 +4548,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/16
+      value: G0/16
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4490,11 +4626,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/23
+      value: G0/23
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4568,11 +4708,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/18
+      value: G0/18
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4704,11 +4848,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/8
+      value: G0/8
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4778,11 +4926,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/9
+      value: G0/9
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4852,11 +5004,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/6
+      value: G0/6
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4996,11 +5152,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/11
+      value: G0/11
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5070,11 +5230,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/1
+      value: G0/1
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5144,7 +5308,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/13
+      value: G0/13
       objectReference: {fileID: 0}
     - target: {fileID: 3091222465700476236, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5161,6 +5325,10 @@ PrefabInstance:
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5230,11 +5398,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/5
+      value: G0/5
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5304,11 +5476,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055998869929621282, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_Name
-      value: F0/19
+      value: G0/19
       objectReference: {fileID: 0}
     - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: PortName
       value: GigabitEthernet 0/19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869382976452921189, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
+      propertyPath: switchportAccessVlan
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8187382346081070154, guid: 352afb94542c2084e9e8dce6e76095be, type: 3}
       propertyPath: m_LocalPosition.x

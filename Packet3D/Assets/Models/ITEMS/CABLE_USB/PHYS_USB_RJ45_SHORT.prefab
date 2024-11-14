@@ -144,6 +144,8 @@ MonoBehaviour:
   downSprite: {fileID: 21300000, guid: 9799e57bbdf327a4684f61eef60e7f1a, type: 3}
   A_statusSprite: {fileID: 0}
   B_statusSprite: {fileID: 0}
+  StartHopA: {fileID: 0}
+  StartHopB: {fileID: 0}
 --- !u!1 &4813060106499127429
 GameObject:
   m_ObjectHideFlags: 0

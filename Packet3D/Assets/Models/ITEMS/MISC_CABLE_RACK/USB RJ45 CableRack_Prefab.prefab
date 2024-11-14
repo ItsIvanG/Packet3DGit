@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3938322682814419003}
+  - component: {fileID: 1483811806006966471}
   m_Layer: 0
   m_Name: USB RJ45 CableRack_Prefab
   m_TagString: Untagged
@@ -32,12 +33,31 @@ Transform:
   - {fileID: 857578687777184563}
   - {fileID: 318002966827324109}
   - {fileID: 6490016825265017433}
-  - {fileID: 4471925497505936949}
-  - {fileID: 6123886325206537787}
   - {fileID: 1936700502172920493}
+  - {fileID: 4471925497505936949}
   - {fileID: 459247526771765995}
+  - {fileID: 6123886325206537787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1483811806006966471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186014382128302093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaf34fc2f9607247990109120c450c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEnable: 0
+  spawnAtStart: 1
+  cableToSpawn: {fileID: 2722624590797645819, guid: 79fe555162aaef84a8617d54e299bdc0, type: 3}
+  SocketFront_1: {fileID: 3773361590336848688}
+  SocketFront_2: {fileID: 4076465061515918610}
+  SocketBack_1: {fileID: 7318887479491220423}
+  SocketBack_2: {fileID: 8201675860389271882}
 --- !u!1 &1260067498013978837
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +699,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 268435456
+    m_Bits: 134217728
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1

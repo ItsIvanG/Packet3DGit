@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11171361feeb43043836144f092f66ad, type: 3}
+  m_Name: S_9300
+  m_EditorClassIdentifier: 
+  type: 1
+  Name: Cisco 9300
+  ShortName: 9300
+  Description: The Cisco Catalyst 9300 Series Switches are Cisco's lead stackable
+    enterprise switching platform built for security, IoT, mobility, and cloud.
+  Thumbnail: {fileID: 21300000, guid: 96307fe7db4cc84489acfd8e5a5a37e7, type: 3}
+  GameObject: {fileID: 4604975743586620506, guid: 520c6ed528ec8d54887226b82ba40b32, type: 3}
+  ShowroomObject: {fileID: 0}

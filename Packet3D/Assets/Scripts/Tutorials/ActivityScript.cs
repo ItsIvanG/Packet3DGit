@@ -44,6 +44,10 @@ public class ActivityScript : MonoBehaviour
 
     private void Start()
     {
+        if(winCanvas == null)
+        {
+            winCanvas = FindAnyObjectByType<WinPanel>();
+        }
         if (MakulitWait)
         {
             Debug.Log("Makulit ka");

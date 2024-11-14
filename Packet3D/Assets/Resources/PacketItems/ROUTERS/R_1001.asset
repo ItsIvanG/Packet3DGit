@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11171361feeb43043836144f092f66ad, type: 3}
+  m_Name: R_1001
+  m_EditorClassIdentifier: 
+  type: 0
+  Name: Cisco ASR 1001
+  ShortName: 1001
+  Description: The Cisco 1000 Series Aggregation Services Routers (ASR 1000) is a
+    SD-WAN ready router.
+  Thumbnail: {fileID: 21300000, guid: 26c88926228537f43bbafd6e501b8159, type: 3}
+  GameObject: {fileID: 5491106933655992623, guid: f7602e61d075dcd4da4cd2eae34c9b03, type: 3}
+  ShowroomObject: {fileID: 0}

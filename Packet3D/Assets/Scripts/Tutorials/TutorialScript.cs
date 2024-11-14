@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 using VInspector;
 
 public class TutorialScript : MonoBehaviour
@@ -40,6 +41,7 @@ public class TutorialScript : MonoBehaviour
     private GameObject arrowResource;
     private GameObject arrowScene;
     private GameObject lastObjectEnabled;
+    private SuccessSFX success;
     private void Awake()
     {
         if (instance == null)
@@ -104,6 +106,7 @@ public class TutorialScript : MonoBehaviour
     }
     private void Start()
     {
+        success = FindAnyObjectByType<SuccessSFX>();
         foreach(var v in visualPanels)
         {
             v.enabled = false;
@@ -141,6 +144,9 @@ public class TutorialScript : MonoBehaviour
         winCanvas.confetti.SetActive(true);
         winCanvas.win(GetComponent<Stopwatch>().runningTime);
         bmo.Dance();
+        success.transform.parent.GetComponent<AudioSource>().Stop();
+        Debug.Log("stopping " + success.transform.parent.GetComponent<AudioSource>());
+
     }
 
     public void doTutorial()
@@ -159,6 +165,14 @@ public class TutorialScript : MonoBehaviour
                 {
                     v.sprite = Lines[currentLine].visual;
                     v.enabled = true;
+                }
+            }
+            else
+            {
+                foreach (var v in visualPanels)
+                {
+                   
+                    v.enabled = false;
                 }
             }
         }
@@ -213,6 +227,9 @@ public class TutorialScript : MonoBehaviour
 
             LineRef.SetText(Lines[currentLine].line.Substring(0, currentLength + 1));
 
+            if (Lines[currentLine].line[currentLength] != ' ')
+                bmo.playBlip();
+
         }
         else
         {
@@ -236,6 +253,7 @@ public class TutorialScript : MonoBehaviour
             if (Lines[currentLine].wait[currentWait].testWait())
             {
                 currentWait++;
+                success.playSuccess();
                 if (currentWait >= Lines[currentLine].wait.Count)
                 {
                     currentWait = 0;

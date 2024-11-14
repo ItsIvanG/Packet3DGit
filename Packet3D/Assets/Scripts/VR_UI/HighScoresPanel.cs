@@ -4,18 +4,38 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
+using VInspector;
 
 public class HighScoresPanel : MonoBehaviour
 {
     public GameObject highScorePrefab;
-    public List<HighScore> highScores;
+    public List<HighScore> highScores = new List<HighScore>();
     public Transform createPrefabHere;
     public TMP_InputField nameInput;
+    public string filePath;
 
     void Start()
-    {
-        refreshList();
+    {  
+        filePath = Application.persistentDataPath + "/Scores_" + SceneManager.GetActiveScene().name;
+        string loadJson;
+        try
+        {
+            loadJson = System.IO.File.ReadAllText(filePath);
+        }
+        catch
+        {
+            Debug.Log("Scores file not found");
+            loadJson = null;
+        }
+        if (loadJson!=null)
+        {
+            HighScoreWrapper wrapper = JsonUtility.FromJson<HighScoreWrapper>(loadJson);
+            highScores = wrapper.highScores;
+            refreshList();
+        }
+      
     }
     void refreshList()
     {
@@ -26,14 +46,17 @@ public class HighScoresPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-
+        int i = 1;
         foreach (HighScore highScore in highScores)
         {
             GameObject panel = Instantiate(highScorePrefab, createPrefabHere);
             TextMeshProUGUI text = panel.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = highScore.name + " - " + WinPanel.FormatTime(highScore.timeTaken);
+            text.text = "#"+i+ " "+highScore.name + " - " + WinPanel.FormatTime(highScore.timeTaken);
+            i++;
         }
     }
+
+    [Button("Submit")]
 
     public void Submit()
     {
@@ -43,6 +66,10 @@ public class HighScoresPanel : MonoBehaviour
         hs.name = nameInput.text;
         highScores.Add(hs);
         refreshList();
+
+        string jsonScores = JsonUtility.ToJson(new HighScoreWrapper(highScores));
+
+        System.IO.File.WriteAllText(filePath,jsonScores);
     }
 
     public void showKB()
@@ -53,5 +80,18 @@ public class HighScoresPanel : MonoBehaviour
         NonNativeKeyboard.Instance.PresentKeyboard();
     }
 
+ 
+
   
+}
+
+[System.Serializable]
+public class HighScoreWrapper
+{
+    public List<HighScore> highScores;
+
+    public HighScoreWrapper(List<HighScore> highScores)
+    {
+        this.highScores = highScores;
+    }  
 }

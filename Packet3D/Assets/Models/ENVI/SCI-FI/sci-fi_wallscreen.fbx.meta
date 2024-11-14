@@ -12,6 +12,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_ScreenBlack
+    second: {fileID: 2100000, guid: cf05c011a74cb0943b861b338a16f069, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_ShinyWhite
     second: {fileID: 2100000, guid: fd4040c746439ab419f7b7bf7257a85d, type: 2}
   materials:

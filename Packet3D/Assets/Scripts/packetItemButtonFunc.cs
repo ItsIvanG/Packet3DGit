@@ -15,6 +15,7 @@ public class packetItemButtonFunc : MonoBehaviour, IPointerEnterHandler
     public Button button;
     public PacketItem packetItem;
     XRRayInteractor interactor;
+    int pointerID;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,7 @@ public class packetItemButtonFunc : MonoBehaviour, IPointerEnterHandler
     public void setAddMngrItem()
     {
         Debug.Log("clicked in packet item: " + packetItem);
-        addManager.setPacketItem(packetItem, interactor.gameObject);
+        addManager.setPacketItem(packetItem, pointerID);
         FindAnyObjectByType<SelectTransform>().setTransformMode(0);
         addManager.disableAllCableCollisions();
 
@@ -34,6 +35,8 @@ public class packetItemButtonFunc : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         interactor = InputModule.GetInteractor(eventData.pointerId) as XRRayInteractor;
+        Debug.Log("Pointer enter " + eventData.pointerId);
+        pointerID = eventData.pointerId;
 
     }
 }

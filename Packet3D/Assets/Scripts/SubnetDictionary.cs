@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class SubnetDictionary : MonoBehaviour
@@ -77,5 +78,25 @@ public class SubnetDictionary : MonoBehaviour
         }
 
         
+    }
+    public static bool IsValidIPAddress(string ipString)
+    {
+        if (ipString.Split(".").Length == 4)
+        {
+            if (IPAddress.TryParse(ipString, out IPAddress ipAddress))
+            {
+                Debug.Log($"{ipString} is a valid IP address.");
+                return true;
+            }
+            else
+            {
+                Debug.Log($"{ipString} is not a valid IP address.");
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }

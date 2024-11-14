@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.UI;
+using UnityEngine.XR.Management;
 public class PropertiesTab : MonoBehaviour
 {
     public static PropertiesTab instance;
@@ -15,6 +19,8 @@ public class PropertiesTab : MonoBehaviour
     public TextMeshProUGUI contextString;
     public PropertiesCanvas propertiesCanvas;
     public GameObject configButton;
+    private XRUIInputModule InputModule => EventSystem.current.currentInputModule as XRUIInputModule;
+    XRRayInteractor interactor;
     public void Start()
     {
         instance = this;
@@ -45,9 +51,7 @@ public class PropertiesTab : MonoBehaviour
         {
             instance.gameObject.SetActive(false);
         }
-        else if (currentObjPacketDetails.type == PacketItem.Type.Router || 
-            currentObjPacketDetails.type == PacketItem.Type.EndDevice || 
-            currentObjPacketDetails.type == PacketItem.Type.Switch)
+        else if(t != null)
         {
             instance.gameObject.SetActive(true);
 
@@ -99,15 +103,7 @@ public class PropertiesTab : MonoBehaviour
 
             }
 
-            if(currentObjPacketDetails.type != PacketItem.Type.EndDevice)
-            {
-                configButton.SetActive(false);
-            }
-            else
-            {
-                configButton.SetActive(true);
-            }
-
+        
         }
     }
 
@@ -131,4 +127,28 @@ public class PropertiesTab : MonoBehaviour
     {
         updatePropertiesTab(instance.currentObj);
     }
+
+    public void moveButton()
+    {
+        AddManager.instance.toMove = currentObj.gameObject;
+        //AddManager.instance.toMove.gameObject.SetActive(false); 
+        updatePropertiesTab(null);
+
+        //AddManager.instance.setGrip(interactor.gameObject);
+    }
+    public void deleteButton()
+    {
+        Destroy(currentObj.gameObject);
+        updatePropertiesTab(null);
+    }
+    public void closeButton()
+    {
+        updatePropertiesTab(null);
+    }
+
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    interactor = InputModule.GetInteractor(eventData.pointerId) as XRRayInteractor;
+
+    //}
 }

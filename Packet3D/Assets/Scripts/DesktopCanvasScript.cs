@@ -113,6 +113,7 @@ public class DesktopCanvasScript : MonoBehaviour
         SubnetInput.text = pp.subnet;
         GatewayInput.text = pp.defaultgateway;
         DNSInput.text = pp.dnsserver;
+        StaticToggle.isOn = pp.isStaticIP;
 
     }
 
@@ -148,23 +149,24 @@ public class DesktopCanvasScript : MonoBehaviour
         //    PopupMessage.showMessage("Error", "No valid connection on ethernet port.", PopupMessage.MsgType.Error);
         //    return;
         //}
-        var getAllCiscoPorts = pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>();
+        //var getAllCiscoPorts = pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>();
         
-        foreach (CiscoEthernetPort port in getAllCiscoPorts)
-        {
-            if (port.name == pp.portHop.name)
-            {
-                ciscoPortHop = port;
-            }
-        }
+        //foreach (CiscoEthernetPort port in getAllCiscoPorts)
+        //{
+        //    if (port.name == pp.portHop.name)
+        //    {
+        //        ciscoPortHop = port;
+        //    }
+        //}
 
+        //TODO DHCP
         pp.isStaticIP = false;
-        Debug.Log("attempting dhcp address excludeEnd " + ciscoPortHop.excludeEnd);
-        var excludeEndSplit = ciscoPortHop.excludeEnd.Split(".");
-        pp.address = excludeEndSplit[0] + "." + excludeEndSplit[1] + "." + excludeEndSplit[2] + "." + (int.Parse(excludeEndSplit[3])+1);
-        pp.subnet = ciscoPortHop.networkSubnet;
-        pp.dnsserver = ciscoPortHop.dnsserver;
-        pp.defaultgateway = ciscoPortHop.defaultRouter;
+        Debug.Log("attempting dhcp address excludeEnd ");
+        //var excludeEndSplit = ciscoPortHop.excludeEnd.Split(".");
+        ////pp.address = excludeEndSplit[0] + "." + excludeEndSplit[1] + "." + excludeEndSplit[2] + "." + (int.Parse(excludeEndSplit[3])+1);
+        //pp.subnet = ciscoPortHop.networkSubnet;
+        //pp.dnsserver = ciscoPortHop.dnsserver;
+        //pp.defaultgateway = ciscoPortHop.defaultRouter;
 
         getIPdetails();
     }

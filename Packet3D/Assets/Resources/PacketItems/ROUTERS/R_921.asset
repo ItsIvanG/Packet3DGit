@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11171361feeb43043836144f092f66ad, type: 3}
+  m_Name: R_921
+  m_EditorClassIdentifier: 
+  type: 0
+  Name: Cisco 921
+  ShortName: 921
+  Description: The Cisco 900 Series Integrated Services Routers (ISRs) combine Internet
+    access, comprehensive security, and wireless services in a single high-performance
+    device that is easy to deploy and manage. They are well suited for deployment
+    as Customer Premises Equipment (CPE) in enterprise small branch offices and in
+    service provider managed-service environments.
+  Thumbnail: {fileID: 21300000, guid: 92e719acb38fe334cb0c902aec80ff53, type: 3}
+  GameObject: {fileID: 5491106933655992623, guid: 8208339dfbe4bf94591853326ffc4264, type: 3}
+  ShowroomObject: {fileID: 0}

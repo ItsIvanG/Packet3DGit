@@ -21,4 +21,9 @@ public class Vlan : CiscoEthernetPort
         }
     }
 
+    private void Start()
+    {
+        updateVlanPorts();
+    }
+
 }

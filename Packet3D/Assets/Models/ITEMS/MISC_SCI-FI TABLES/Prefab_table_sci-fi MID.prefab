@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4910517872722756997}
   - component: {fileID: 5100123765918415822}
+  - component: {fileID: 3567604474016298406}
   m_Layer: 0
   m_Name: Prefab_table_sci-fi MID
-  m_TagString: Untagged
+  m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,6 +55,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0846145, y: 0.7093516, z: 0.85822034}
   m_Center: {x: 0.0035444498, y: 0.34381577, z: -0.007089019}
+--- !u!114 &3567604474016298406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6619159239893424227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4727ac75f77fd4b9c8611b9e7df485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  Name: Medium Table
+  icon: {fileID: 21300000, guid: e3ccb8b31374e984fa880b0be3bf49dd, type: 3}
 --- !u!1001 &7997215454977578402
 PrefabInstance:
   m_ObjectHideFlags: 0

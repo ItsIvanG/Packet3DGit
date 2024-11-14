@@ -17,5 +17,8 @@ MonoBehaviour:
   - dhcp
   - dhcp:pool
   - route
+  - host
+  - name-server
   CommandPrivilege: 3
   specificConfig: 0
+  routerOnly: 1

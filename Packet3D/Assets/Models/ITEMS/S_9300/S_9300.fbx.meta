@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_S9300
+    second: {fileID: 2100000, guid: 6038ac4645ad75a4f8baaa370aebc14d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material.001
     second: {fileID: 2100000, guid: 6038ac4645ad75a4f8baaa370aebc14d, type: 2}
   materials:

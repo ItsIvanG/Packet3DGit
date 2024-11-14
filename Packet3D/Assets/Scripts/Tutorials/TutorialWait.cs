@@ -11,7 +11,7 @@ public class TutorialWait
     public GameObject enableObjects;
     public enum waitFor { 
         None,
-        PC_IPAdd,
+        Port_IPAdd,
         PC_State,
         Porthop_Obj,
         Cisco_Hostname,
@@ -22,10 +22,31 @@ public class TutorialWait
         Cisco_EnablePassword,
         Cisco_SpecificConfig,
         Cisco_LoginLocal,
+        Cisco_Banner,
+        Cisco_InterfacePort,
+        Cisco_NoShut,
+        Cisco_WriteMem,
+        Cisco_DNSHost,
+        Cisco_DNSName,
+        PC_Gateway,
+        Port_PorthopSpecific,
+        DHCP_Pool,
+        DHCP_Net,
+        DHCP_DefGate,
+        DHCP_DNS,
+        DHCP_Exc, //split 'begin' and 'end' by SPACE
+        Port_DHCP,
+        Cisco_StaticRoute, //two addresses <network> <route> (192.168.1.1/24 192.168.1.1)
+        Cisco_RIPRoute,
+        Cisco_FindPort,
+        Cisco_EncapsulatedPort,
+        Cisco_SubportIP
+
     };
     public waitFor waitType;
     public GameObject waitObject;
     public string fieldCheck;
+    public bool boolCheck;
     public GameObject objectCheck;
     public PCBehavior.CurrentMenu PCStateCheck;
     public TerminalPrivileges.privileges CiscoPrivilegeCheck;
@@ -40,6 +61,7 @@ public class TutorialWait
             waitObject.TryGetComponent<CiscoDevice>(out CiscoDevice cd);
             waitObject.TryGetComponent<PCBehavior>(out PCBehavior pc);
             waitObject.TryGetComponent<PortProperties>(out PortProperties pp);
+            waitObject.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cep);
 
             if (pc == null && cd == null && pp == null)
             {
@@ -50,7 +72,48 @@ public class TutorialWait
 
             switch (waitType)
             {
-                case waitFor.PC_IPAdd:
+                case waitFor.DHCP_Pool:
+
+                    foreach(var pool in cd.DHCPPools)
+                    {
+                        if (pool.Name == fieldCheck) return true;
+                    }
+                     return false;
+
+                case waitFor.DHCP_Net:
+
+                    foreach (var pool in cd.DHCPPools)
+                    {
+                        if (pool.network == fieldCheck) return true;
+                    }
+                    return false;
+
+                case waitFor.DHCP_DefGate:
+
+                    foreach (var pool in cd.DHCPPools)
+                    {
+                        if (pool.defaultGateway == fieldCheck) return true;
+                    }
+                    return false;
+
+                case waitFor.DHCP_DNS:
+
+                    foreach (var pool in cd.DHCPPools)
+                    {
+                        if (pool.defaultDNS == fieldCheck) return true;
+                    }
+                    return false;
+
+                case waitFor.DHCP_Exc:
+
+                    foreach (var exc in cd.DHCPExcludes)
+                    {
+                        if (exc.excludeBegin == fieldCheck.Split(" ")[0] &&
+                            exc.excludeEnd == fieldCheck.Split(" ")[1]) return true;
+                    }
+                    return false;
+
+                case waitFor.Port_IPAdd:
                     if(waitObject.TryGetComponent(out PortProperties pcep)){
                         if (pcep.address == fieldCheck.Split('/')[0])
                         {
@@ -102,6 +165,11 @@ public class TutorialWait
                         return true;
                     else return false;
 
+                case waitFor.Port_PorthopSpecific:
+
+                    if (pp.portHop == objectCheck.GetComponent<PortProperties>())
+                        return true;
+                    else return false;
                 case waitFor.PC_State:
 
                     if (pc.currentMenu == PCStateCheck)
@@ -126,6 +194,135 @@ public class TutorialWait
                     if (cd.checkLoginLocal())
                         return true;
                     else return false;
+
+                case waitFor.Cisco_Banner:
+
+                    if (cd.MOTD == fieldCheck)
+                        return true;
+                    else return false;
+
+                case waitFor.Cisco_InterfacePort:
+
+                    if (cd.interfacePort == objectCheck.GetComponent<CiscoEthernetPort>())
+                        return true;
+                    else return false;
+
+                case waitFor.Cisco_NoShut:
+
+                    if (cep.noShut == boolCheck)
+                        return true;
+                    else return false;
+
+                case waitFor.Cisco_WriteMem:
+
+                    if (cd.writeMems.Count>0)
+                        return true;
+                    else return false;
+
+                case waitFor.Cisco_DNSHost:
+
+                    if (cd.DNSHosts.ContainsKey(fieldCheck.Split(" ")[0]) &&
+                        cd.DNSHosts[fieldCheck.Split(" ")[0]] == fieldCheck.Split(" ")[1])
+                        return true;
+                    else return false;
+
+                case waitFor.Cisco_DNSName:
+
+                    if (cd.DNSName == fieldCheck)
+                        return true;
+                    else return false;
+
+                case waitFor.PC_Gateway:
+
+                    if (waitObject.TryGetComponent(out PCEthernetProperties pcepp))
+                    {
+                        if (pcepp.defaultgateway == fieldCheck)
+                        {
+                            return true;
+                        }
+                    }
+
+
+                    return false;
+
+                case waitFor.Port_DHCP:
+
+                    if (waitObject.TryGetComponent(out PCEthernetProperties pceppp))
+                    {
+                        if (pceppp.isStaticIP == false)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+
+                case waitFor.Cisco_StaticRoute:
+
+                    var staticRoutes = cd.staticRoutes;
+
+                    foreach(var route in staticRoutes)
+                    {
+                        if (route.network == fieldCheck.Split(" ")[0] && route.route == fieldCheck.Split(" ")[1]) return true;
+                    }
+
+                    return false;
+                case waitFor.Cisco_RIPRoute:
+
+                    var ripRoutes = cd.RIPNetworks;
+
+                    foreach (var route in ripRoutes)
+                    {
+                        if (route == fieldCheck) return true;
+                    }
+
+                    return false;
+
+                case waitFor.Cisco_FindPort:
+
+                   var subports =  waitObject.GetComponentsInChildren<Subport>();
+                    foreach(var subport in subports)
+                    {
+                        if (subport.gameObject.name == fieldCheck)
+                        return true;
+                    }
+
+                    return false;
+
+                case waitFor.Cisco_EncapsulatedPort:
+                    var subportss = waitObject.GetComponentsInChildren<Subport>();
+                    Subport sp = null; 
+                    foreach (var subport in subportss)
+                    {
+                        if (subport.gameObject.name == fieldCheck)
+                        {
+                            sp = subport;
+                            if (sp.isEnscapsulated && sp.encapsulationVlan == int.Parse(fieldCheck.Split(".")[1])) return true;
+
+                        }
+
+
+                    }
+
+                    return false;
+
+                case waitFor.Cisco_SubportIP:
+                    var subportsss = waitObject.GetComponentsInChildren<Subport>();
+                    Subport spp = null;
+                    foreach (var subport in subportsss)
+                    {
+                        if (subport.gameObject.name == fieldCheck.Split(" ")[0])
+                        {
+                            spp = subport;
+                            if (spp.address ==
+                            fieldCheck.Split(" ")[1])
+                                return true;
+
+                        }
+
+
+                    }
+
+                    return false;
 
                 default: return false;
             }

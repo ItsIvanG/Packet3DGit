@@ -9,6 +9,7 @@ public class SandboxMenuVR : MonoBehaviour
 {
     public GameObject menu;
     public InputActionProperty showButton;
+    public Transform leftControlTransform;
     Vector3 forwardLoc;
     public float menuDistance = 4f;
     public float lerpDamp = 2f;
@@ -28,11 +29,13 @@ public class SandboxMenuVR : MonoBehaviour
             Debug.Log("Menu press VR");
             menu.SetActive(!menu.activeSelf);
             forwardLoc = cam.forward.normalized * menuDistance;
-            menu.transform.position = cam.transform.position + new Vector3(cam.transform.forward.x,
-                cam.transform.forward.y,
-           cam.transform.forward.z).normalized * menuDistance;
-            menu.transform.LookAt(new Vector3(cam.position.x, menu.transform.position.y, cam.position.z));
-            menu.transform.forward *= -1;
+            //menu.transform.position = cam.transform.position + new Vector3(cam.transform.forward.x,
+            //    cam.transform.forward.y,
+            //    cam.transform.forward.z).normalized * menuDistance;
+            transform.position = leftControlTransform.position + (leftControlTransform.forward* menuDistance);
+            transform.LookAt(new Vector3(cam.position.x, transform.position.y, cam.position.z));
+           transform.Rotate(new Vector3(0, 10, 0));
+            transform.forward *= -1;
         }
 
     

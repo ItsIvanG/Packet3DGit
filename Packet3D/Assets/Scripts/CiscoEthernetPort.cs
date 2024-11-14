@@ -17,4 +17,5 @@ public class CiscoEthernetPort : PortProperties
     public int switchportAccessVlan;
 
     public bool noShut = false;
+    public bool switchport = false;
 }

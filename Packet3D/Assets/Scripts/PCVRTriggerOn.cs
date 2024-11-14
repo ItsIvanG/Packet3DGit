@@ -7,8 +7,17 @@ public class PCVRTriggerOn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && transform.parent.gameObject!= DesktopCanvasScript.instance.currentPC)
         {
+            //nilipat from ontrigger exit
+            if (TerminalConsoleBehavior.instance.currentObj != null) TerminalConsoleBehavior.instance.saveVarsToCisco();
+            TerminalConsoleBehavior.instance.currentObj = null;
+            TerminalConsoleBehavior.instance.TerminalCanvas.SetActive(false);
+            DesktopCanvasScript.instance.IPPanel.SetActive(false);
+            DesktopCanvasScript.instance.gameObject.SetActive(false);
+            TerminalConsoleBehavior.instance.inputField.text = "";
+            //
+
             Debug.Log("PC enter");
 
          
@@ -20,12 +29,7 @@ public class PCVRTriggerOn : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (TerminalConsoleBehavior.instance.currentObj != null) TerminalConsoleBehavior.instance.saveVarsToCisco();
-            TerminalConsoleBehavior.instance.currentObj = null;
-            TerminalConsoleBehavior.instance.TerminalCanvas.SetActive(false);
-            DesktopCanvasScript.instance.IPPanel.SetActive(false);
-            DesktopCanvasScript.instance.gameObject.SetActive(false);
-            TerminalConsoleBehavior.instance.inputField.text = "";
+           
         }
 
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7498346995663542544}
   - component: {fileID: 2439565376188536513}
+  - component: {fileID: 7490918045410733973}
   m_Layer: 0
   m_Name: Prefab_Table
   m_TagString: Selectable
@@ -54,6 +55,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2083554, y: 0.7198837, z: 0.62143856}
   m_Center: {x: 0.0044018924, y: 0.35588717, z: -0.0014673173}
+--- !u!114 &7490918045410733973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696783750557932655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4727ac75f77fd4b9c8611b9e7df485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  Name: Small Table
+  icon: {fileID: 21300000, guid: 5000cb0f9012c8047b746e9c9d49c82e, type: 3}
 --- !u!1001 &8494650753551965037
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -18,9 +18,17 @@ public class IPAddCommand : ConsoleCommand
                 {
                     if (SubnetDictionary.getPrefix(args[2]) != "/?")
                     {
-                        ciscoDevice.interfacePort.address = args[1];
-                        ciscoDevice.interfacePort.subnet = args[2];
-                        PropertiesTab.instance.updatePropertiesTab(PropertiesTab.instance.currentObj);
+                        if (SubnetDictionary.IsValidIPAddress(args[1]))
+                        {
+                            ciscoDevice.interfacePort.address = args[1];
+                            ciscoDevice.interfacePort.subnet = args[2];
+                            PropertiesTab.instance.updatePropertiesTab(PropertiesTab.instance.currentObj);
+                        }
+                        else
+                        {
+                            TerminalConsoleBehavior.printToTerminal("Invalid IP address");
+                            return false;
+                        }
                         return true;
                     }
                     else

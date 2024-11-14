@@ -33,10 +33,10 @@ Transform:
   - {fileID: 857578687777184563}
   - {fileID: 318002966827324109}
   - {fileID: 6490016825265017433}
-  - {fileID: 4471925497505936949}
-  - {fileID: 6123886325206537787}
   - {fileID: 1936700502172920493}
+  - {fileID: 4471925497505936949}
   - {fileID: 459247526771765995}
+  - {fileID: 6123886325206537787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7589866727716620382
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEnable: 0
+  spawnAtStart: 1
   cableToSpawn: {fileID: 2722624590797645819, guid: 2829f67c04385724e9665470d65d5cc4, type: 3}
   SocketFront_1: {fileID: 3773361590336848688}
   SocketFront_2: {fileID: 4076465061515918610}
@@ -316,7 +317,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7589866727716620382}
+        m_TargetAssemblyTypeName: CableRack, Assembly-CSharp
+        m_MethodName: checkSockets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -430,7 +443,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7589866727716620382}
+        m_TargetAssemblyTypeName: CableRack, Assembly-CSharp
+        m_MethodName: checkSockets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -715,7 +740,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7589866727716620382}
+        m_TargetAssemblyTypeName: CableRack, Assembly-CSharp
+        m_MethodName: checkSockets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -829,7 +866,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7589866727716620382}
+        m_TargetAssemblyTypeName: CableRack, Assembly-CSharp
+        m_MethodName: checkSockets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:

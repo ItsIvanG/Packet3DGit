@@ -8,6 +8,13 @@ public class BMO_Behavior : MonoBehaviour
     public Animator animator;
     public Transform player;    // Reference to the player's transform
     public float rotationSpeed = 5f;  // Speed of the rotation
+    public float moveSpeed = 5f;  // Speed of the rotation
+    public float camMargin = -1.9f;
+    public float bmoMargin = -3.4f;
+    public float bmoDefaultX = -1.577f;
+    private Vector3 targetPos;
+    public AudioClip[] bmoBlips;
+    public AudioSource bmoAudioSource;
     void Update()
     {
         // Get the direction to the player
@@ -25,10 +32,22 @@ public class BMO_Behavior : MonoBehaviour
             // Lerp the current rotation to the target rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
+
+        if(player.position.x < camMargin)
+        {
+            targetPos.x = bmoMargin;
+        }
+        else
+        {
+            targetPos.x = bmoDefaultX;
+        }
+        transform.position = Vector3.Lerp(transform.position, targetPos, moveSpeed * Time.deltaTime);
     }
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        player = Camera.main.transform;
+        targetPos = transform.position;
 
     }
     [Button("Wait Done")]
@@ -65,6 +84,11 @@ public class BMO_Behavior : MonoBehaviour
         Debug.Log("Stop yap");
         animator.SetTrigger("stop yap");
 
+    }
+    public void playBlip()
+    {
+        bmoAudioSource.clip = bmoBlips[Random.Range(0,bmoBlips.Length-1)];
+        bmoAudioSource.Play();
     }
 
     

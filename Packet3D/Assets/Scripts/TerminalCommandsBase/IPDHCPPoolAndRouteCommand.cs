@@ -9,53 +9,93 @@ public class IPDHCPPoolAndRouteCommand : ConsoleCommand
     {
         CiscoDevice ciscoDevice = TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>();
 
-        if (args.Length == 3 && args[0].ToLower() == "dhcp" && args[1].ToLower()=="pool")
+        if (args.Length == 3 && args[0].ToLower() == "dhcp" && args[1].ToLower() == "pool")
         {
-            CiscoEthernetPort interfacePort = null;
-            
-            var getAllCiscoPorts = TerminalConsoleBehavior.instance.currentObj.GetComponentsInChildren<CiscoEthernetPort>();
+            List<DHCPPool> pools = ciscoDevice.DHCPPools;
 
-            foreach (CiscoEthernetPort port in getAllCiscoPorts)
+            bool poolExists=false;
+
+            foreach(var pl in pools)
             {
-                if (port.name == args[2].ToUpper())
+                if(pl.Name == args[2])
                 {
-                    interfacePort = port;
+                    poolExists = true;
+                    break;
                 }
             }
 
-            if (interfacePort != null)
+            if (!poolExists)
             {
-                Debug.Log("Found port " + args[2]);
-                TerminalConsoleBehavior.instance.currentObj.GetComponent<CiscoDevice>().interfacePort = interfacePort;
-                TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.dhcppool;
+                DHCPPool pool = new DHCPPool();
+                pool.Name = args[2];
+                ciscoDevice.DHCPPools.Add(pool);
+            }
 
+
+
+            ciscoDevice.currentConfigLevel = TerminalPrivileges.specificConfig.dhcppool;
+            TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.dhcppool;
+            ciscoDevice.currentPool = args[2];
+
+            return true;
+        }
+        else if (args.Length == 4 && args[0].ToLower() == "route")
+        {
+
+            if (SubnetDictionary.IsValidIPAddress(args[1]) && SubnetDictionary.IsValidIPAddress(args[3]))
+            {
+                if (SubnetDictionary.getPrefix(args[2]) != "/?")
+                {
+
+                    StaticRoute sr = new StaticRoute();
+                    sr.network = args[1] + SubnetDictionary.getPrefix(args[2]);
+                    sr.route = args[3];
+                    ciscoDevice.staticRoutes.Add(sr);
+                    //TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterBehavior>().routeAddresses.Add(args[1]);
+                    //TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterBehavior>().routeSubnets.Add(args[2]);
+                    //TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterBehavior>().routeDestinations.Add(args[3]);
+                }
+                else
+                {
+                    TerminalConsoleBehavior.printToTerminal("Invalid subnet");
+                    return false;
+                }
                 return true;
             }
-            
             else
             {
-                Debug.Log("Did not find port " + args[2]);
-                TerminalConsoleBehavior.printToTerminal("Could not find port:" + args[2] + ".");
+                TerminalConsoleBehavior.printToTerminal("Invalid IP Address");
                 return false;
             }
 
         }
-        else if (args.Length == 4 && args[0].ToLower() == "route")
+        else if (args.Length == 3 && args[0].ToLower() == "host")
         {
-            
-            if (SubnetDictionary.getPrefix(args[2])!="/?")
+            if (SubnetDictionary.IsValidIPAddress(args[2]))
             {
-                TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterBehavior>().routeAddresses.Add(args[1]);
-                TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterBehavior>().routeSubnets.Add(args[2]);
-                TerminalConsoleBehavior.instance.currentObj.GetComponent<RouterBehavior>().routeDestinations.Add(args[3]);
+                if (!ciscoDevice.DNSHosts.ContainsKey(args[1]))
+                {
+                    ciscoDevice.DNSHosts.Add(args[1], args[2]);
+                    return true;
+                }
+                else
+                {
+                    ciscoDevice.DNSHosts[args[1]] = args[2];
+                    return true;
+                }
             }
             else
             {
-                TerminalConsoleBehavior.printToTerminal("Invalid subnet");
+                Debug.Log("DNS host invalid IP");
                 return false;
             }
+          
+           
+        }
+        else if (args.Length == 2 && args[0].ToLower() == "name-server")
+        {
+            ciscoDevice.DNSName = args[1];
             return true;
-
         }
         else
         {

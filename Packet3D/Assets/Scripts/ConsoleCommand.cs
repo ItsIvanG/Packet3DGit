@@ -9,7 +9,7 @@ public abstract class ConsoleCommand : ScriptableObject
     public List<string> CommandArgs;
     public TerminalPrivileges.privileges CommandPrivilege;
     public TerminalPrivileges.specificConfig specificConfig;
-
+    public bool routerOnly;
     public abstract bool Process(string[] args);
 
 }

@@ -104,87 +104,123 @@ MonoBehaviour:
   - line: "Welcome to the second part of your networking journey! Today we\u2019ll
       be learning about assigning IP Addresses to computers, and hooking them up
       to a network switch."
+    visual: {fileID: 0}
     wait: []
   - line: Imagine you want to send a letter to a friend. Every house has a unique
       address so the mailman knows exactly where to deliver the letter. Without an
       address, the mailman wouldn't know where to go!
+    visual: {fileID: 0}
     wait: []
   - line: In the same way, every device on the internet has its own special address
       called an IP address.
+    visual: {fileID: 0}
     wait: []
   - line: Just like your house address is made of a street name and a number, an
       IP address is a set of numbers (like 192.168.1.1) that helps computers find
       each other when they need to send information.
+    visual: {fileID: 0}
     wait: []
   - line: "Let\u2019s start by connecting the first computer to the switch."
+    visual: {fileID: 0}
     wait:
     - arrowOn: {fileID: 0}
+      enableObjects: {fileID: 0}
       waitType: 3
       waitObject: {fileID: 0}
       fieldCheck: 
+      boolCheck: 0
       objectCheck: {fileID: 0}
       PCStateCheck: 0
       CiscoPrivilegeCheck: 0
+      CiscoSpecificConfigCheck: 0
+      CiscoLineConfigCheck: 0
   - line: Now hook the second computer!
+    visual: {fileID: 0}
     wait:
     - arrowOn: {fileID: 0}
+      enableObjects: {fileID: 0}
       waitType: 3
       waitObject: {fileID: 0}
       fieldCheck: 
+      boolCheck: 0
       objectCheck: {fileID: 0}
       PCStateCheck: 0
       CiscoPrivilegeCheck: 0
+      CiscoSpecificConfigCheck: 0
+      CiscoLineConfigCheck: 0
   - line: "Great! Let\u2019s assign an IP Address to our first PC. Open up IP Config
       on the desktop, and make sure it\u2019s set to static.\n"
+    visual: {fileID: 0}
     wait:
     - arrowOn: {fileID: 0}
+      enableObjects: {fileID: 0}
       waitType: 2
       waitObject: {fileID: 0}
       fieldCheck: 
+      boolCheck: 0
       objectCheck: {fileID: 0}
       PCStateCheck: 1
       CiscoPrivilegeCheck: 0
+      CiscoSpecificConfigCheck: 0
+      CiscoLineConfigCheck: 0
   - line: Enter 192.168.1.1 on the IPv4 box, and 255.255.255.0 on the subnet mask.
+    visual: {fileID: 0}
     wait:
     - arrowOn: {fileID: 0}
+      enableObjects: {fileID: 0}
       waitType: 1
       waitObject: {fileID: 0}
       fieldCheck: 192.168.1.1/24
+      boolCheck: 0
       objectCheck: {fileID: 0}
       PCStateCheck: 1
       CiscoPrivilegeCheck: 0
+      CiscoSpecificConfigCheck: 0
+      CiscoLineConfigCheck: 0
   - line: Nice job! The subnet mask is like a line on a map that tells you how much
       of the address belongs to the neighborhood and how much belongs to the house
       number.
+    visual: {fileID: 0}
     wait: []
   - line: 255.255.255.0 is an example of a subnet mask. 255.255.255 means that the
       first three parts of the address tell you which neighborhood you're in, while
       0 means the last part is for the specific house.
+    visual: {fileID: 0}
     wait: []
   - line: If you have the IP address 192.168.1.1, and the subnet mask is 255.255.255.0,
       the first three numbers (192.168.1) tell you the neighborhood, and the last
       number (1) tells you which house (computer) it is.
+    visual: {fileID: 0}
     wait: []
   - line: Do the same thing on the second computer, but enter 192.168.1.2 on its
       IPv4 box, and the same subnet mask.
+    visual: {fileID: 0}
     wait:
     - arrowOn: {fileID: 0}
+      enableObjects: {fileID: 0}
       waitType: 1
       waitObject: {fileID: 0}
       fieldCheck: 192.168.1.2/24
+      boolCheck: 0
       objectCheck: {fileID: 0}
       PCStateCheck: 1
       CiscoPrivilegeCheck: 0
+      CiscoSpecificConfigCheck: 0
+      CiscoLineConfigCheck: 0
   - line: "Good job! Let\u2019s now try to check if these two PCs can see each other."
+    visual: {fileID: 0}
     wait: []
   - line: "Enter CMD Prompt on PC 1 and type in \u2018ping 192.168.1.2\u2019."
+    visual: {fileID: 0}
     wait: []
   - line: 'Great! This means that the PCs can interact with each other.
 
 '
+    visual: {fileID: 0}
     wait: []
   - line: "Congratulations! You have now setup your very first network configuration.
       We\u2019ll have more lessons to learn on the other side!\n"
+    visual: {fileID: 0}
     wait: []
 --- !u!114 &5800336036064289723
 MonoBehaviour:

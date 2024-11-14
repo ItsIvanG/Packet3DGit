@@ -13,10 +13,17 @@ public class LevelMenu : MonoBehaviour
     public Sprite Idle, clicked;
     [Tooltip("Can be \"Tut\" or \"Act\"")]
     public string LevelsPrefix;
+    //public GameObject TrophyObject;
+    int currentLevel;
+    //private void Awake()
+    //{
 
+    //    if (currentLevel < levels.Length) Destroy(TrophyObject);
+    //}
     private void Start()
     {
-        int currentLevel = PlayerPrefs.GetInt("Current" + LevelsPrefix, 0);
+        currentLevel = PlayerPrefs.GetInt("Current" + LevelsPrefix, 0);
+
 
         for (int i = 0;i < levels.Length; i++)
         {

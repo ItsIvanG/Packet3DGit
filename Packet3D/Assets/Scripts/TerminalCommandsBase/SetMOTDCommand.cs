@@ -11,7 +11,12 @@ public class SetMOTDCommand : ConsoleCommand
         {
             if (args[0] == "motd")
             {
-                TerminalConsoleBehavior.instance.MOTD = args[1];
+                for(int i =1;i<args.Length;i++)
+                {
+
+                    if (i > 1) TerminalConsoleBehavior.instance.MOTD += " " + args[i];
+                    else TerminalConsoleBehavior.instance.MOTD += args[i];
+                }
                 
                 return true;
             }

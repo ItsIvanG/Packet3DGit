@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class CableHops : MonoBehaviour
 {
@@ -20,6 +21,24 @@ public class CableHops : MonoBehaviour
     public Sprite downSprite;
     public SpriteRenderer A_statusSprite; public SpriteRenderer B_statusSprite;
     GameObject lastPortA, lastPortB;
+    [Header("Start hops")]
+    public XRSocketInteractor StartHopA;
+      public XRSocketInteractor StartHopB;
+    private void Awake()
+    {
+        if (StartHopA)
+        {
+            StartHopA.startingSelectedInteractable = wireEndA.GetComponent<XRGrabInteractable>();
+            wireEndA.transform.position = StartHopA.transform.position;
+            wireEndA.transform.rotation = StartHopA.transform.rotation;
+        }
+        if (StartHopB)
+        {
+            StartHopB.startingSelectedInteractable = wireEndB.GetComponent<XRGrabInteractable>();
+            wireEndB.transform.position = StartHopB.transform.position;
+            wireEndB.transform.rotation = StartHopB.transform.rotation;
+        }
+    }
     public void UpdateHops(GameObject pA, GameObject pB)
     {
         portA = pA;

@@ -34,50 +34,49 @@ public class cableRender : MonoBehaviour
         cableHops = transform.parent.GetComponent<CableHops>();
         CapsuleCol = transform.parent.GetComponent<CapsuleCollider>();
     }
-    void Update()
+    void FixedUpdate()
     {
-        if (lineRenderer) {
-            lineRenderer.SetPosition(0, posA.position);
-            lineRenderer.SetPosition(1, posB.position);
-        }
+        //if (lineRenderer) {
+        //    lineRenderer.SetPosition(0, posA.position);
+        //    lineRenderer.SetPosition(1, posB.position);
+        //}
 
 
-        Vector3 midpoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) / 2, 
-            posA.position.y + (posB.position.y - posA.position.y) / 2, 
-            posA.position.z + (posB.position.z - posA.position.z) / 2);
+        //Vector3 midpoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) / 2, 
+        //    posA.position.y + (posB.position.y - posA.position.y) / 2, 
+        //    posA.position.z + (posB.position.z - posA.position.z) / 2);
 
-        Vector3 AstatusPoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) * 0.2f,
-           posA.position.y + (posB.position.y - posA.position.y) *0.2f,
-           posA.position.z + (posB.position.z - posA.position.z) * 0.2f);
+        //Vector3 AstatusPoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) * 0.2f,
+        //   posA.position.y + (posB.position.y - posA.position.y) *0.2f,
+        //   posA.position.z + (posB.position.z - posA.position.z) * 0.2f);
 
-        Vector3 BstatusPoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) * 0.8f,
-           posA.position.y + (posB.position.y - posA.position.y) * 0.8f,
-           posA.position.z + (posB.position.z - posA.position.z) * 0.8f);
+        //Vector3 BstatusPoint = new Vector3(posA.position.x + (posB.position.x - posA.position.x) * 0.8f,
+        //   posA.position.y + (posB.position.y - posA.position.y) * 0.8f,
+        //   posA.position.z + (posB.position.z - posA.position.z) * 0.8f);
 
-        if (cableLengthUI)
-        {
-            cableLengthUI.transform.position = midpoint;
-            cableLengthUI.transform.rotation = cam.transform.rotation;
-        }
+        //if (cableLengthUI)
+        //{
+        //    cableLengthUI.transform.position = midpoint;
+        //    cableLengthUI.transform.rotation = cam.transform.rotation;
+        //}
 
-        if(AStatus!=null && BStatus != null)
-        {
-            AStatus.transform.position = AstatusPoint;
-            AStatus.transform.rotation = cam.transform.rotation;
+        //if(AStatus!=null && BStatus != null)
+        //{
+        //    AStatus.transform.position = AstatusPoint;
+        //    AStatus.transform.rotation = cam.transform.rotation;
 
-            BStatus.transform.position = BstatusPoint;
-            BStatus.transform.rotation = cam.transform.rotation;
-        }
-        //cableLengthUI.transform.localScale = FindAnyObjectByType<orbitCam>().scrollVect*50;
+        //    BStatus.transform.position = BstatusPoint;
+        //    BStatus.transform.rotation = cam.transform.rotation;
+        //}
 
-        if (updateCollider && CapsuleCol)
-        {
-            CapsuleCol.transform.position = (posA.position + posB.position) * 0.5f;
-            CapsuleCol.transform.LookAt(posB.position);
-            CapsuleCol.height = Vector3.Distance(posA.position, posB.position);
+        //if (updateCollider && CapsuleCol)
+        //{
+        //    CapsuleCol.transform.position = (posA.position + posB.position) * 0.5f;
+        //    CapsuleCol.transform.LookAt(posB.position);
+        //    CapsuleCol.height = Vector3.Distance(posA.position, posB.position);
 
             
-        }
+        //}
         updateRender();
 
 
@@ -126,7 +125,9 @@ public class cableRender : MonoBehaviour
         if (physStart && physEnd)
         {
             physStart.transform.position = posA.position;
+            physStart.transform.rotation = posA.rotation * Quaternion.Euler(0,180,0) ;
             physEnd.transform.position = posB.position;
+            physEnd.transform.rotation = posB.rotation * Quaternion.Euler(0, 180, 0);
         }
     }
     
