@@ -2,8 +2,10 @@
   "dependencies": {
     "com.shtif.runtimetransformhandle": "0.1.4",
     "com.unity.2d.sprite": "1.0.0",
+    "com.unity.cinemachine": "2.9.7",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.development": "1.0.1",
+    "com.unity.recorder": "4.0.3",
     "com.unity.render-pipelines.universal": "14.0.10",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",

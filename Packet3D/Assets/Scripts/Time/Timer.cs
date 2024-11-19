@@ -53,4 +53,8 @@ public class Timer : MonoBehaviour
         Debug.Log("Timer finished!");
         // You can trigger an event or function when the timer finishes
     }
+    public void stopTimer()
+    {
+        isTimerRunning = false;
+    }
 }

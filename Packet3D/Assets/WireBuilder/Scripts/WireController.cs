@@ -114,7 +114,7 @@ public class WireController : MonoBehaviour
 
     private void OnValidate()
     {
-        ChangeRadius();
+        //ChangeRadius();
     }
 
     public void GetSegmentsDistance()

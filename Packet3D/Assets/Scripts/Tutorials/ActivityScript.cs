@@ -85,5 +85,6 @@ public class ActivityScript : MonoBehaviour
         winCanvas.panel.SetActive(true);
         winCanvas.confetti.SetActive(true);
         winCanvas.win(GetComponent<Timer>().maxTime - GetComponent<Timer>().remainingTime);
+        GetComponent<Timer>().stopTimer();
     }
 }

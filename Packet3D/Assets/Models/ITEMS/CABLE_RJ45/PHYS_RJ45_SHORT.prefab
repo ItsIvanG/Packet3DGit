@@ -144,6 +144,8 @@ MonoBehaviour:
   downSprite: {fileID: 21300000, guid: 9799e57bbdf327a4684f61eef60e7f1a, type: 3}
   A_statusSprite: {fileID: 0}
   B_statusSprite: {fileID: 0}
+  StartHopA: {fileID: 0}
+  StartHopB: {fileID: 0}
 --- !u!1 &7129357702157588193
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,10 +827,6 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2421900493731386162, guid: 67b2b58d740c5e64a946af0b34cded6a, type: 3}
-      propertyPath: m_Radius
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2697920652764650253, guid: 67b2b58d740c5e64a946af0b34cded6a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -916,10 +914,6 @@ PrefabInstance:
     - target: {fileID: 6773883988128110484, guid: 67b2b58d740c5e64a946af0b34cded6a, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6841640944991881468, guid: 67b2b58d740c5e64a946af0b34cded6a, type: 3}
-      propertyPath: m_Radius
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7755680181197767791, guid: 67b2b58d740c5e64a946af0b34cded6a, type: 3}
       propertyPath: m_Materials.Array.data[0]
