@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -63,7 +64,23 @@ public class SubnetDictionary : MonoBehaviour
         {"/31",0 },
         {"/32",0 }
     };
+    public static string ConvertCIDRToSubnetMask(int cidrSuffix)
+    {
+        if (cidrSuffix < 0 || cidrSuffix > 32)
+        {
+            throw new ArgumentOutOfRangeException(nameof(cidrSuffix), "CIDR suffix must be between 0 and 32.");
+        }
 
+        // Create a 32-bit binary number with 'cidrSuffix' 1s followed by 0s
+        uint mask = uint.MaxValue << (32 - cidrSuffix);
+
+        // Convert the binary number to its IP format
+        return string.Format("{0}.{1}.{2}.{3}",
+            (mask >> 24) & 0xFF,
+            (mask >> 16) & 0xFF,
+            (mask >> 8) & 0xFF,
+            mask & 0xFF);
+    }
     public static string getPrefix(string address)
     {
         string output;
@@ -98,5 +115,71 @@ public class SubnetDictionary : MonoBehaviour
         {
             return false;
         }
+    }
+    /// <summary>
+    /// Finds the last available IP address in a subnet.
+    /// </summary>
+    /// <param name="ip">The IP address.</param>
+    /// <param name="mask">The subnet mask.</param>
+    /// <returns>The last available IP address as a string.</returns>
+    public static string GetLastAvailableIPAddress(string ip, string mask)
+    {
+        try
+        {
+            // Convert IP and mask to 32-bit unsigned integers
+            uint ipUint = IPToUInt32(IPAddress.Parse(ip));
+            uint maskUint = IPToUInt32(IPAddress.Parse(mask));
+
+            // Calculate the broadcast address
+            uint broadcastUint = ipUint | ~maskUint;
+
+            // Convert the broadcast address back to a string
+            return UInt32ToIP(broadcastUint);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error in GetLastAvailableIPAddress: {ex.Message}");
+            return null;
+        }
+    }
+    public static string GetNetworkAddress(string ip, string mask)
+    {
+        try
+        {
+            // Convert IP and mask to 32-bit unsigned integers
+            uint ipUint = IPToUInt32(IPAddress.Parse(ip));
+            uint maskUint = IPToUInt32(IPAddress.Parse(mask));
+
+            // Perform bitwise AND to get the network address
+            uint networkUint = ipUint & maskUint;
+
+            // Convert back to an IP address string
+            return UInt32ToIP(networkUint);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error in GetNetworkAddress: {ex.Message}");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Converts an IP address to a 32-bit unsigned integer.
+    /// </summary>
+    private static uint IPToUInt32(IPAddress ipAddress)
+    {
+        byte[] bytes = ipAddress.GetAddressBytes();
+        Array.Reverse(bytes); // Ensure correct endianness
+        return BitConverter.ToUInt32(bytes, 0);
+    }
+
+    /// <summary>
+    /// Converts a 32-bit unsigned integer to an IP address string.
+    /// </summary>
+    private static string UInt32ToIP(uint ipAddress)
+    {
+        byte[] bytes = BitConverter.GetBytes(ipAddress);
+        Array.Reverse(bytes); // Ensure correct endianness
+        return new IPAddress(bytes).ToString();
     }
 }

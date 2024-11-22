@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
-using UnityEditor.Events;
+//using UnityEditor.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -68,7 +68,7 @@ public class WinPanel : MonoBehaviour
     {
         if (FindAnyObjectByType<ActivityScript>())
         {
-            UnityEventTools.RemovePersistentListener(okButton.onClick,0);
+            //UnityEventTools.RemovePersistentListener(okButton.onClick,0);
             okButton.onClick.AddListener(pressOK);
             skipScoresButton.onClick.AddListener(skipScores);
             LevelsPrefix = "Act";

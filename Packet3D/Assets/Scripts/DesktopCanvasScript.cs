@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
-using UnityEditor.Hardware;
+
 
 public class DesktopCanvasScript : MonoBehaviour
 {
@@ -31,6 +31,7 @@ public class DesktopCanvasScript : MonoBehaviour
     public NonNativeKeyboard Keyboard;
     public TextMeshProUGUI COMString;
     public TMP_InputField COMInput;
+    public Toggle SerialToggle;
     //public PCBehavior.CurrentMenu currentMenu = PCBehavior.CurrentMenu.Desktop;
 
     private void Awake()
@@ -121,36 +122,86 @@ public class DesktopCanvasScript : MonoBehaviour
     {
         PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
         Debug.Log("SETTING port properties: " + pp);
-
-        if (SubnetDictionary.getPrefix(SubnetInput.text) == "/?")
+        if (SubnetDictionary.IsValidIPAddress(GatewayInput.text))
         {
-            PopupMessage.showMessage("Error", "Subnet invalid or unsupported.", PopupMessage.MsgType.Error);
+            if (SubnetDictionary.IsValidIPAddress(DNSInput.text))
+            {
+                if (SubnetDictionary.IsValidIPAddress(IPInput.text))
+                {
+                    if (SubnetDictionary.getPrefix(SubnetInput.text) == "/?")
+                    {
+                        PopupMessage.showMessage("Error", "Subnet invalid or unsupported.", PopupMessage.MsgType.Error);
+                    }
+                    else
+                    {
+                        pp.isStaticIP = StaticToggle.isOn;
+                        pp.address = IPInput.text;
+                        pp.subnet = SubnetInput.text;
+                        pp.defaultgateway = GatewayInput.text;
+                        pp.dnsserver = DNSInput.text;
+                        IPPanel.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    PopupMessage.showMessage("Error", "Invalid IP address.", PopupMessage.MsgType.Error);
+                }
+
+            }
+            else
+            {
+                PopupMessage.showMessage("Error", "Invalid DNS address.", PopupMessage.MsgType.Error);
+
+            }
         }
         else
         {
-            pp.isStaticIP = StaticToggle.isOn;
-            pp.address = IPInput.text;
-            pp.subnet = SubnetInput.text;
-            pp.defaultgateway = GatewayInput.text;
-            pp.dnsserver = DNSInput.text;
-            IPPanel.gameObject.SetActive(false);
+            PopupMessage.showMessage("Error", "Invalid gateway address.", PopupMessage.MsgType.Error);
+
         }
+       
 
     }
+    public DHCPPool lastPool = null;
     public void setPCtoDHCP()
     {
-        PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+        if (DHCPToggle.isOn) {
+            PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+            CiscoEthernetPort ciscoPortHop = null;
+            pp.isStaticIP = false;
 
-        
+            SimulationBehavior.instance.hopsFound.Clear();
+            DHCPPool pool = SimulationBehavior.instance.recursiveTestDHCP(currentPC);
 
-        CiscoEthernetPort ciscoPortHop = null;
+            if (pool != null)
+            {
+                lastPool = pool;
+                pp.address = pool.GetNextAvailableIP();
+                pool.existingIPs.Add(pp.address);
+                pp.subnet = SubnetDictionary.ConvertCIDRToSubnetMask(int.Parse(pool.network.Split("/")[1]));
+                pp.dnsserver = pool.defaultDNS;
+                pp.defaultgateway = pool.defaultGateway;
+            }
+            else
+            {
+                PopupMessage.showMessage("DHCP Fail", "APIPA is being used.", PopupMessage.MsgType.Error);
+                pp.address = "169.254." + Random.Range(0, 255) + "." + Random.Range(0, 255);
+                pp.subnet = "255.255.0.0";
+                pp.dnsserver = "0.0.0.0";
+                pp.defaultgateway = "0.0.0.0";
+            }
+
+        }
+
+
+
         //if (pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>())
         //{
         //    PopupMessage.showMessage("Error", "No valid connection on ethernet port.", PopupMessage.MsgType.Error);
         //    return;
         //}
         //var getAllCiscoPorts = pp.portHopParent.GetComponentsInChildren<CiscoEthernetPort>();
-        
+
         //foreach (CiscoEthernetPort port in getAllCiscoPorts)
         //{
         //    if (port.name == pp.portHop.name)
@@ -160,7 +211,7 @@ public class DesktopCanvasScript : MonoBehaviour
         //}
 
         //TODO DHCP
-        pp.isStaticIP = false;
+
         Debug.Log("attempting dhcp address excludeEnd ");
         //var excludeEndSplit = ciscoPortHop.excludeEnd.Split(".");
         ////pp.address = excludeEndSplit[0] + "." + excludeEndSplit[1] + "." + excludeEndSplit[2] + "." + (int.Parse(excludeEndSplit[3])+1);
@@ -168,31 +219,74 @@ public class DesktopCanvasScript : MonoBehaviour
         //pp.dnsserver = ciscoPortHop.dnsserver;
         //pp.defaultgateway = ciscoPortHop.defaultRouter;
 
+
         getIPdetails();
     }
     public void setPCstaticIP()
     {
-        PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
-        pp.isStaticIP = true;
+        if (StaticToggle.isOn)
+        {
+    
+            PCEthernetProperties pp = ethernetPorts[ethernetPortsDropdown.value];
+            if(lastPool!=null) lastPool.existingIPs.Remove(pp.address);
+            pp.isStaticIP = true;
+        }
+
         //getIPdetails();
     }
     public void showPCTerminal()
     {
-        for (int i = 0; i < USBPorts.Count; i++)
+        if (SerialToggle.isOn)
         {
-
-            if (USBPortNames[i] ==COMInput.text &&  USBPorts[i].portHop.PortFunction == PortTypes.Function.Console)
+            bool found = false;
+            for (int i = 0; i < USBPorts.Count; i++)
             {
-                TerminalCanvasScript.ShowTerminal(USBPorts[i].portHopParent);
-                currentPC.GetComponent<PCBehavior>().currentMenu = PCBehavior.CurrentMenu.Terminal;
+
+                if (USBPortNames[i] == COMInput.text && USBPorts[i].portHop.PortFunction == PortTypes.Function.Console)
+                {
+                    TerminalCanvasScript.ShowTerminal(USBPorts[i].portHopParent);
+                    currentPC.GetComponent<PCBehavior>().currentMenu = PCBehavior.CurrentMenu.Terminal;
+                    found = true;
+                }
+
+            }
+            if (!found)
+            {
+                Debug.Log("NO Console Device plugged in USB port!");
+                PopupMessage.showMessage("Error", "Serial not found", PopupMessage.MsgType.Error);
             }
         }
-       
-        //else
-        //{
-        //    Debug.Log("NO Console Device plugged in USB port!");
-        //    PopupMessage.showMessage("Error", "NO Console Device plugged in USB port!", PopupMessage.MsgType.Error);
-        //}
+        else
+        {
+            if (COMInput.text != "")
+            {
+                SimulationBehavior.instance.hopsFound.Clear();
+
+                CiscoDevice cd = SimulationBehavior.instance.recursiveTestTelnet(currentPC, COMInput.text);
+                if (cd)
+                {
+                    if (cd.checkLoginLocalVTY())
+                    {
+                        cd.currentPrivilege = TerminalPrivileges.privileges.loggedOut;
+                        TerminalConsoleBehavior.instance.currentPrivilege = TerminalPrivileges.privileges.loggedOut;
+                        TerminalCanvasScript.ShowTerminal(cd.gameObject);
+                        currentPC.GetComponent<PCBehavior>().successTelnet = COMInput.text;
+                    }
+                    else
+                    {
+                        PopupMessage.showMessage("Error", "Connection closed by host.", PopupMessage.MsgType.Error);
+
+                    }
+                }
+                else
+                {
+                    PopupMessage.showMessage("Error", "IP address not found", PopupMessage.MsgType.Error);
+                }
+            }
+           
+        }
+
+
     }
     public void setDHCPStaticToggles()
     {

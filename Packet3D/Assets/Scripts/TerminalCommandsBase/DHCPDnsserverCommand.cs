@@ -15,8 +15,8 @@ public class DHCPDnsserver : ConsoleCommand
 
             for (int i = 0; i < ciscoDevice.DHCPPools.Count; i++)
             {
-                if (ciscoDevice.DHCPPools[i].Name == ciscoDevice.currentPool) poolIndex = i;
-                break;
+                if (ciscoDevice.DHCPPools[i].DHCPName == ciscoDevice.currentPool) poolIndex = i;
+
             }
 
             ciscoDevice.DHCPPools[poolIndex].defaultDNS = args[0];

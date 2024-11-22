@@ -31,13 +31,15 @@ public class TerminalCanvasScript : MonoBehaviour
     public static void ShowTerminal(GameObject device)
     {
         instance.inputField.text = "";
+  
         instance. SetKB();
         instance.gameObject.SetActive(true);
         instance.currentDevice = device;
         instance.deviceLabel.text = device.name;
-        
-        
-        
+
+        instance.inputField.Select();
+        instance.inputField.ActivateInputField();
+
         TerminalConsoleBehavior.instance.currentObj = device;
         TerminalConsoleBehavior.instance.getVarsFromCisco();
         TerminalLogin.checkLogin();
@@ -51,6 +53,8 @@ public class TerminalCanvasScript : MonoBehaviour
     {
         NonNativeKeyboard.Instance.InputField = inputField;
         NonNativeKeyboard.Instance.PresentKeyboard(inputField.text);
+        instance.inputField.Select();
+        instance.inputField.ActivateInputField();
     }
 
     public void updateHostnamePrefix()

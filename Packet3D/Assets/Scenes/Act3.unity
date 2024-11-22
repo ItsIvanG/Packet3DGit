@@ -1197,6 +1197,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: Enter Global Configuration mode. Remember from your first lesson, first
       enter 'enable' to access Privileged EXEC Mode, then enter 'configuration terminal'
       to access Global Config mode.
@@ -1213,6 +1214,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 3
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Now, let\u2019s configure the hostname of your router. Once logged in,
       you can set the hostname by typing hostname, followed by the name you want.
       For this lesson, enter 'hostname R1' "
@@ -1229,6 +1231,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: See? The router name is updated to the selected hostname! This makes it
       easier to find the device on the network.
     visual: {fileID: 0}
@@ -1248,6 +1251,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
     - arrowOn: {fileID: 0}
       enableObjects: {fileID: 0}
       waitType: 8
@@ -1259,6 +1263,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: As an additional security measure, you can set a password when accessing
       the 'enable' command. Type 'enable secret pass' to set the Priviledged EXEC
       mode's password!
@@ -1275,6 +1280,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: You've now entered your username 'user, and your password 'pass'. Enter
       'line console 0' to configure settings for the console port.
     visual: {fileID: 0}
@@ -1290,6 +1296,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 3
       CiscoSpecificConfigCheck: 3
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: You are now configuring the Console port. Enter 'login local' to apply
       your username and password!
     visual: {fileID: 0}
@@ -1305,6 +1312,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: 'Great job! Now if you exit out of Configuration and Priviledged EXEC mode,
       you will now be asked to login using your credentials. Try it now! (Username:
       user, Password: pass)'
@@ -1321,6 +1329,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
     - arrowOn: {fileID: 0}
       enableObjects: {fileID: 0}
       waitType: 5
@@ -1332,6 +1341,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 1
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: And that's all to setting up basic device security!
     visual: {fileID: 0}
     wait: []
@@ -2673,17 +2683,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721854716}
   m_CullTransparentMesh: 1
---- !u!114 &722212714 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3579395380542431386, guid: 9c66530ffaec2bf45b2704f0f370d702, type: 3}
-  m_PrefabInstance: {fileID: 2137000453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e8da3ecf1119842a6744f327e6a0da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &732641681
 GameObject:
   m_ObjectHideFlags: 0
@@ -6294,6 +6293,8 @@ MonoBehaviour:
   pickingWhat: 0
   SimSpeed: 1
   hopsFound: []
+  staticRoutes: []
+  RIPRoutes: []
 --- !u!224 &1491662138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8440,6 +8441,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 7
@@ -8451,6 +8453,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 8
@@ -8462,6 +8465,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 9
@@ -8473,6 +8477,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 12
@@ -8484,6 +8489,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
 --- !u!4 &2097457663
 Transform:
   m_ObjectHideFlags: 0
@@ -9486,10 +9492,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8963754659645991467, guid: c765cfb46c1cd3c40937bdef26c8de4f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 722212714}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

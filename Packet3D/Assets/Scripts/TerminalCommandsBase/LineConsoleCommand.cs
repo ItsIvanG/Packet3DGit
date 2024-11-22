@@ -41,6 +41,25 @@ public class LineConsoleCommand : ConsoleCommand
             }
 
         }
+        else  if (args[0] == "vty" && int.TryParse(args[1],out int start) && int.TryParse(args[2], out int end))
+        {
+            foreach (var lVTYs in cd.lineVTYs)
+            {
+                lVTYs.availableVTYconnections = end - start + 1;
+                TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.line;
+                cd.lineConfig = TerminalPrivileges.lineConfig.vty;
+                return true;
+
+            }
+            LineConsole lc = new LineConsole();
+            lc.availableVTYconnections = end-start+1;
+            cd.lineVTYs.Add(lc);
+
+            TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.line;
+            cd.lineConfig = TerminalPrivileges.lineConfig.vty;
+            return true;
+        }
+
         else
         {
             return false;

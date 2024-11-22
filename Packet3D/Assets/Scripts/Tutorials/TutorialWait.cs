@@ -40,7 +40,11 @@ public class TutorialWait
         Cisco_RIPRoute,
         Cisco_FindPort,
         Cisco_EncapsulatedPort,
-        Cisco_SubportIP
+        Cisco_SubportIP,
+        Cisco_RangeCheckVLAN,
+        Cisco_CheckPortTrunk,
+        Cisco_LoginLocalVTY,
+        PC_SuccessTelnet
 
     };
     public waitFor waitType;
@@ -52,6 +56,7 @@ public class TutorialWait
     public TerminalPrivileges.privileges CiscoPrivilegeCheck;
     public TerminalPrivileges.specificConfig CiscoSpecificConfigCheck;
     public TerminalPrivileges.lineConfig CiscoLineConfigCheck;
+    public List<CiscoEthernetPort> RangePortCheck;
 
     public bool testWait()
     {
@@ -76,7 +81,7 @@ public class TutorialWait
 
                     foreach(var pool in cd.DHCPPools)
                     {
-                        if (pool.Name == fieldCheck) return true;
+                        if (pool.DHCPName == fieldCheck) return true;
                     }
                      return false;
 
@@ -134,7 +139,12 @@ public class TutorialWait
                     }
                     return false;
 
-
+                case waitFor.PC_SuccessTelnet:
+                    if (pc.successTelnet == fieldCheck)
+                    {
+                        return true;
+                    }
+                    return false;
                 case waitFor.Cisco_Hostname:
 
                     if (cd.hostname == fieldCheck)
@@ -192,6 +202,12 @@ public class TutorialWait
                 case waitFor.Cisco_LoginLocal:
 
                     if (cd.checkLoginLocal())
+                        return true;
+                    else return false;
+
+                case waitFor.Cisco_LoginLocalVTY:
+
+                    if (cd.checkLoginLocalVTY())
                         return true;
                     else return false;
 
@@ -324,7 +340,22 @@ public class TutorialWait
 
                     return false;
 
+                case waitFor.Cisco_RangeCheckVLAN:
+
+                    foreach(var port in RangePortCheck)
+                    {
+                        if (port.switchportAccessVlan != int.Parse(fieldCheck)) return false;
+                    }
+
+                    return true;
+
+                case waitFor.Cisco_CheckPortTrunk:
+                    if (cep.switchportMode == CiscoEthernetPort.switchportModes.Trunk) return true;
+
+                    return false;
+
                 default: return false;
+
             }
         }
         else

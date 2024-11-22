@@ -15,6 +15,7 @@ MonoBehaviour:
   type: 4
   Name: USB Console Cable
   ShortName: Console
-  Description: 
-  Thumbnail: {fileID: 21300000, guid: 0ba98dcc5565d7f408f8ed84ada7b97c, type: 3}
+  Description: A USB to RJ45 cable used to connect Console ports to PC USB ports.
+  Thumbnail: {fileID: 21300000, guid: 32e04a4893b37fd4d8f852d000e76f97, type: 3}
   GameObject: {fileID: 2722624590797645819, guid: 89de7ddcfb84c6a4d9a071d109b96b19, type: 3}
+  ShowroomObject: {fileID: 4558487934747033108, guid: cfc8687e44c0efc4c83021ee53c6ba0d, type: 3}

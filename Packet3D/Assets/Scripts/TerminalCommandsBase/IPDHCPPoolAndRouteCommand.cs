@@ -17,7 +17,7 @@ public class IPDHCPPoolAndRouteCommand : ConsoleCommand
 
             foreach(var pl in pools)
             {
-                if(pl.Name == args[2])
+                if(pl.DHCPName == args[2])
                 {
                     poolExists = true;
                     break;
@@ -27,8 +27,11 @@ public class IPDHCPPoolAndRouteCommand : ConsoleCommand
             if (!poolExists)
             {
                 DHCPPool pool = new DHCPPool();
-                pool.Name = args[2];
+                pool.DHCPName = args[2];
                 ciscoDevice.DHCPPools.Add(pool);
+
+              
+
             }
 
 

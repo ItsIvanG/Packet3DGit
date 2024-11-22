@@ -16,5 +16,5 @@ public class PCBehavior : MonoBehaviour
         DeviceManager
     }
     public CurrentMenu currentMenu = CurrentMenu.Desktop;
-    public string successPing;
+    public string successPing,successTelnet;
 }

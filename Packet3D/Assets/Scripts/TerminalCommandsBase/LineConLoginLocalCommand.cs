@@ -12,7 +12,17 @@ public class LinConLoginLocal : ConsoleCommand
 
         if (args[0] == "local")
         {
-            cd.lineConsoles[cd.currentLineCon].usingLocal = true;
+            if (cd.lineConfig == TerminalPrivileges.lineConfig.console)
+            {
+                cd.lineConsoles[cd.currentLineCon].usingLocal = true;
+
+            }
+              
+            else if (cd.lineConfig == TerminalPrivileges.lineConfig.vty)
+            {
+                cd.lineVTYs[0].usingLocal = true;
+            }
+
             return true;
         }
         else

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New DHCPNetCommand Command", menuName = "Terminal/DHCPNetCommand Command")]
@@ -15,13 +16,28 @@ public class DHCPNetCommand : ConsoleCommand
 
             for (int i = 0; i < ciscoDevice.DHCPPools.Count; i++)
             {
-                if (ciscoDevice.DHCPPools[i].Name == ciscoDevice.currentPool) poolIndex = i;
-                break;
+                if (ciscoDevice.DHCPPools[i].DHCPName == ciscoDevice.currentPool)
+                {
+                    Debug.Log("Found pool index " + i + "|| NAME: " + ciscoDevice.DHCPPools[i].DHCPName + " || CURRPOOL: " + ciscoDevice.currentPool);
+
+                    poolIndex = i;
+                }
+                
             }
+            Debug.Log("CURRENTPOOL INDEX: " + poolIndex);
 
             if (SubnetDictionary.getPrefix(args[1]) != "/?")
             {
                 ciscoDevice.DHCPPools[poolIndex].network = args[0] + SubnetDictionary.getPrefix(args[1]);
+
+                var ports = ciscoDevice.GetComponentsInChildren<CiscoEthernetPort>();
+                foreach (var port in ports)
+                {
+                    if (SimulationBehavior.IsIPInNetwork(port.address, args[0], args[1])){
+                        ciscoDevice.DHCPPools[poolIndex].existingIPs.Add(port.address);
+                    }
+                }
+                ciscoDevice.DHCPPools[poolIndex].existingIPs.Add(SubnetDictionary.GetNetworkAddress(args[0], args[1]));
                 return true;
             }
             else

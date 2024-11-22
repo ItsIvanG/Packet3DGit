@@ -22,6 +22,9 @@ public class PCVRTriggerOn : MonoBehaviour
 
          
             DesktopCanvasScript.showDesktopCanvas(transform.parent.gameObject);
+            PopupMessage.instance.transform.position = transform.parent.Find("Screen").position;
+            PopupMessage.instance.transform.rotation = transform.parent.Find("Screen").rotation;
+            PopupMessage.instance.transform.localScale = transform.parent.Find("Screen").localScale;
         }
     }
 

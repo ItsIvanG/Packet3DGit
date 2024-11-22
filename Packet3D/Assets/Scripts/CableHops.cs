@@ -83,6 +83,12 @@ public class CableHops : MonoBehaviour
             portAproperties.portHop = portB.GetComponent<PortProperties>();
             portAproperties.portHopParent = portB.transform.parent.gameObject;
             //portAPrefabDetails.UpdateContent();
+            if ((portAproperties.portHopParent.GetComponent<PCBehavior>() ||
+                portAproperties.portHopParent.GetComponent < RouterBehavior > () )&&
+                 portAproperties.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cep))
+            {
+                cep.noShut = true;
+            }
             portAproperties.pluggedCable = gameObject;
 
             PortProperties portBproperties = portB.GetComponent<PortProperties>();
@@ -91,6 +97,12 @@ public class CableHops : MonoBehaviour
             portBproperties.portHop = portA.GetComponent<PortProperties>();
             portBproperties.portHopParent = portA.transform.parent.gameObject;
             //portBPrefabDetails.UpdateContent();
+            if ((portBproperties.portHopParent.GetComponent<PCBehavior>() ||
+                portBproperties.portHopParent.GetComponent<RouterBehavior>()) &&
+              portBproperties.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cepb))
+            {
+                cepb.noShut = true;
+            }
             portBproperties.pluggedCable = gameObject;
             Debug.Log("Updated hops");
         }
@@ -101,16 +113,23 @@ public class CableHops : MonoBehaviour
             portAproperties.portHop = null;
             portAproperties.portHopParent = null;
             portAproperties.pluggedCable = null;
+            if (portAproperties.GetComponent<CiscoEthernetPort>() && !portAproperties.transform.parent.GetComponent<RouterBehavior>())
+            {
+                portAproperties.GetComponent<CiscoEthernetPort>().noShut = false;
+            }
 
             PortProperties portBproperties = lastPortB.GetComponent<PortProperties>();
 
             portBproperties.portHop = null;
             portBproperties.portHopParent = null;
             portBproperties.pluggedCable = null;
-
+            if (portBproperties.GetComponent<CiscoEthernetPort>() && !portBproperties.transform.parent.GetComponent<RouterBehavior>())
+            {
+                portBproperties.GetComponent<CiscoEthernetPort>().noShut = false;
+            }
             lastPortA = null;
             lastPortB = null;
-
+          
             Debug.Log("Updated hops");
         }
     }

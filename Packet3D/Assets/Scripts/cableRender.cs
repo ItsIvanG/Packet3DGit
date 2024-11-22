@@ -91,7 +91,7 @@ public class cableRender : MonoBehaviour
         //}
         //else
         //{
-        //    float measuredDistanceInMeters = Vector3.Distance(posA.position, posB.position);
+        //    
         //    switch (measureUnit)
         //    {
         //        case 1:
@@ -129,6 +129,8 @@ public class cableRender : MonoBehaviour
             physEnd.transform.position = posB.position;
             physEnd.transform.rotation = posB.rotation * Quaternion.Euler(0, 180, 0);
         }
+        //float measuredDistanceInMeters = Vector3.Distance(posA.position, posB.position);
+        //Debug.Log(measuredDistanceInMeters);
     }
     
 }

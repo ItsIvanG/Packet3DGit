@@ -15,10 +15,7 @@ MonoBehaviour:
   CommandWord: line
   CommandArgs:
   - console
+  - vty
   CommandPrivilege: 3
   specificConfig: 0
-  lc:
-    index: 0
-    username: 
-    password: 
-    usingLocal: 0
+  routerOnly: 0

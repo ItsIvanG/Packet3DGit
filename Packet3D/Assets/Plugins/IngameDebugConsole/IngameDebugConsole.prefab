@@ -790,7 +790,7 @@ MonoBehaviour:
   toggleWithKey: 1
   toggleKey: 96
   VRInputAction:
-    m_UseReference: 1
+    m_UseReference: 0
     m_Action:
       m_Name: VR Input
       m_Type: 0

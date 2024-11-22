@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class SimulationBehavior : MonoBehaviour
 {
@@ -23,7 +26,38 @@ public class SimulationBehavior : MonoBehaviour
     public int pickingWhat = 0;//0 - FROM. 1 - TO
     public float SimSpeed =1f;
     public List<GameObject> hopsFound;
+    public List<StaticRoute> staticRoutes;
+    public List<string> RIPRoutes;
 
+
+    public void refreshRoutes()
+    {
+        staticRoutes.Clear();
+        RIPRoutes.Clear();
+
+        var ciscoDevices = FindObjectsByType<CiscoDevice>(0);
+        foreach(CiscoDevice ciscoDevice in ciscoDevices)
+        {
+            var staticRoutess = ciscoDevice.staticRoutes;
+            foreach(StaticRoute staticRoute in staticRoutess)
+            {
+                staticRoutes.Add(staticRoute);
+
+            }
+            var RIPRoutess = ciscoDevice.RIPNetworks;
+            foreach (string RIPRoute in RIPRoutess)
+            {
+                RIPRoutes.Add(RIPRoute);
+
+            }
+        }
+
+    }
+
+    private void Start()
+    {
+        refreshRoutes();
+    }
     private void Awake()
     {
         instance = this;
@@ -151,7 +185,7 @@ public class SimulationBehavior : MonoBehaviour
         foreach (var p in ports)
         {
 
-            if (p.portHopParent != null && !hopsFound.Contains(p.portHopParent))
+            if (p.portHopParent != null && !ping.hops.Contains(p.portHopParent))
             {
                 Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
                 hopsFound.Add(p.portHopParent);
@@ -166,4 +200,124 @@ public class SimulationBehavior : MonoBehaviour
     {
         SimSpeed = speed;
     }
+    public CiscoDevice recursiveTestTelnet(GameObject g, string ip)
+    {
+        Debug.Log("current recursive: " + g);
+        var ports = g.GetComponentsInChildren<PortProperties>();
+        foreach (var p in ports)
+        {
+            if(p.portHopParent)
+            {
+                if( p.address == ip)
+                {
+                    return p.transform.GetComponentInParent<CiscoDevice>();
+                }
+
+            }
+
+            if (p.portHopParent != null && !hopsFound.Contains(p.portHopParent))
+            {
+                Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
+                hopsFound.Add(p.portHopParent);
+               return recursiveTestTelnet(p.portHopParent, ip);
+
+            }
+        }
+        return null;
+    }
+    public DHCPPool recursiveTestDHCP(GameObject g)
+    {
+        DHCPPool poolReturn = null;
+        List<DHCPPool> pools = null;
+        if (g.GetComponent<CiscoDevice>())
+        {
+
+            var ciscoPorts = g.GetComponentsInChildren<CiscoEthernetPort>();
+            pools = g.GetComponent<CiscoDevice>().DHCPPools;
+            foreach (var p in ciscoPorts)
+            {
+                if (pools != null)
+                {
+                    foreach (var pool in pools)
+                    {
+                        if (IsIPInNetwork(p.address,
+                            pool.network.Split("/")[0],
+                            SubnetDictionary.ConvertCIDRToSubnetMask(int.Parse(pool.network.Split("/")[1]))
+                            ))
+                        {
+                            return pool;
+                        }
+                    }
+                }
+
+            }
+            //Debug.Log("Gotten POOLS list from " + g);
+            //Debug.Log("POOLS: " + pools);
+        }
+
+    
+
+        Debug.Log("current recursive: " + g);
+        var ports = g.GetComponentsInChildren<PortProperties>();
+        foreach (var p in ports)
+        {
+
+            if (p.portHopParent != null && !hopsFound.Contains(p.portHopParent) && p.portHop.PortFunction==PortTypes.Function.EthernetPort)
+            {
+                if (p.portHop.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cep))
+                {
+                    Debug.Log("Found CEP " + cep);
+                    if (cep.noShut)
+                    {
+                        Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
+                        hopsFound.Add(p.portHopParent);
+                        poolReturn = recursiveTestDHCP(p.portHopParent);
+                    }
+
+                }
+                else
+                {
+                    Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
+                    hopsFound.Add(p.portHopParent);
+                    poolReturn = recursiveTestDHCP(p.portHopParent);
+                }
+        
+
+            }
+        }
+        return poolReturn;
+    }
+    public static bool IsIPInNetwork(string ipAddress, string networkAddress, string subnetMask)
+    {
+        try
+        {
+            // Convert IP, network address, and subnet mask to byte arrays
+            IPAddress ip = IPAddress.Parse(ipAddress);
+            IPAddress network = IPAddress.Parse(networkAddress);
+            IPAddress mask = IPAddress.Parse(subnetMask);
+
+            byte[] ipBytes = ip.GetAddressBytes();
+            byte[] networkBytes = network.GetAddressBytes();
+            byte[] maskBytes = mask.GetAddressBytes();
+
+            // Check if IP is in the network range
+            for (int i = 0; i < ipBytes.Length; i++)
+            {
+                if ((ipBytes[i] & maskBytes[i]) != (networkBytes[i] & maskBytes[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error: {e.Message}");
+            return false;
+        }
+    }
+
+
+
 }

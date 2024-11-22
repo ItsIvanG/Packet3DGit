@@ -50,8 +50,21 @@ public class Timer : MonoBehaviour
 
     void TimerFinished()
     {
-        Debug.Log("Timer finished!");
+       
         // You can trigger an event or function when the timer finishes
+        var getAudioSources = FindObjectsByType<AudioSource>(0);
+
+        foreach (AudioSource audioSource in getAudioSources)
+        {
+            audioSource.Stop();
+        }
+        var timeOutSFX = Resources.Load<AudioClip>("SFX/time out");
+        Debug.Log("Timer finished! playing " + timeOutSFX);
+        ActivityScript.instance.winCanvas.GetComponent<AudioSource>().PlayOneShot(timeOutSFX);
+        UIFadeInAndLoadScene uif = FindAnyObjectByType<UIFadeInAndLoadScene>();
+        uif.StartFade();
+
+
     }
     public void stopTimer()
     {

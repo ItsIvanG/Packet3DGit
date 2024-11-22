@@ -1759,6 +1759,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Global Configuration mode allows you to configure the interface. Type
       \u2018interface g0/0/0\u2019 to access the port."
     visual: {fileID: 0}
@@ -1774,6 +1775,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Next, assign an IP address with 'ip address' followed by an IP and subnet
       mask, for this lesson, enter \u2018ip add 192.168.1.1 255.255.255.0\u2019. "
     visual: {fileID: 0}
@@ -1789,6 +1791,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Enable the interface with \u2018no shutdown\u2019."
     visual: {fileID: 0}
     wait:
@@ -1803,6 +1806,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: Great job! The port now has an IP Address of 192.168.1.1. Once you connect
       the PC to this port, its address must be 192.168.1.2 to not conflict with the
       router.
@@ -4357,6 +4361,8 @@ MonoBehaviour:
   pickingWhat: 0
   SimSpeed: 1
   hopsFound: []
+  staticRoutes: []
+  RIPRoutes: []
 --- !u!224 &1108820011
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8121,6 +8127,10 @@ PrefabInstance:
     - target: {fileID: 692661527903471016, guid: 96460537f3146e6419a07180eb5f1081, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 757398458174881730, guid: 96460537f3146e6419a07180eb5f1081, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 757398458176408350, guid: 96460537f3146e6419a07180eb5f1081, type: 3}
       propertyPath: m_AnchorMax.y

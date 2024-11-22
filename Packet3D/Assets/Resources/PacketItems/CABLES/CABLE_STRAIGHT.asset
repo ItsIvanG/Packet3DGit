@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CABLE_STRAIGHT
   m_EditorClassIdentifier: 
   type: 4
-  Name: Straight Through RJ45 Cable
+  Name: RJ45 Cable
   ShortName: Straight
-  Description: 
-  Thumbnail: {fileID: 21300000, guid: 99a7ef4d804139346b18f8f97424b162, type: 3}
+  Description: An RJ45 ethernet cable used to connect PCs and networking devices.
+  Thumbnail: {fileID: 21300000, guid: d3ba73324b95fad4c8115fb19e00dc58, type: 3}
   GameObject: {fileID: 2722624590797645819, guid: 69944e8a4021e3740b77f4f1c6f8e4ba, type: 3}
+  ShowroomObject: {fileID: 4558487934747033108, guid: 0f805d9d6f8de60409103e44615cb368, type: 3}

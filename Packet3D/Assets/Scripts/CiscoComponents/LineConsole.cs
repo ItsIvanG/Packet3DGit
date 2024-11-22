@@ -8,4 +8,5 @@ public class LineConsole
     public int index=0;
     public string username, password;
     public bool usingLocal = false;
+    public int availableVTYconnections = 0;
 }

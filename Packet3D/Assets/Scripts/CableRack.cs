@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -13,6 +14,9 @@ public class CableRack : MonoBehaviour
     public GameObject SocketBack_1;
     public GameObject SocketBack_2;
     private XRSocketInteractor sFront_1, sFront_2, sBack_1,sBack_2;
+    //public getTexts;
+
+    public bool addLenghts = true;
     private void Start()
     {
         sFront_1 = SocketFront_1.GetComponent<XRSocketInteractor>();
@@ -25,6 +29,26 @@ public class CableRack : MonoBehaviour
         {
             Invoke("spawnFront", 0.8f);
             Invoke("spawnBack", 1f);
+        }
+        if (addLenghts)
+        {
+            TextMeshPro[] getTexts = GetComponentsInChildren<TextMeshPro>();
+            Debug.Log("Adding length to " + getTexts);
+            string length="";
+            if (cableToSpawn.name.Contains("MEDIUM"))
+            {
+                length = "2.5 m";
+            } 
+            else if (cableToSpawn.name.Contains("SHORT"))
+            {
+                length = "1.0 m";
+            }
+
+            foreach (var text in getTexts)
+            {
+
+                text.text+="\n"+length;
+            }
         }
     }
 

@@ -476,7 +476,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -5302406620110960859, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   LineRef: {fileID: 1581175831}
-  currentLine: 14
+  currentLine: 0
   currentWait: 0
   bmo: {fileID: 669040463}
   MakulitWait: 1
@@ -529,6 +529,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Nicely done! Now, we must identify which console port from the computer
       you\u2019ve connected the router to. "
     visual: {fileID: 0}
@@ -548,6 +549,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Great! Now, open PuTTY from the desktop to access the router\u2019s terminal. "
     visual: {fileID: 0}
     wait:
@@ -562,6 +564,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Enter the COM identifier you\u2019ve gathered from the Device Manager
       onto the Serial line box, and press Open! "
     visual: {fileID: 0}
@@ -577,6 +580,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: 'Great job! We are now at the User EXEC Mode. This is the default user
       mode when you first access the device. '
     visual: {fileID: 0}
@@ -595,6 +599,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 2
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Now you're in Privileged EXEC Mode, you are close to having access to
       configure and manage the router.  Enter \u2018configure terminal\u2019 to access
       Global Configuration Mode."
@@ -611,6 +616,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 3
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "You're now in Global Configuration Mode, where you can make configuration
       changes to the router. This is where you\u2019ll type most of your configuration
       commands."

@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -138,6 +139,15 @@ public class PropertiesTab : MonoBehaviour
     }
     public void deleteButton()
     {
+        if (currentObj.GetComponent<PCBehavior>())
+        {
+            if(DesktopCanvasScript.instance.currentPC == currentObj.gameObject)
+            {
+                DesktopCanvasScript.instance.GetComponentInChildren<Canvas>().gameObject.SetActive(false);
+                PopupMessage.instance.panel.gameObject.SetActive(false);
+                NonNativeKeyboard.Instance.gameObject.SetActive(false);
+            }
+        }
         Destroy(currentObj.gameObject);
         updatePropertiesTab(null);
     }

@@ -153,7 +153,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
         string typedCommandSplitLast = typedCommandSplit[typedCommandSplit.Length - 1];
         //Debug.Log("TYPED COMMAND LENGTH: "+typedCommandSplit.Length);
 
-        if (inputField.text.Length > 0)
+        if (inputField.text.Length > 0 )
         {
             foreach (ConsoleCommand cc in commands)
             {
@@ -161,7 +161,8 @@ public class TerminalConsoleBehavior : MonoBehaviour
                     typedCommandSplit.Length==1 && 
                     cc.CommandWord.Contains(typedCommandSplitLast) &&
                     typedCommandSplitLast != cc.CommandWord &&
-                    
+
+
                     ((instance.currentPrivilege == cc.CommandPrivilege && 
                     cc.specificConfig == TerminalPrivileges.specificConfig.global) 
                     ||
@@ -173,11 +174,17 @@ public class TerminalConsoleBehavior : MonoBehaviour
                     )
 
                 {
-                    cluesPanel.SetActive(true);
-                    //Debug.Log("found " + cc.CommandWord);
-                    GameObject prefab = Instantiate(cluePrefab, cluesPanel.transform);
-                    prefab.GetComponent<cluesString>().setText(cc.CommandWord, typedCommandSplitLast, this);
-                    noClues = false;
+
+                    if( cluesPanel.transform.childCount < 4)
+                    {
+                        cluesPanel.SetActive(true);
+                        //Debug.Log("found " + cc.CommandWord);
+                        GameObject prefab = Instantiate(cluePrefab, cluesPanel.transform);
+                        prefab.GetComponent<cluesString>().setText(cc.CommandWord, typedCommandSplitLast, this);
+                        //currentClues.Add(typedCommandSplitLast);
+                        noClues = false;
+                    }
+                   
                 }
                 if (typedCommandSplit.Length > 1 && cc.CommandWord==typedCommandSplit[0])
                 {
@@ -185,7 +192,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
                     foreach (string a in SOargs)
                     {
                         var argsSplit = a.Split(":");
-                        if(typedCommandSplit.Length == argsSplit.Length + 1)
+                        if(typedCommandSplit.Length == argsSplit.Length + 1 && cluesPanel.transform.childCount < 4)
                         {
                             //Debug.Log("typedCommandSplitLast: " + typedCommandSplitLast);
                             if(typedCommandSplit.Length >2)
@@ -353,5 +360,7 @@ public class TerminalConsoleBehavior : MonoBehaviour
         currentPrivilege = TerminalPrivileges.privileges.cmd;
         isCMD = true;
         getVarsFromCisco();
+        inputField.Select();
+        inputField.ActivateInputField();
     }
 }

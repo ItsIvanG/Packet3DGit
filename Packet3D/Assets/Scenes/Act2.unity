@@ -1607,6 +1607,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: Now hook the second computer!
     visual: {fileID: 0}
     wait:
@@ -1621,6 +1622,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Great! Let\u2019s assign an IP Address to our first PC. Open up IP Config
       on the desktop, and make sure it\u2019s set to static.\n"
     visual: {fileID: 0}
@@ -1636,6 +1638,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: Enter 192.168.1.1 on the IPv4 box, and 255.255.255.0 on the subnet mask.
     visual: {fileID: 0}
     wait:
@@ -1650,6 +1653,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: Nice job! The subnet mask is like a line on a map that tells you how much
       of the address belongs to the neighborhood and how much belongs to the house
       number.
@@ -1680,6 +1684,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: "Good job! Let\u2019s now try to check if these two PCs can see each other."
     visual: {fileID: 0}
     wait: []
@@ -1697,6 +1702,7 @@ MonoBehaviour:
       CiscoPrivilegeCheck: 0
       CiscoSpecificConfigCheck: 0
       CiscoLineConfigCheck: 0
+      RangePortCheck: []
   - line: 'Great! This means that the PCs can interact with each other.
 
 '
@@ -2233,6 +2239,8 @@ MonoBehaviour:
   pickingWhat: 0
   SimSpeed: 1
   hopsFound: []
+  staticRoutes: []
+  RIPRoutes: []
 --- !u!224 &415881124
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3456,17 +3464,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 825ff720060ee594aa8aacd71fbe50c9, type: 3}
---- !u!114 &722212714 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3579395380542431386, guid: 9c66530ffaec2bf45b2704f0f370d702, type: 3}
-  m_PrefabInstance: {fileID: 2137000453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e8da3ecf1119842a6744f327e6a0da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &743790082
 GameObject:
   m_ObjectHideFlags: 0
@@ -8334,6 +8331,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 3
@@ -8345,6 +8343,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 3
@@ -8356,6 +8355,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 3
@@ -8367,6 +8367,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 1
@@ -8378,6 +8379,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 1
@@ -8389,6 +8391,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 1
@@ -8400,6 +8403,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
   - arrowOn: {fileID: 0}
     enableObjects: {fileID: 0}
     waitType: 1
@@ -8411,6 +8415,7 @@ MonoBehaviour:
     CiscoPrivilegeCheck: 0
     CiscoSpecificConfigCheck: 0
     CiscoLineConfigCheck: 0
+    RangePortCheck: []
 --- !u!4 &1819078513
 Transform:
   m_ObjectHideFlags: 0
@@ -10415,10 +10420,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8963754659645991467, guid: c765cfb46c1cd3c40937bdef26c8de4f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 722212714}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

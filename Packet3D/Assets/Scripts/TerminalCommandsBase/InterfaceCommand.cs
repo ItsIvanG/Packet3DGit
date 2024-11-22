@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New InterfaceCommand Command", menuName = "Terminal/InterfaceCommand Command")]
@@ -72,6 +72,7 @@ public class InterfaceCommand : ConsoleCommand
                             GameObject subportObj = Instantiate(subportPrefab, TerminalConsoleBehavior.instance.currentObj.transform);
                             currentSubport = subportObj.GetComponent<Subport>();
                             currentSubport.name = args[0].ToUpper();
+                            currentSubport.noShut = true;
                         }
                         TerminalConsoleBehavior.instance.currentConfigLevel = TerminalPrivileges.specificConfig.subInterface;
                         ciscoDevice.interfacePort = currentSubport;

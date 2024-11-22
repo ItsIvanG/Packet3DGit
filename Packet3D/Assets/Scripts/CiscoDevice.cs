@@ -23,6 +23,7 @@ public  class CiscoDevice : MonoBehaviour
     public Vlan configVlan;
     public int linConAvailable = 1;
     public List<LineConsole> lineConsoles;
+    public List<LineConsole> lineVTYs;
     public int currentLineCon = -1;
     public List<float> writeMems;
     public List<StaticRoute> staticRoutes;
@@ -40,6 +41,18 @@ public  class CiscoDevice : MonoBehaviour
     public bool checkLoginLocal()
     {
         foreach(var lc in lineConsoles)
+        {
+            if (lc.usingLocal == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool checkLoginLocalVTY()
+    {
+        foreach (var lc in lineVTYs)
         {
             if (lc.usingLocal == true)
             {

@@ -74,6 +74,7 @@ public class SwitchportCommand : ConsoleCommand
                 vlanComponent = vlan.GetComponent<Vlan>();
                 vlanComponent.PortName = "VLAN" + args[2];
                 vlanComponent.enabled = true;
+
                 vlanComponent.vlanNumber = int.Parse(args[2]);
                 vlanComponent.updateVlanPorts();
 
