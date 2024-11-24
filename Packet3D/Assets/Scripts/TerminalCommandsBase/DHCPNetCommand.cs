@@ -33,9 +33,18 @@ public class DHCPNetCommand : ConsoleCommand
                 var ports = ciscoDevice.GetComponentsInChildren<CiscoEthernetPort>();
                 foreach (var port in ports)
                 {
-                    if (SimulationBehavior.IsIPInNetwork(port.address, args[0], args[1])){
-                        ciscoDevice.DHCPPools[poolIndex].existingIPs.Add(port.address);
+                    Debug.Log("Testing if IP " + port.address + " is in " + args[0] + " with subnet " + args[1]);
+                    try
+                    {
+                        if (SimulationBehavior.IsIPInNetwork(port.address, args[0], args[1]))
+                        {
+                            ciscoDevice.DHCPPools[poolIndex].existingIPs.Add(port.address);
+                        }
+                    } catch
+                    {
+                        continue;
                     }
+
                 }
                 ciscoDevice.DHCPPools[poolIndex].existingIPs.Add(SubnetDictionary.GetNetworkAddress(args[0], args[1]));
                 return true;

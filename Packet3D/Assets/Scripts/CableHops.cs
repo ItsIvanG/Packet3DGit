@@ -83,8 +83,12 @@ public class CableHops : MonoBehaviour
             portAproperties.portHop = portB.GetComponent<PortProperties>();
             portAproperties.portHopParent = portB.transform.parent.gameObject;
             //portAPrefabDetails.UpdateContent();
+
+            // IF cable hops are either PC or router, no shut me
             if ((portAproperties.portHopParent.GetComponent<PCBehavior>() ||
-                portAproperties.portHopParent.GetComponent < RouterBehavior > () )&&
+                portAproperties.portHopParent.GetComponent < RouterBehavior > () )  
+
+                &&
                  portAproperties.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cep))
             {
                 cep.noShut = true;
@@ -97,12 +101,27 @@ public class CableHops : MonoBehaviour
             portBproperties.portHop = portA.GetComponent<PortProperties>();
             portBproperties.portHopParent = portA.transform.parent.gameObject;
             //portBPrefabDetails.UpdateContent();
+
+            // IF cable hops are either PC or router, no shut me
             if ((portBproperties.portHopParent.GetComponent<PCBehavior>() ||
                 portBproperties.portHopParent.GetComponent<RouterBehavior>()) &&
               portBproperties.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cepb))
             {
                 cepb.noShut = true;
             }
+            // IF both cable hops are switches -- noshut both
+            if (
+                portAproperties.portHopParent.GetComponent<SwitchBehavior>() &&
+                portBproperties.portHopParent.GetComponent<SwitchBehavior>() &&
+              portAproperties.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cepc1) &&
+            portBproperties.TryGetComponent<CiscoEthernetPort>(out CiscoEthernetPort cepc2)
+            )
+            {
+                cepc1.noShut = true;
+                cepc2.noShut = true;
+            }
+
+
             portBproperties.pluggedCable = gameObject;
             Debug.Log("Updated hops");
         }

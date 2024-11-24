@@ -181,10 +181,14 @@ public class DesktopCanvasScript : MonoBehaviour
                 pp.subnet = SubnetDictionary.ConvertCIDRToSubnetMask(int.Parse(pool.network.Split("/")[1]));
                 pp.dnsserver = pool.defaultDNS;
                 pp.defaultgateway = pool.defaultGateway;
+                Debug.Log("DHCP SUCCESS ");
+
             }
             else
             {
-                PopupMessage.showMessage("DHCP Fail", "APIPA is being used.", PopupMessage.MsgType.Error);
+
+                Debug.Log("DHCP FAIL ");
+                PopupMessage.showMessage("DHCP Fail", "APIPA is being used!", PopupMessage.MsgType.Error);
                 pp.address = "169.254." + Random.Range(0, 255) + "." + Random.Range(0, 255);
                 pp.subnet = "255.255.0.0";
                 pp.dnsserver = "0.0.0.0";
@@ -212,7 +216,6 @@ public class DesktopCanvasScript : MonoBehaviour
 
         //TODO DHCP
 
-        Debug.Log("attempting dhcp address excludeEnd ");
         //var excludeEndSplit = ciscoPortHop.excludeEnd.Split(".");
         ////pp.address = excludeEndSplit[0] + "." + excludeEndSplit[1] + "." + excludeEndSplit[2] + "." + (int.Parse(excludeEndSplit[3])+1);
         //pp.subnet = ciscoPortHop.networkSubnet;

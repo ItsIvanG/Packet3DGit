@@ -54,9 +54,9 @@ public class CableRack : MonoBehaviour
 
     public void checkSockets()
     {
-        Debug.Log("checking cable rack");
-        Debug.Log("front 1: " + sFront_1.interactablesSelected.Count);
-        Debug.Log("front 2: " + sFront_2.interactablesSelected.Count);
+        //Debug.Log("checking cable rack");
+        //Debug.Log("front 1: " + sFront_1.interactablesSelected.Count);
+        //Debug.Log("front 2: " + sFront_2.interactablesSelected.Count);
         if (spawnEnable)
         {
             if (sFront_1.interactablesSelected.Count <= 0 && sFront_2.interactablesSelected.Count <= 0)

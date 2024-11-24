@@ -225,6 +225,7 @@ public class SimulationBehavior : MonoBehaviour
         }
         return null;
     }
+
     public DHCPPool recursiveTestDHCP(GameObject g)
     {
         DHCPPool poolReturn = null;
@@ -277,9 +278,9 @@ public class SimulationBehavior : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
-                    hopsFound.Add(p.portHopParent);
-                    poolReturn = recursiveTestDHCP(p.portHopParent);
+                    //Debug.Log("RECURSIVE FOUND: " + p.portHopParent);
+                    //hopsFound.Add(p.portHopParent);
+                    //poolReturn = recursiveTestDHCP(p.portHopParent);
                 }
         
 

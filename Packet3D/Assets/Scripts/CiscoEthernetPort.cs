@@ -43,8 +43,11 @@ public class CiscoEthernetPort : PortProperties
         if (transform.Find("Lights"))
         {
             Renderer lightRender= transform.Find("Lights").GetComponentInChildren<Renderer>();
-            Material mat = lightRender.material;
+            if (lightRender)
+            {
+                Material mat = lightRender.material;
             mat.SetColor("_EmissionColor", new Color(0, 50, 0) * (1 * (newValue ? 1 : 0)));
+            }
         }
     }
 
